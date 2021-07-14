@@ -63,7 +63,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 ```{r}
 packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels', 'tidytext')
+             'UpSetR','ggplot2','topicmodels', 'tidytext','tokenizers')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -163,7 +163,10 @@ data$message  <- tm_map(data$message , stemDocument)
 ```
 
 
+Next, the text tokenization would be conducted. 
 
+```{r}
+data$token <- tokenize_words(data$message)
 
+```
 
-Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.
