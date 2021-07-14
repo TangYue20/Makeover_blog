@@ -126,14 +126,29 @@ head(data$date,5)
 
 ### 2.3.1 Text proprecessing
 
-Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.
+Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning of data or making available data available for analysis so further applications like getting the frequency of words
 
-1. 
+
+1. Creating Corpus
+ 
+Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria.   It arranges text in such a manner  so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .
+
 ```{r}
-raw_text <- data$message
-
-
-
+report <- Corpus(VectorSource(data$message))
+report
 
 ```
 
+2. 
+
+
+
+
+
+
+
+
+
+
+
+Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.

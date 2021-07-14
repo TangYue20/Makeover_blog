@@ -1575,16 +1575,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 [5] &quot;2014-01-23 17:00:00 UTC&quot;</code></pre>
 </div>
 <h3 id="text-proprecessing">2.3.1 Text proprecessing</h3>
-<p>Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.</p>
+<p>Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning of data or making available data available for analysis so further applications like getting the frequency of words</p>
 <ol type="1">
-<li><div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>raw_text</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>
-</code></pre>
-</div></li>
+<li>Creating Corpus</li>
 </ol>
+<p>Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria. It arranges text in such a manner so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>Corpus</span><span class='op'>(</span><span class='fu'>VectorSource</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>report</span>
+</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
+Metadata:  corpus specific: 1, document level (indexed): 0
+Content:  documents: 4063</code></pre>
+</div>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<p>Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
