@@ -101,3 +101,10 @@ ccdata <- subset(data, type == "ccdata")
 mbdata <- subset(data, type == "mbdata")
 
 ```
+
+
+### 2.3 Data preprocessing
+
+### 2.3.1 Modifying Date formate  
+
+Date data in table were shown as scientific notation, so we firstly disabling scientifc notation in R for further date processing.
