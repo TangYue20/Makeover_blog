@@ -166,7 +166,6 @@ data$message  <- tm_map(data$message , stemDocument)
 Next, the text tokenization would be conducted. 
 
 ```{r}
-data$token <- tokenize_words(data$message)
 
 ```
 
