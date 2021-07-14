@@ -2211,10 +2211,34 @@ Metadata:  corpus specific: 1, document level (indexed): 0
 Content:  documents: 4063</code></pre>
 </div>
 <ol start="2" type="1">
-<li></li>
+<li>Removing punctuation</li>
 </ol>
+<p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Replacing "/", "@" and "|" with space</span>
+<span class='va'>toSpace</span> <span class='op'>&lt;-</span> <span class='fu'>content_transformer</span><span class='op'>(</span><span class='kw'>function</span> <span class='op'>(</span><span class='va'>x</span> , <span class='va'>pattern</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='va'>pattern</span>, <span class='st'>" "</span>, <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>toSpace</span>, <span class='st'>"/"</span><span class='op'>)</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>toSpace</span>, <span class='st'>"\\|"</span><span class='op'>)</span>
+<span class='co'># Convert the text to lower case</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='fu'>content_transformer</span><span class='op'>(</span><span class='va'>tolower</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Remove english common stopwords</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>removeWords</span>, <span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># Remove punctuations</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>removePunctuation</span><span class='op'>)</span>
+<span class='co'># Eliminate extra white spaces</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>stripWhitespace</span><span class='op'>)</span>
+<span class='co'># Text stemming - which reduces words to their root form</span>
+<span class='va'>report</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>report</span>, <span class='va'>stemDocument</span><span class='op'>)</span>
+<span class='va'>report</span>
+</code></pre>
+</div>
+<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
+Metadata:  corpus specific: 1, document level (indexed): 0
+Content:  documents: 4063</code></pre>
+</div>
 <p>Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

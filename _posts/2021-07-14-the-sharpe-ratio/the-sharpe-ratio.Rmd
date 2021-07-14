@@ -139,10 +139,27 @@ report
 
 ```
 
-2. 
+2. Removing punctuation
 
+Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
-
+```{r}
+# Replacing "/", "@" and "|" with space
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+report <- tm_map(report, toSpace, "/")
+report <- tm_map(report, toSpace, "\\|")
+# Convert the text to lower case
+report <- tm_map(report, content_transformer(tolower))
+# Remove english common stopwords
+report <- tm_map(report, removeWords, stopwords("english"))
+# Remove punctuations
+report <- tm_map(report, removePunctuation)
+# Eliminate extra white spaces
+report <- tm_map(report, stripWhitespace)
+# Text stemming - which reduces words to their root form
+report <- tm_map(report, stemDocument)
+report
+```
 
 
 
