@@ -93,3 +93,6 @@ data <- rbind(table1, table2,table3)
 ```
 
 
+Next, we would separate 'ccdata' and 'mbdata', they represent microblog record and emergency call center data collected by  the Abila, Kronos local police and fire departments.
+
+
