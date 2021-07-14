@@ -1581,10 +1581,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <p>Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria. It arranges text in such a manner so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>Corpus</span><span class='op'>(</span><span class='fu'>VectorSource</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
+
 </div>
 <ol start="2" type="1">
 <li>Text cleaning</li>
@@ -1592,33 +1589,30 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.</p>
 <p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Replacing "/", "@" and "|" with space</span>
-<span class='va'>toSpace</span> <span class='op'>&lt;-</span> <span class='fu'>content_transformer</span><span class='op'>(</span><span class='kw'>function</span> <span class='op'>(</span><span class='va'>x</span> , <span class='va'>pattern</span> <span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='va'>pattern</span>, <span class='st'>" "</span>, <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>, <span class='va'>toSpace</span>, <span class='st'>"/"</span><span class='op'>)</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>, <span class='va'>toSpace</span>, <span class='st'>"\\|"</span><span class='op'>)</span>
-<span class='co'># Convert the text to lower case</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> , <span class='fu'>content_transformer</span><span class='op'>(</span><span class='va'>tolower</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
+
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Remove english common stopwords</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message_cleaned</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> , <span class='va'>removeWords</span>, <span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># Remove punctuations</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> , <span class='va'>removePunctuation</span><span class='op'>)</span>
-<span class='co'># Eliminate extra white spaces</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> , <span class='va'>stripWhitespace</span><span class='op'>)</span>
-<span class='co'># Text stemming - which reduces words to their root form</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>  <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> , <span class='va'>stemDocument</span><span class='op'>)</span>
-</code></pre>
+
 </div>
+<div class="layout-chunk" data-layout="l-body">
+
 </div>
 <p>Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext’s unnest_tokens() function.</p>
-<pre class="{r"><code>  
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#q2_rally$message &lt;- str_replace_all(q2_rally$message,'[[:punct:]]+', "")</span>
+
+<span class='co'>#q2_rally$message &lt;- str_replace_all(q2_rally$message,fixed("@"),"")</span>
+
+<span class='co'>#q2_rally$message &lt;- str_replace_all(q2_rally$message,fixed("#"),"")</span>
+
+<span class='co'>#q2_rally$message &lt;- str_replace_all(q2_rally$message,fixed("&lt;"),"")</span>
+
+<span class='co'>#q2_rally$message &lt;- str_replace_all(q2_rally$message,"[\u4e00-\u9fa5]+", "")</span>
 </code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+</div>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

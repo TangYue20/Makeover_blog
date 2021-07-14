@@ -134,7 +134,7 @@ Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning
 Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria.   It arranges text in such a manner  so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .
 
 ```{r}
-data$message <- Corpus(VectorSource(data$message))
+
 
 ```
 
@@ -145,32 +145,34 @@ In this step, we would like to clean text, including punctuation removal, convet
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
 ```{r}
-# Replacing "/", "@" and "|" with space
-toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
-data$message  <- tm_map(data$message, toSpace, "/")
-data$message  <- tm_map(data$message, toSpace, "\\|")
-# Convert the text to lower case
-data$message  <- tm_map(data$message , content_transformer(tolower))
+
 
 ```
 
 
 ```{r}
-# Remove english common stopwords
-data$message_cleaned  <- tm_map(data$message , removeWords, stopwords("english"))
-# Remove punctuations
-data$message <- tm_map(data$message , removePunctuation)
-# Eliminate extra white spaces
-data$message  <- tm_map(data$message , stripWhitespace)
-# Text stemming - which reduces words to their root form
-data$message  <- tm_map(data$message , stemDocument)
+
+```
+
+```{r}
+
+
 ```
 
 
 Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
 
-```{r
+```{r}
   
+#q2_rally$message <- str_replace_all(q2_rally$message,'[[:punct:]]+', "")
+
+#q2_rally$message <- str_replace_all(q2_rally$message,fixed("@"),"")
+
+#q2_rally$message <- str_replace_all(q2_rally$message,fixed("#"),"")
+
+#q2_rally$message <- str_replace_all(q2_rally$message,fixed("<"),"")
+
+#q2_rally$message <- str_replace_all(q2_rally$message,"[\u4e00-\u9fa5]+", "")
 
 ```
 
