@@ -63,7 +63,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 ```{r}
 packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels','stringr', 'tidytext','tokenizers','DT')
+             'UpSetR','ggplot2','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -118,10 +118,15 @@ options(scipen = 999)
 
 Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
+
 ```{r}
-data$date <- ymd_hms(data$date.yyyyMMddHHmmss.)
-head(data$date,5)
+data$date.yyyyMMddHHmmss. <- as.character(data$date.yyyyMMddHHmmss.)
+data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
+                                      zone = "",
+                                      format = "%Y%m%d %H%M%s")
+
 ```
+
 
 ### 2.3.1 Text proprecessing
 
@@ -148,6 +153,7 @@ data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 ### 2.4 Classify Record
 
 ```{r}
+
 
 ```
 
