@@ -63,7 +63,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 ```{r}
 packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels', 'tidytext','tokenizers')
+             'UpSetR','ggplot2','topicmodels', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -136,7 +136,6 @@ Use the following code to load the data as a corpus. A corpus is a collection of
 ```{r}
 data$message <- Corpus(VectorSource(data$message))
 
-data$message 
 ```
 
 2. Text cleaning
@@ -152,8 +151,13 @@ data$message  <- tm_map(data$message, toSpace, "/")
 data$message  <- tm_map(data$message, toSpace, "\\|")
 # Convert the text to lower case
 data$message  <- tm_map(data$message , content_transformer(tolower))
+
+```
+
+
+```{r}
 # Remove english common stopwords
-data$message  <- tm_map(data$message , removeWords, stopwords("english"))
+data$message_cleaned  <- tm_map(data$message , removeWords, stopwords("english"))
 # Remove punctuations
 data$message <- tm_map(data$message , removePunctuation)
 # Eliminate extra white spaces
@@ -165,7 +169,8 @@ data$message  <- tm_map(data$message , stemDocument)
 
 Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
 
-```{r}
+```{r
+  
 
 ```
 
