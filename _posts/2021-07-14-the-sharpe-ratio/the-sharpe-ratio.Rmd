@@ -163,7 +163,7 @@ data$message  <- tm_map(data$message , stemDocument)
 ```
 
 
-Next, the text tokenization would be conducted. 
+Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
 
 ```{r}
 
