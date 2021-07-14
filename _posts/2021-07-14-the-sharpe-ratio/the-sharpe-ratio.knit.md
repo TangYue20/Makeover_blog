@@ -12,14 +12,7 @@ output:
 ---
 
 
-```{r setup,include=FALSE}
-options(htmltools.dir.version=FALSE)
-knitr::opts_chunk$set(fig.retina = 3,
-                      echo = TRUE,
-                      eval = TRUE,
-                      message = FALSE,
-                      warning = FALSE)
-```
+
 
 # 1. Overview
 
@@ -61,16 +54,19 @@ First, we run the below code to set the environment.
 In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
 
 
-```{r}
-packages = c('tidyverse','dplyr','readr',
-             'UpSetR','ggplot2','topicmodels')
-for (p in packages){
-  if(!require(p, character.only = T)){
-  install.packages(p)
-  }
-  library(p,character.only = T)
-}
-```
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'readr'</span>,
+             <span class='st'>'UpSetR'</span>,<span class='st'>'ggplot2'</span>,<span class='st'>'topicmodels'</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+  <span class='op'>}</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>p</span>,character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre></div>
+
+</div>
+
 
 
 ### 2.2 Import dataset and combine data
@@ -83,3 +79,5 @@ Firstly, we need to combine 3 files into one consolidated file, which is necessa
 The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.
 
 
+```{.r .distill-force-highlighting-css}
+```

@@ -2130,6 +2130,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
+<h3 id="import-dataset-and-combine-data">2.2 Import dataset and combine data</h3>
+<p>The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.</p>
+<p><img src="image/1.files.PNG" /></p>
+<p>Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package ‘tidyverse’ would be used. The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
