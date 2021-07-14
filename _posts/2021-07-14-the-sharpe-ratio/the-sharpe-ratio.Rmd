@@ -63,7 +63,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 ```{r}
 packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels')
+             'UpSetR','ggplot2','topicmodels', 'tidytext')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -161,9 +161,6 @@ data$message  <- tm_map(data$message , stripWhitespace)
 # Text stemming - which reduces words to their root form
 data$message  <- tm_map(data$message , stemDocument)
 ```
-
-
-
 
 
 
