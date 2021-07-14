@@ -1,0 +1,19 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to R for Data Science and Analysis",
+    "description": "Welcome to our new blog, R for Data Science and Analysis. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Tang Yue",
+        "url": {}
+      }
+    ],
+    "date": "2021-07-14",
+    "categories": [],
+    "contents": "\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-07-14T11:34:38+08:00",
+    "input_file": "welcome.knit.md"
+  }
+]
