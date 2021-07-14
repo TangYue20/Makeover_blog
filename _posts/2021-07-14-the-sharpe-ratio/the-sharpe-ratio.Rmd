@@ -160,16 +160,19 @@ data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 
 ```{r}
-
+data
 ```
-
-```{r}
-
-
-```
-
 
 Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
+
+```{r}
+data %>%
+unnest_tokens(word, message)
+
+```
+
+
+
 
 
 

@@ -1,1505 +1,61 @@
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="distill" />
-
-  <style type="text/css">
-  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
-  body {
-    visibility: hidden;
-  }
-  </style>
-
- <!--radix_placeholder_import_source-->
- <!--/radix_placeholder_import_source-->
-
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ad0000; } /* Alert */
-code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
-code span.bn { color: #ad0000; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
-code span.ch { color: #20794d; } /* Char */
-code span.cn { color: #8f5902; } /* Constant */
-code span.co { color: #5e5e5e; } /* Comment */
-code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-code span.dt { color: #ad0000; } /* DataType */
-code span.dv { color: #ad0000; } /* DecVal */
-code span.er { color: #ad0000; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #ad0000; } /* Float */
-code span.fu { color: #4758ab; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
-code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
-code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
-code span.ss { color: #20794d; } /* SpecialString */
-code span.st { color: #20794d; } /* String */
-code span.va { color: #111111; } /* Variable */
-code span.vs { color: #20794d; } /* VerbatimString */
-code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-</style>
-
-  <!--radix_placeholder_meta_tags-->
-  <title>VAST Challenge 2021 - Mini-Challenge 3 </title>
-  
-  <meta property="description" itemprop="description" content="A short description of the post."/>
-  
-  
-  <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-07-14"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-07-14"/>
-  <meta name="article:author" content="Tang Yue"/>
-  
-  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="VAST Challenge 2021 - Mini-Challenge 3 "/>
-  <meta property="og:type" content="article"/>
-  <meta property="og:description" content="A short description of the post."/>
-  <meta property="og:locale" content="en_US"/>
-  
-  <!--  https://dev.twitter.com/cards/types/summary -->
-  <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="VAST Challenge 2021 - Mini-Challenge 3 "/>
-  <meta property="twitter:description" content="A short description of the post."/>
-  
-  <!--/radix_placeholder_meta_tags-->
-  <!--radix_placeholder_rmarkdown_metadata-->
-  
-  <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["VAST Challenge 2021 - Mini-Challenge 3 "]},{"type":"character","attributes":{},"value":["A short description of the post.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Tang Yue"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["07-14-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
-  </script>
-  <!--/radix_placeholder_rmarkdown_metadata-->
-  
-  <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["csv-1700-1830.csv","csv-1831-2000.csv","csv-2001-2131.csv","image/1.files.PNG","the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
-  </script>
-  <!--radix_placeholder_navigation_in_header-->
-  <!--/radix_placeholder_navigation_in_header-->
-  <!--radix_placeholder_distill-->
-  
-  <style type="text/css">
-  
-  body {
-    background-color: white;
-  }
-  
-  .pandoc-table {
-    width: 100%;
-  }
-  
-  .pandoc-table>caption {
-    margin-bottom: 10px;
-  }
-  
-  .pandoc-table th:not([align]) {
-    text-align: left;
-  }
-  
-  .pagedtable-footer {
-    font-size: 15px;
-  }
-  
-  d-byline .byline {
-    grid-template-columns: 2fr 2fr;
-  }
-  
-  d-byline .byline h3 {
-    margin-block-start: 1.5em;
-  }
-  
-  d-byline .byline .authors-affiliations h3 {
-    margin-block-start: 0.5em;
-  }
-  
-  .authors-affiliations .orcid-id {
-    width: 16px;
-    height:16px;
-    margin-left: 4px;
-    margin-right: 4px;
-    vertical-align: middle;
-    padding-bottom: 2px;
-  }
-  
-  d-title .dt-tags {
-    margin-top: 1em;
-    grid-column: text;
-  }
-  
-  .dt-tags .dt-tag {
-    text-decoration: none;
-    display: inline-block;
-    color: rgba(0,0,0,0.6);
-    padding: 0em 0.4em;
-    margin-right: 0.5em;
-    margin-bottom: 0.4em;
-    font-size: 70%;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  
-  d-article table.gt_table td,
-  d-article table.gt_table th {
-    border-bottom: none;
-  }
-  
-  .html-widget {
-    margin-bottom: 2.0em;
-  }
-  
-  .l-screen-inset {
-    padding-right: 16px;
-  }
-  
-  .l-screen .caption {
-    margin-left: 10px;
-  }
-  
-  .shaded {
-    background: rgb(247, 247, 247);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .shaded .html-widget {
-    margin-bottom: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .shaded .shaded-content {
-    background: white;
-  }
-  
-  .text-output {
-    margin-top: 0;
-    line-height: 1.5em;
-  }
-  
-  .hidden {
-    display: none !important;
-  }
-  
-  d-article {
-    padding-top: 2.5rem;
-    padding-bottom: 30px;
-  }
-  
-  d-appendix {
-    padding-top: 30px;
-  }
-  
-  d-article>p>img {
-    width: 100%;
-  }
-  
-  d-article h2 {
-    margin: 1rem 0 1.5rem 0;
-  }
-  
-  d-article h3 {
-    margin-top: 1.5rem;
-  }
-  
-  d-article iframe {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 2.0em;
-    width: 100%;
-  }
-  
-  /* Tweak code blocks */
-  
-  d-article div.sourceCode code,
-  d-article pre code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-  
-  d-article pre,
-  d-article div.sourceCode,
-  d-article div.sourceCode pre {
-    overflow: auto;
-  }
-  
-  d-article div.sourceCode {
-    background-color: white;
-  }
-  
-  d-article div.sourceCode pre {
-    padding-left: 10px;
-    font-size: 12px;
-    border-left: 2px solid rgba(0,0,0,0.1);
-  }
-  
-  d-article pre {
-    font-size: 12px;
-    color: black;
-    background: none;
-    margin-top: 0;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-  
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-  
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-  }
-  
-  d-article pre a {
-    border-bottom: none;
-  }
-  
-  d-article pre a:hover {
-    border-bottom: none;
-    text-decoration: underline;
-  }
-  
-  d-article details {
-    grid-column: text;
-    margin-bottom: 0.8em;
-  }
-  
-  @media(min-width: 768px) {
-  
-  d-article pre,
-  d-article div.sourceCode,
-  d-article div.sourceCode pre {
-    overflow: visible !important;
-  }
-  
-  d-article div.sourceCode pre {
-    padding-left: 18px;
-    font-size: 14px;
-  }
-  
-  d-article pre {
-    font-size: 14px;
-  }
-  
-  }
-  
-  figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
-  }
-  
-  /* CSS for d-contents */
-  
-  .d-contents {
-    grid-column: text;
-    color: rgba(0,0,0,0.8);
-    font-size: 0.9em;
-    padding-bottom: 1em;
-    margin-bottom: 1em;
-    padding-bottom: 0.5em;
-    margin-bottom: 1em;
-    padding-left: 0.25em;
-    justify-self: start;
-  }
-  
-  @media(min-width: 1000px) {
-    .d-contents.d-contents-float {
-      height: 0;
-      grid-column-start: 1;
-      grid-column-end: 4;
-      justify-self: center;
-      padding-right: 3em;
-      padding-left: 2em;
-    }
-  }
-  
-  .d-contents nav h3 {
-    font-size: 18px;
-    margin-top: 0;
-    margin-bottom: 1em;
-  }
-  
-  .d-contents li {
-    list-style-type: none
-  }
-  
-  .d-contents nav > ul {
-    padding-left: 0;
-  }
-  
-  .d-contents ul {
-    padding-left: 1em
-  }
-  
-  .d-contents nav ul li {
-    margin-top: 0.6em;
-    margin-bottom: 0.2em;
-  }
-  
-  .d-contents nav a {
-    font-size: 13px;
-    border-bottom: none;
-    text-decoration: none
-    color: rgba(0, 0, 0, 0.8);
-  }
-  
-  .d-contents nav a:hover {
-    text-decoration: underline solid rgba(0, 0, 0, 0.6)
-  }
-  
-  .d-contents nav > ul > li > a {
-    font-weight: 600;
-  }
-  
-  .d-contents nav > ul > li > ul {
-    font-weight: inherit;
-  }
-  
-  .d-contents nav > ul > li > ul > li {
-    margin-top: 0.2em;
-  }
-  
-  
-  .d-contents nav ul {
-    margin-top: 0;
-    margin-bottom: 0.25em;
-  }
-  
-  .d-article-with-toc h2:nth-child(2) {
-    margin-top: 0;
-  }
-  
-  
-  /* Figure */
-  
-  .figure {
-    position: relative;
-    margin-bottom: 2.5em;
-    margin-top: 1.5em;
-  }
-  
-  .figure img {
-    width: 100%;
-  }
-  
-  .figure .caption {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 12px;
-    line-height: 1.5em;
-  }
-  
-  .figure img.external {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    padding: 18px;
-    box-sizing: border-box;
-  }
-  
-  .figure .caption a {
-    color: rgba(0, 0, 0, 0.6);
-  }
-  
-  .figure .caption b,
-  .figure .caption strong, {
-    font-weight: 600;
-    color: rgba(0, 0, 0, 1.0);
-  }
-  
-  /* Citations */
-  
-  d-article .citation {
-    color: inherit;
-    cursor: inherit;
-  }
-  
-  div.hanging-indent{
-    margin-left: 1em; text-indent: -1em;
-  }
-  
-  /* Citation hover box */
-  
-  .tippy-box[data-theme~=light-border] {
-    background-color: rgba(250, 250, 250, 0.95);
-  }
-  
-  .tippy-content > p {
-    margin-bottom: 0;
-    padding: 2px;
-  }
-  
-  
-  /* Tweak 1000px media break to show more text */
-  
-  @media(min-width: 1000px) {
-    .base-grid,
-    distill-header,
-    d-title,
-    d-abstract,
-    d-article,
-    d-appendix,
-    distill-appendix,
-    d-byline,
-    d-footnote-list,
-    d-citation-list,
-    distill-footer {
-      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
-      grid-column-gap: 16px;
-    }
-  
-    .grid {
-      grid-column-gap: 16px;
-    }
-  
-    d-article {
-      font-size: 1.06rem;
-      line-height: 1.7em;
-    }
-    figure .caption, .figure .caption, figure figcaption {
-      font-size: 13px;
-    }
-  }
-  
-  @media(min-width: 1180px) {
-    .base-grid,
-    distill-header,
-    d-title,
-    d-abstract,
-    d-article,
-    d-appendix,
-    distill-appendix,
-    d-byline,
-    d-footnote-list,
-    d-citation-list,
-    distill-footer {
-      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
-      grid-column-gap: 32px;
-    }
-  
-    .grid {
-      grid-column-gap: 32px;
-    }
-  }
-  
-  
-  /* Get the citation styles for the appendix (not auto-injected on render since
-     we do our own rendering of the citation appendix) */
-  
-  d-appendix .citation-appendix,
-  .d-appendix .citation-appendix {
-    font-size: 11px;
-    line-height: 15px;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: 18px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background: rgba(0, 0, 0, 0.02);
-    padding: 10px 18px;
-    border-radius: 3px;
-    color: rgba(150, 150, 150, 1);
-    overflow: hidden;
-    margin-top: -12px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-  
-  /* Include appendix styles here so they can be overridden */
-  
-  d-appendix {
-    contain: layout style;
-    font-size: 0.8em;
-    line-height: 1.7em;
-    margin-top: 60px;
-    margin-bottom: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    color: rgba(0,0,0,0.5);
-    padding-top: 60px;
-    padding-bottom: 48px;
-  }
-  
-  d-appendix h3 {
-    grid-column: page-start / text-start;
-    font-size: 15px;
-    font-weight: 500;
-    margin-top: 1em;
-    margin-bottom: 0;
-    color: rgba(0,0,0,0.65);
-  }
-  
-  d-appendix h3 + * {
-    margin-top: 1em;
-  }
-  
-  d-appendix ol {
-    padding: 0 0 0 15px;
-  }
-  
-  @media (min-width: 768px) {
-    d-appendix ol {
-      padding: 0 0 0 30px;
-      margin-left: -30px;
-    }
-  }
-  
-  d-appendix li {
-    margin-bottom: 1em;
-  }
-  
-  d-appendix a {
-    color: rgba(0, 0, 0, 0.6);
-  }
-  
-  d-appendix > * {
-    grid-column: text;
-  }
-  
-  d-appendix > d-footnote-list,
-  d-appendix > d-citation-list,
-  d-appendix > distill-appendix {
-    grid-column: screen;
-  }
-  
-  /* Include footnote styles here so they can be overridden */
-  
-  d-footnote-list {
-    contain: layout style;
-  }
-  
-  d-footnote-list > * {
-    grid-column: text;
-  }
-  
-  d-footnote-list a.footnote-backlink {
-    color: rgba(0,0,0,0.3);
-    padding-left: 0.5em;
-  }
-  
-  
-  
-  /* Anchor.js */
-  
-  .anchorjs-link {
-    /*transition: all .25s linear; */
-    text-decoration: none;
-    border-bottom: none;
-  }
-  *:hover > .anchorjs-link {
-    margin-left: -1.125em !important;
-    text-decoration: none;
-    border-bottom: none;
-  }
-  
-  /* Social footer */
-  
-  .social_footer {
-    margin-top: 30px;
-    margin-bottom: 0;
-    color: rgba(0,0,0,0.67);
-  }
-  
-  .disqus-comments {
-    margin-right: 30px;
-  }
-  
-  .disqus-comment-count {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-  }
-  
-  #disqus_thread {
-    margin-top: 30px;
-  }
-  
-  .article-sharing a {
-    border-bottom: none;
-    margin-right: 8px;
-  }
-  
-  .article-sharing a:hover {
-    border-bottom: none;
-  }
-  
-  .sidebar-section.subscribe {
-    font-size: 12px;
-    line-height: 1.6em;
-  }
-  
-  .subscribe p {
-    margin-bottom: 0.5em;
-  }
-  
-  
-  .article-footer .subscribe {
-    font-size: 15px;
-    margin-top: 45px;
-  }
-  
-  
-  .sidebar-section.custom {
-    font-size: 12px;
-    line-height: 1.6em;
-  }
-  
-  .custom p {
-    margin-bottom: 0.5em;
-  }
-  
-  /* Styles for listing layout (hide title) */
-  .layout-listing d-title, .layout-listing .d-title {
-    display: none;
-  }
-  
-  /* Styles for posts lists (not auto-injected) */
-  
-  
-  .posts-with-sidebar {
-    padding-left: 45px;
-    padding-right: 45px;
-  }
-  
-  .posts-list .description h2,
-  .posts-list .description p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  }
-  
-  .posts-list .description h2 {
-    font-weight: 700;
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-  
-  .posts-list h2.post-tag {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    padding-bottom: 12px;
-  }
-  .posts-list {
-    margin-top: 60px;
-    margin-bottom: 24px;
-  }
-  
-  .posts-list .post-preview {
-    text-decoration: none;
-    overflow: hidden;
-    display: block;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 24px 0;
-  }
-  
-  .post-preview-last {
-    border-bottom: none !important;
-  }
-  
-  .posts-list .posts-list-caption {
-    grid-column: screen;
-    font-weight: 400;
-  }
-  
-  .posts-list .post-preview h2 {
-    margin: 0 0 6px 0;
-    line-height: 1.2em;
-    font-style: normal;
-    font-size: 24px;
-  }
-  
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.4em;
-    font-size: 16px;
-  }
-  
-  .posts-list .post-preview .thumbnail {
-    box-sizing: border-box;
-    margin-bottom: 24px;
-    position: relative;
-    max-width: 500px;
-  }
-  .posts-list .post-preview img {
-    width: 100%;
-    display: block;
-  }
-  
-  .posts-list .metadata {
-    font-size: 12px;
-    line-height: 1.4em;
-    margin-bottom: 18px;
-  }
-  
-  .posts-list .metadata > * {
-    display: inline-block;
-  }
-  
-  .posts-list .metadata .publishedDate {
-    margin-right: 2em;
-  }
-  
-  .posts-list .metadata .dt-authors {
-    display: block;
-    margin-top: 0.3em;
-    margin-right: 2em;
-  }
-  
-  .posts-list .dt-tags {
-    display: block;
-    line-height: 1em;
-  }
-  
-  .posts-list .dt-tags .dt-tag {
-    display: inline-block;
-    color: rgba(0,0,0,0.6);
-    padding: 0.3em 0.4em;
-    margin-right: 0.2em;
-    margin-bottom: 0.4em;
-    font-size: 60%;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  
-  .posts-list img {
-    opacity: 1;
-  }
-  
-  .posts-list img[data-src] {
-    opacity: 0;
-  }
-  
-  .posts-more {
-    clear: both;
-  }
-  
-  
-  .posts-sidebar {
-    font-size: 16px;
-  }
-  
-  .posts-sidebar h3 {
-    font-size: 16px;
-    margin-top: 0;
-    margin-bottom: 0.5em;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
-  
-  .sidebar-section {
-    margin-bottom: 30px;
-  }
-  
-  .categories ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .categories li {
-    color: rgba(0, 0, 0, 0.8);
-    margin-bottom: 0;
-  }
-  
-  .categories li>a {
-    border-bottom: none;
-  }
-  
-  .categories li>a:hover {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  }
-  
-  .categories .active {
-    font-weight: 600;
-  }
-  
-  .categories .category-count {
-    color: rgba(0, 0, 0, 0.4);
-  }
-  
-  
-  @media(min-width: 768px) {
-    .posts-list .post-preview h2 {
-      font-size: 26px;
-    }
-    .posts-list .post-preview .thumbnail {
-      float: right;
-      width: 30%;
-      margin-bottom: 0;
-    }
-    .posts-list .post-preview .description {
-      float: left;
-      width: 45%;
-    }
-    .posts-list .post-preview .metadata {
-      float: left;
-      width: 20%;
-      margin-top: 8px;
-    }
-    .posts-list .post-preview p {
-      margin: 0 0 12px 0;
-      line-height: 1.5em;
-      font-size: 16px;
-    }
-    .posts-with-sidebar .posts-list {
-      float: left;
-      width: 75%;
-    }
-    .posts-with-sidebar .posts-sidebar {
-      float: right;
-      width: 20%;
-      margin-top: 60px;
-      padding-top: 24px;
-      padding-bottom: 24px;
-    }
-  }
-  
-  
-  /* Improve display for browsers without grid (IE/Edge <= 15) */
-  
-  .downlevel {
-    line-height: 1.6em;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
-  }
-  
-  .downlevel .d-title {
-    padding-top: 6rem;
-    padding-bottom: 1.5rem;
-  }
-  
-  .downlevel .d-title h1 {
-    font-size: 50px;
-    font-weight: 700;
-    line-height: 1.1em;
-    margin: 0 0 0.5rem;
-  }
-  
-  .downlevel .d-title p {
-    font-weight: 300;
-    font-size: 1.2rem;
-    line-height: 1.55em;
-    margin-top: 0;
-  }
-  
-  .downlevel .d-byline {
-    padding-top: 0.8em;
-    padding-bottom: 0.8em;
-    font-size: 0.8rem;
-    line-height: 1.8em;
-  }
-  
-  .downlevel .section-separator {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .downlevel .d-article {
-    font-size: 1.06rem;
-    line-height: 1.7em;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-  }
-  
-  
-  .downlevel .d-appendix {
-    padding-left: 0;
-    padding-right: 0;
-    max-width: none;
-    font-size: 0.8em;
-    line-height: 1.7em;
-    margin-bottom: 0;
-    color: rgba(0,0,0,0.5);
-    padding-top: 40px;
-    padding-bottom: 48px;
-  }
-  
-  .downlevel .footnotes ol {
-    padding-left: 13px;
-  }
-  
-  .downlevel .base-grid,
-  .downlevel .distill-header,
-  .downlevel .d-title,
-  .downlevel .d-abstract,
-  .downlevel .d-article,
-  .downlevel .d-appendix,
-  .downlevel .distill-appendix,
-  .downlevel .d-byline,
-  .downlevel .d-footnote-list,
-  .downlevel .d-citation-list,
-  .downlevel .distill-footer,
-  .downlevel .appendix-bottom,
-  .downlevel .posts-container {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  
-  @media(min-width: 768px) {
-    .downlevel .base-grid,
-    .downlevel .distill-header,
-    .downlevel .d-title,
-    .downlevel .d-abstract,
-    .downlevel .d-article,
-    .downlevel .d-appendix,
-    .downlevel .distill-appendix,
-    .downlevel .d-byline,
-    .downlevel .d-footnote-list,
-    .downlevel .d-citation-list,
-    .downlevel .distill-footer,
-    .downlevel .appendix-bottom,
-    .downlevel .posts-container {
-    padding-left: 150px;
-    padding-right: 150px;
-    max-width: 900px;
-  }
-  }
-  
-  .downlevel pre code {
-    display: block;
-    border-left: 2px solid rgba(0, 0, 0, .1);
-    padding: 0 0 0 20px;
-    font-size: 14px;
-  }
-  
-  .downlevel code, .downlevel pre {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-  
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-  
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-  }
-  
-  .downlevel .posts-list .post-preview {
-    color: inherit;
-  }
-  
-  
-  
-  </style>
-  
-  <script type="application/javascript">
-  
-  function is_downlevel_browser() {
-    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
-                                   window.navigator.userAgent)) {
-      return true;
-    } else {
-      return window.load_distill_framework === undefined;
-    }
-  }
-  
-  // show body when load is complete
-  function on_load_complete() {
-  
-    // add anchors
-    if (window.anchors) {
-      window.anchors.options.placement = 'left';
-      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
-    }
-  
-  
-    // set body to visible
-    document.body.style.visibility = 'visible';
-  
-    // force redraw for leaflet widgets
-    if (window.HTMLWidgets) {
-      var maps = window.HTMLWidgets.findAll(".leaflet");
-      $.each(maps, function(i, el) {
-        var map = this.getMap();
-        map.invalidateSize();
-        map.eachLayer(function(layer) {
-          if (layer instanceof L.TileLayer)
-            layer.redraw();
-        });
-      });
-    }
-  
-    // trigger 'shown' so htmlwidgets resize
-    $('d-article').trigger('shown');
-  }
-  
-  function init_distill() {
-  
-    init_common();
-  
-    // create front matter
-    var front_matter = $('<d-front-matter></d-front-matter>');
-    $('#distill-front-matter').wrap(front_matter);
-  
-    // create d-title
-    $('.d-title').changeElementType('d-title');
-  
-    // create d-byline
-    var byline = $('<d-byline></d-byline>');
-    $('.d-byline').replaceWith(byline);
-  
-    // create d-article
-    var article = $('<d-article></d-article>');
-    $('.d-article').wrap(article).children().unwrap();
-  
-    // move posts container into article
-    $('.posts-container').appendTo($('d-article'));
-  
-    // create d-appendix
-    $('.d-appendix').changeElementType('d-appendix');
-  
-    // flag indicating that we have appendix items
-    var appendix = $('.appendix-bottom').children('h3').length > 0;
-  
-    // replace footnotes with <d-footnote>
-    $('.footnote-ref').each(function(i, val) {
-      appendix = true;
-      var href = $(this).attr('href');
-      var id = href.replace('#', '');
-      var fn = $('#' + id);
-      var fn_p = $('#' + id + '>p');
-      fn_p.find('.footnote-back').remove();
-      var text = fn_p.html();
-      var dtfn = $('<d-footnote></d-footnote>');
-      dtfn.html(text);
-      $(this).replaceWith(dtfn);
-    });
-    // remove footnotes
-    $('.footnotes').remove();
-  
-    // move refs into #references-listing
-    $('#references-listing').replaceWith($('#refs'));
-  
-    $('h1.appendix, h2.appendix').each(function(i, val) {
-      $(this).changeElementType('h3');
-    });
-    $('h3.appendix').each(function(i, val) {
-      var id = $(this).attr('id');
-      $('.d-contents a[href="#' + id + '"]').parent().remove();
-      appendix = true;
-      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
-    });
-  
-    // show d-appendix if we have appendix content
-    $("d-appendix").css('display', appendix ? 'grid' : 'none');
-  
-    // localize layout chunks to just output
-    $('.layout-chunk').each(function(i, val) {
-  
-      // capture layout
-      var layout = $(this).attr('data-layout');
-  
-      // apply layout to markdown level block elements
-      var elements = $(this).children().not('details, div.sourceCode, pre, script');
-      elements.each(function(i, el) {
-        var layout_div = $('<div class="' + layout + '"></div>');
-        if (layout_div.hasClass('shaded')) {
-          var shaded_content = $('<div class="shaded-content"></div>');
-          $(this).wrap(shaded_content);
-          $(this).parent().wrap(layout_div);
-        } else {
-          $(this).wrap(layout_div);
-        }
-      });
-  
-  
-      // unwrap the layout-chunk div
-      $(this).children().unwrap();
-    });
-  
-    // remove code block used to force  highlighting css
-    $('.distill-force-highlighting-css').parent().remove();
-  
-    // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
-  
-    // load distill framework
-    load_distill_framework();
-  
-    // wait for window.distillRunlevel == 4 to do post processing
-    function distill_post_process() {
-  
-      if (!window.distillRunlevel || window.distillRunlevel < 4)
-        return;
-  
-      // hide author/affiliations entirely if we have no authors
-      var front_matter = JSON.parse($("#distill-front-matter").html());
-      var have_authors = front_matter.authors && front_matter.authors.length > 0;
-      if (!have_authors)
-        $('d-byline').addClass('hidden');
-  
-      // article with toc class
-      $('.d-contents').parent().addClass('d-article-with-toc');
-  
-      // strip links that point to #
-      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
-  
-      // add orcid ids
-      $('.authors-affiliations').find('.author').each(function(i, el) {
-        var orcid_id = front_matter.authors[i].orcidID;
-        if (orcid_id) {
-          var a = $('<a></a>');
-          a.attr('href', 'https://orcid.org/' + orcid_id);
-          var img = $('<img></img>');
-          img.addClass('orcid-id');
-          img.attr('alt', 'ORCID ID');
-          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
-          a.append(img);
-          $(this).append(a);
-        }
-      });
-  
-      // hide elements of author/affiliations grid that have no value
-      function hide_byline_column(caption) {
-        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
-      }
-  
-      // affiliations
-      var have_affiliations = false;
-      for (var i = 0; i<front_matter.authors.length; ++i) {
-        var author = front_matter.authors[i];
-        if (author.affiliation !== "&nbsp;") {
-          have_affiliations = true;
-          break;
-        }
-      }
-      if (!have_affiliations)
-        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
-  
-      // published date
-      if (!front_matter.publishedDate)
-        hide_byline_column("Published");
-  
-      // document object identifier
-      var doi = $('d-byline').find('h3:contains("DOI")');
-      var doi_p = doi.next().empty();
-      if (!front_matter.doi) {
-        // if we have a citation and valid citationText then link to that
-        if ($('#citation').length > 0 && front_matter.citationText) {
-          doi.html('Citation');
-          $('<a href="#citation"></a>')
-            .text(front_matter.citationText)
-            .appendTo(doi_p);
-        } else {
-          hide_byline_column("DOI");
-        }
-      } else {
-        $('<a></a>')
-           .attr('href', "https://doi.org/" + front_matter.doi)
-           .html(front_matter.doi)
-           .appendTo(doi_p);
-      }
-  
-       // change plural form of authors/affiliations
-      if (front_matter.authors.length === 1) {
-        var grid = $('.authors-affiliations');
-        grid.children('h3:contains("Authors")').text('Author');
-        grid.children('h3:contains("Affiliations")').text('Affiliation');
-      }
-  
-      // remove d-appendix and d-footnote-list local styles
-      $('d-appendix > style:first-child').remove();
-      $('d-footnote-list > style:first-child').remove();
-  
-      // move appendix-bottom entries to the bottom
-      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
-      $('.appendix-bottom').remove();
-  
-      // hoverable references
-      $('span.citation[data-cites]').each(function() {
-        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
-        window.tippy(this, {
-          allowHTML: true,
-          content: refHtml,
-          maxWidth: 500,
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start'
-        });
-      });
-  
-      // clear polling timer
-      clearInterval(tid);
-  
-      // show body now that everything is ready
-      on_load_complete();
-    }
-  
-    var tid = setInterval(distill_post_process, 50);
-    distill_post_process();
-  
-  }
-  
-  function init_downlevel() {
-  
-    init_common();
-  
-     // insert hr after d-title
-    $('.d-title').after($('<hr class="section-separator"/>'));
-  
-    // check if we have authors
-    var front_matter = JSON.parse($("#distill-front-matter").html());
-    var have_authors = front_matter.authors && front_matter.authors.length > 0;
-  
-    // manage byline/border
-    if (!have_authors)
-      $('.d-byline').remove();
-    $('.d-byline').after($('<hr class="section-separator"/>'));
-    $('.d-byline a').remove();
-  
-    // remove toc
-    $('.d-contents').remove();
-  
-    // move appendix elements
-    $('h1.appendix, h2.appendix').each(function(i, val) {
-      $(this).changeElementType('h3');
-    });
-    $('h3.appendix').each(function(i, val) {
-      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
-    });
-  
-  
-    // inject headers into references and footnotes
-    var refs_header = $('<h3></h3>');
-    refs_header.text('References');
-    $('#refs').prepend(refs_header);
-  
-    var footnotes_header = $('<h3></h3');
-    footnotes_header.text('Footnotes');
-    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
-  
-    // move appendix-bottom entries to the bottom
-    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
-    $('.appendix-bottom').remove();
-  
-    // remove appendix if it's empty
-    if ($('.d-appendix').children().length === 0)
-      $('.d-appendix').remove();
-  
-    // prepend separator above appendix
-    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
-  
-    // trim code
-    $('pre>code').each(function(i, val) {
-      $(this).html($.trim($(this).html()));
-    });
-  
-    // move posts-container right before article
-    $('.posts-container').insertBefore($('.d-article'));
-  
-    $('body').addClass('downlevel');
-  
-    on_load_complete();
-  }
-  
-  
-  function init_common() {
-  
-    // jquery plugin to change element types
-    (function($) {
-      $.fn.changeElementType = function(newType) {
-        var attrs = {};
-  
-        $.each(this[0].attributes, function(idx, attr) {
-          attrs[attr.nodeName] = attr.nodeValue;
-        });
-  
-        this.replaceWith(function() {
-          return $("<" + newType + "/>", attrs).append($(this).contents());
-        });
-      };
-    })(jQuery);
-  
-    // prevent underline for linked images
-    $('a > img').parent().css({'border-bottom' : 'none'});
-  
-    // mark non-body figures created by knitr chunks as 100% width
-    $('.layout-chunk').each(function(i, val) {
-      var figures = $(this).find('img, .html-widget');
-      if ($(this).attr('data-layout') !== "l-body") {
-        figures.css('width', '100%');
-      } else {
-        figures.css('max-width', '100%');
-        figures.filter("[width]").each(function(i, val) {
-          var fig = $(this);
-          fig.css('width', fig.attr('width') + 'px');
-        });
-  
-      }
-    });
-  
-    // auto-append index.html to post-preview links in file: protocol
-    // and in rstudio ide preview
-    $('.post-preview').each(function(i, val) {
-      if (window.location.protocol === "file:")
-        $(this).attr('href', $(this).attr('href') + "index.html");
-    });
-  
-    // get rid of index.html references in header
-    if (window.location.protocol !== "file:") {
-      $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
-      });
-    }
-  
-    // add class to pandoc style tables
-    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
-    $('.kable-table').children('table').addClass('pandoc-table');
-  
-    // add figcaption style to table captions
-    $('caption').parent('table').addClass("figcaption");
-  
-    // initialize posts list
-    if (window.init_posts_list)
-      window.init_posts_list();
-  
-    // implmement disqus comment link
-    $('.disqus-comment-count').click(function() {
-      window.headroom_prevent_pin = true;
-      $('#disqus_thread').toggleClass('hidden');
-      if (!$('#disqus_thread').hasClass('hidden')) {
-        var offset = $(this).offset();
-        $(window).resize();
-        $('html, body').animate({
-          scrollTop: offset.top - 35
-        });
-      }
-    });
-  }
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    if (is_downlevel_browser())
-      init_downlevel();
-    else
-      window.addEventListener('WebComponentsReady', init_distill);
-  });
-  
-  </script>
-  
-  <!--/radix_placeholder_distill-->
-  <script src="the-sharpe-ratio_files/jquery/jquery.min.js"></script>
-  <script src="the-sharpe-ratio_files/popper/popper.min.js"></script>
-  <link href="the-sharpe-ratio_files/tippy/tippy.css" rel="stylesheet" />
-  <link href="the-sharpe-ratio_files/tippy/tippy-light-border.css" rel="stylesheet" />
-  <script src="the-sharpe-ratio_files/tippy/tippy.umd.min.js"></script>
-  <script src="the-sharpe-ratio_files/anchor/anchor.min.js"></script>
-  <script src="the-sharpe-ratio_files/bowser/bowser.min.js"></script>
-  <script src="the-sharpe-ratio_files/webcomponents/webcomponents.js"></script>
-  <script src="the-sharpe-ratio_files/distill/template.v2.js"></script>
-  <!--radix_placeholder_site_in_header-->
-  <!--/radix_placeholder_site_in_header-->
+---
+title: "VAST Challenge 2021 - Mini-Challenge 3 "
+description: |
+  A short description of the post.
+author:
+  - name: Tang Yue
+    url: {}
+date: 07-14-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
 
 
-</head>
 
-<body>
 
-<!--radix_placeholder_front_matter-->
+# 1. Overview
 
-<script id="distill-front-matter" type="text/json">
-{"title":"VAST Challenge 2021 - Mini-Challenge 3 ","description":"A short description of the post.","authors":[{"author":"Tang Yue","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-07-14T00:00:00.000+08:00","citationText":"Yue, 2021"}
-</script>
+In the roughly twenty years that Tethys-based GAStech has been operating a natural gas production site in the island country of Kronos, it has produced remarkable profits and developed strong relationships with the government of Kronos. However, GAStech has not been as successful in demonstrating environmental stewardship.
 
-<!--/radix_placeholder_front_matter-->
-<!--radix_placeholder_navigation_before_body-->
-<!--/radix_placeholder_navigation_before_body-->
-<!--radix_placeholder_site_before_body-->
-<!--/radix_placeholder_site_before_body-->
+In January, 2014, the leaders of GAStech are celebrating their new-found fortune as a result of the initial public offering of their very successful company. In the midst of this celebration, several employees of GAStech go missing. An organization known as the Protectors of Kronos (POK) is suspected in the disappearance, but things may not be what they seem.
 
-<div class="d-title">
-<h1>VAST Challenge 2021 - Mini-Challenge 3</h1>
-<!--radix_placeholder_categories-->
-<!--/radix_placeholder_categories-->
-<p><p>A short description of the post.</p></p>
-</div>
+On January 23, 2014, multiple events unfolded in Abila. You’ve been asked to come in to perform a retrospective analysis based on limited information about what took place. Your goal is to identify risks and how they could have been mitigated more effectively.
 
-<div class="d-byline">
-  Tang Yue true 
-  
-<br/>07-14-2021
-</div>
+in this assignment we would provide some insights to help law enforcement from Kronos and Tethys.
 
-<div class="d-article">
-<h1 id="overview">1. Overview</h1>
-<p>In the roughly twenty years that Tethys-based GAStech has been operating a natural gas production site in the island country of Kronos, it has produced remarkable profits and developed strong relationships with the government of Kronos. However, GAStech has not been as successful in demonstrating environmental stewardship.</p>
-<p>In January, 2014, the leaders of GAStech are celebrating their new-found fortune as a result of the initial public offering of their very successful company. In the midst of this celebration, several employees of GAStech go missing. An organization known as the Protectors of Kronos (POK) is suspected in the disappearance, but things may not be what they seem.</p>
-<p>On January 23, 2014, multiple events unfolded in Abila. You’ve been asked to come in to perform a retrospective analysis based on limited information about what took place. Your goal is to identify risks and how they could have been mitigated more effectively.</p>
-<p>in this assignment we would provide some insights to help law enforcement from Kronos and Tethys.</p>
-<h1 id="exploration-and-preparation-of-data">2. Exploration and preparation of Data</h1>
-<p>There are two dataset provides:</p>
-<ol type="1">
-<li><p>Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident</p></li>
-<li><p>Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.</p></li>
-<li><p>maps of Abila and background documents.</p></li>
-</ol>
-<p>Two dataset are stored in 3 csv files, they are csv-1700-1830.csv“,”csv-1831-2000.csv’ and “csv-2001-2131.csv”:</p>
-<p>The data for Mini-Challenge 3 is found in three segments.</p>
-<p>Segment 1 covers the time period from 1700 to 1830 Abila time on January 23.</p>
-<p>Segment 2 covers the time period from 1830 to 2000 Abila time on January 23.</p>
-<p>Segment 3 covers the time period from 2000 to shortly after 2130 Abila time on January 23.</p>
-<h3 id="install-and-load-r-package">2.1 Install and load R package</h3>
-<p>First, we run the below code to set the environment.</p>
-<p>In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.</p>
+
+# 2. Exploration and preparation of Data
+
+There are two dataset provides:
+
+(1) Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
+
+(2) Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.
+
+(3) maps of Abila and background documents.
+
+
+Two dataset are stored in 3 csv files, they are csv-1700-1830.csv", "csv-1831-2000.csv' and  "csv-2001-2131.csv":
+
+The data for Mini-Challenge 3 is found in three segments.
+
+Segment 1 covers the time period from 1700 to 1830 Abila time on January 23. 
+
+Segment 2 covers the time period from 1830 to 2000 Abila time on January 23. 
+
+Segment 3 covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
+
+### 2.1 Install and load R package
+
+First, we run the below code to set the environment.
+
+
+In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'wordcloud'</span>,<span class='st'>'SnowballC'</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'wordcloud'</span>,<span class='st'>'SnowballC'</span>,
              <span class='st'>'UpSetR'</span>,<span class='st'>'ggplot2'</span>,<span class='st'>'topicmodels'</span>,<span class='st'>'stringr'</span>, <span class='st'>'tidytext'</span>,<span class='st'>'tokenizers'</span>,<span class='st'>'DT'</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
   <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
@@ -1507,44 +63,62 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='op'>}</span>
   <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>p</span>,character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
 <span class='op'>}</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="import-dataset-and-combine-data">2.2 Import dataset and combine data</h3>
-<p>The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.</p>
-<p>1<a href="image/1.files.PNG"></a></p>
-<p>Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package ‘tidyverse’ would be used.</p>
-<p>The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.</p>
+
+
+
+### 2.2 Import dataset and combine data
+
+The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
+
+1[](image/1.files.PNG)
+
+
+Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
+
+The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 <span class='va'>table1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1700-1830.csv"</span><span class='op'>)</span>
 <span class='va'>table2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1831-2000.csv"</span><span class='op'>)</span>
 <span class='va'>table3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-2001-2131.csv"</span><span class='op'>)</span>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>table1</span>, <span class='va'>table2</span>,<span class='va'>table3</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<p>Next, we would separate ‘ccdata’ and ‘mbdata’, they represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.</p>
+
+
+
+Next, we would separate 'ccdata' and 'mbdata', they represent microblog record and emergency call center data collected by  the Abila, Kronos local police and fire departments.
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"ccdata"</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"ccdata"</span><span class='op'>)</span>
 <span class='va'>mbdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"mbdata"</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="data-preprocessing">2.3 Data preprocessing</h3>
-<h3 id="modifying-date-formate">2.3.1 Modifying Date formate</h3>
-<p>Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.</p>
+
+
+
+### 2.3 Data preprocessing
+
+### 2.3.1 Modifying Date formate  
+
+Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span>,<span class='fl'>5</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>    type date.yyyyMMddHHmmss.        author
+</code></pre></div>
+
+```
+    type date.yyyyMMddHHmmss.        author
 1 mbdata       20140123170000           POK
 2 mbdata       20140123170000 maha_Homeland
 3 mbdata       20140123170000      Viktor-E
@@ -1552,7 +126,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 5 mbdata       20140123170000     AbilaPost
                                                                                                              message
 1                                                                                              Follow us @POK-Kronos
-2                                       Don&#39;t miss a moment!  Follow our live coverage of the POK Rally in the Park!
+2                                       Don't miss a moment!  Follow our live coverage of the POK Rally in the Park!
 3                                                        Come join us in the Park! Music tonight at Abila City Park!
 4                 POK rally to start in Abila City Park. POK leader Sylvia Marek to open with a speech.\230 #KronosStar
 5 POK rally set to take place in Abila City Park - POK leader Sylvia Marek has begun with opening remarks #AbilaPost
@@ -1561,36 +135,51 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 2       NA        NA         
 3       NA        NA         
 4       NA        NA         
-5       NA        NA         </code></pre>
-</div>
-<p>Next, package ‘lubridate’ would be used to convert data type from ‘yyyymmddhhmmss’ to ‘yyyy-mm-dd hh:mm:ss’, and create a new column ‘date’ in data, and the code chunk could be seen below.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date</span>,<span class='fl'>5</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>[1] &quot;2014-01-23 17:00:00 UTC&quot; &quot;2014-01-23 17:00:00 UTC&quot;
-[3] &quot;2014-01-23 17:00:00 UTC&quot; &quot;2014-01-23 17:00:00 UTC&quot;
-[5] &quot;2014-01-23 17:00:00 UTC&quot;</code></pre>
-</div>
-<h3 id="text-proprecessing">2.3.1 Text proprecessing</h3>
-<p>Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning of data or making available data available for analysis so further applications like getting the frequency of words</p>
-<ol type="1">
-<li>Creating Corpus</li>
-</ol>
-<p>Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria. It arranges text in such a manner so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .</p>
-<div class="layout-chunk" data-layout="l-body">
+5       NA        NA         
+```
 
 </div>
-<ol start="2" type="1">
-<li>Text cleaning</li>
-</ol>
-<p>In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.</p>
-<p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
+
+
+Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>'[[:punct:]]+'</span>, <span class='st'>""</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hms</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date</span>,<span class='fl'>5</span><span class='op'>)</span>
+</code></pre></div>
+
+```
+[1] "2014-01-23 17:00:00 UTC" "2014-01-23 17:00:00 UTC"
+[3] "2014-01-23 17:00:00 UTC" "2014-01-23 17:00:00 UTC"
+[5] "2014-01-23 17:00:00 UTC"
+```
+
+</div>
+
+
+### 2.3.1 Text proprecessing
+
+Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning of data or making available data available for analysis so further applications like getting the frequency of words
+
+
+1. Creating Corpus
+ 
+Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria.   It arranges text in such a manner  so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .
+
+<div class="layout-chunk" data-layout="l-body">
+
+
+</div>
+
+
+2. Text cleaning
+
+In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.
+
+Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>'[[:punct:]]+'</span>, <span class='st'>""</span><span class='op'>)</span>
 
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"@"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 
@@ -1599,15 +188,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"&lt;"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>"[\u4e00-\u9fa5]+"</span>, <span class='st'>""</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span>
-</code></pre>
-</div>
-<pre><code>       type date.yyyyMMddHHmmss.                author
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span>
+</code></pre></div>
+
+```
+       type date.yyyyMMddHHmmss.                author
 1    mbdata       20140123170000                   POK
 2    mbdata       20140123170000         maha_Homeland
 3    mbdata       20140123170000              Viktor-E
@@ -17862,16 +16454,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 4060 2014-01-23 21:33:45
 4061 2014-01-23 21:34:00
 4062 2014-01-23 21:34:00
-4063 2014-01-23 21:34:45</code></pre>
+4063 2014-01-23 21:34:45
+```
+
 </div>
-<p>Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext’s unnest_tokens() function.</p>
+
+
+Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span> <span class='op'>%&gt;%</span>
 <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>message</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>        type date.yyyyMMddHHmmss.              author latitude
+</code></pre></div>
+
+```
+        type date.yyyyMMddHHmmss.              author latitude
 1     mbdata       20140123170000                 POK       NA
 2     mbdata       20140123170000                 POK       NA
 3     mbdata       20140123170000                 POK       NA
@@ -55371,25 +53968,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 12497 2014-01-23 18:24:26                                      you
 12498 2014-01-23 18:24:26                                     dont
 12499 2014-01-23 18:24:26                                      try
- [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 37850 rows ]</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<!--radix_placeholder_article_footer-->
-<!--/radix_placeholder_article_footer-->
-</div>
+ [ reached 'max' / getOption("max.print") -- omitted 37850 rows ]
+```
 
-<div class="d-appendix">
 </div>
 
 
-<!--radix_placeholder_site_after_body-->
-<!--/radix_placeholder_site_after_body-->
-<!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
-<!--/radix_placeholder_appendices-->
-<!--radix_placeholder_navigation_after_body-->
-<!--/radix_placeholder_navigation_after_body-->
 
-</body>
 
-</html>
+
+
+
+```{.r .distill-force-highlighting-css}
+```
