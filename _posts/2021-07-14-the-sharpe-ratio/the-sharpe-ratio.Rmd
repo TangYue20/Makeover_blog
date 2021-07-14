@@ -107,4 +107,12 @@ mbdata <- subset(data, type == "mbdata")
 
 ### 2.3.1 Modifying Date formate  
 
-Date data in table were shown as scientific notation, so we firstly disabling scientifc notation in R for further date processing.
+Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
+
+```{r}
+library(lubridate)
+
+options(scipen = 999)
+head(data,5)
+
+```

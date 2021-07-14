@@ -2155,8 +2155,35 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <h3 id="data-preprocessing">2.3 Data preprocessing</h3>
 <h3 id="modifying-date-formate">2.3.1 Modifying Date formate</h3>
-<p>Date data in table were shown as scientific notation, so we firstly disabling scientifc notation in R for further date processing.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span>,<span class='fl'>5</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    type date.yyyyMMddHHmmss.        author
+1 mbdata       20140123170000           POK
+2 mbdata       20140123170000 maha_Homeland
+3 mbdata       20140123170000      Viktor-E
+4 mbdata       20140123170000    KronosStar
+5 mbdata       20140123170000     AbilaPost
+                                                                                                             message
+1                                                                                              Follow us @POK-Kronos
+2                                       Don&#39;t miss a moment!  Follow our live coverage of the POK Rally in the Park!
+3                                                        Come join us in the Park! Music tonight at Abila City Park!
+4                 POK rally to start in Abila City Park. POK leader Sylvia Marek to open with a speech.\230 #KronosStar
+5 POK rally set to take place in Abila City Park - POK leader Sylvia Marek has begun with opening remarks #AbilaPost
+  latitude longitude location
+1       NA        NA         
+2       NA        NA         
+3       NA        NA         
+4       NA        NA         
+5       NA        NA         </code></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
