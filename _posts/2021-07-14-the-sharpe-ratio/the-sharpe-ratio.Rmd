@@ -123,3 +123,10 @@ Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmms
 data$date <- ymd_hms(data$date.yyyyMMddHHmmss.)
 head(data$date,5)
 ```
+
+### 2.3.1 Text proprecessing
+
+Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.
+
+
+
