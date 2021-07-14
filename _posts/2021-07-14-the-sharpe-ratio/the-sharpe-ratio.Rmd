@@ -134,9 +134,9 @@ Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning
 Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria.   It arranges text in such a manner  so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .
 
 ```{r}
-report <- Corpus(VectorSource(data$message))
-report
+data$message <- Corpus(VectorSource(data$message))
 
+data$message 
 ```
 
 2. Text cleaning
@@ -148,18 +148,18 @@ Cleaning the text data starts with making transformations like removing special 
 ```{r}
 # Replacing "/", "@" and "|" with space
 toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
-report <- tm_map(report, toSpace, "/")
-report <- tm_map(report, toSpace, "\\|")
+data$message  <- tm_map(data$message, toSpace, "/")
+data$message  <- tm_map(data$message, toSpace, "\\|")
 # Convert the text to lower case
-report <- tm_map(report, content_transformer(tolower))
+data$message  <- tm_map(data$message , content_transformer(tolower))
 # Remove english common stopwords
-report <- tm_map(report, removeWords, stopwords("english"))
+data$message  <- tm_map(data$message , removeWords, stopwords("english"))
 # Remove punctuations
-report <- tm_map(report, removePunctuation)
+data$message <- tm_map(data$message , removePunctuation)
 # Eliminate extra white spaces
-report <- tm_map(report, stripWhitespace)
+data$message  <- tm_map(data$message , stripWhitespace)
 # Text stemming - which reduces words to their root form
-report <- tm_map(report, stemDocument)
+data$message  <- tm_map(data$message , stemDocument)
 ```
 
 
