@@ -62,7 +62,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 
 ```{r}
-packages = c('tidyverse','dplyr','readr',
+packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
              'UpSetR','ggplot2','topicmodels')
 for (p in packages){
   if(!require(p, character.only = T)){
@@ -128,5 +128,12 @@ head(data$date,5)
 
 Next, we would use topic modeling to explore topics involved in microblog and call center records. Latent Dirichlet allocation (LDA) is a particularly popular method for fitting a topic model, here topicmodels package and present topic result with ggplot2 and dylyr.
 
+1. 
+```{r}
+raw_text <- data$message
 
+
+
+
+```
 
