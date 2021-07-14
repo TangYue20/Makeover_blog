@@ -118,3 +118,8 @@ head(data,5)
 ```
 
 Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+
+```{r}
+data$date <- ymd_hms(data$date.yyyyMMddHHmmss.)
+head(data$date,5)
+```
