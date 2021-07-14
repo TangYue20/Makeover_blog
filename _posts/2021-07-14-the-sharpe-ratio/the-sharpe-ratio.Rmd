@@ -58,7 +58,19 @@ Segment 3 covers the time period from 2000 to shortly after 2130 Abila time on J
 First, we run the below code to set the environment.
 
 
+In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
 
+
+```{r}
+packages = c('tidyverse','dplyr','readr',
+             'UpSetR','ggplot2','topicmodels')
+for (p in packages){
+  if(!require(p, character.only = T)){
+  install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
 
 
 
