@@ -124,7 +124,6 @@ data$date.yyyyMMddHHmmss. <- as.character(data$date.yyyyMMddHHmmss.)
 data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       zone = "",
                                       format = "%Y%m%d %H%M%s")
-
 ```
 
 
