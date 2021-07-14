@@ -113,7 +113,6 @@ Date data in table were shown as scientific notation, so we firstly disabling sc
 library(lubridate)
 
 options(scipen = 999)
-head(data,5)
 
 ```
 
@@ -126,20 +125,6 @@ head(data$date,5)
 
 ### 2.3.1 Text proprecessing
 
-Steps of Text preprocessing - Text preprocessing, in general, refers to cleaning of data or making available data available for analysis so further applications like getting the frequency of words
-
-
-1. Creating Corpus
- 
-Use the following code to load the data as a corpus. A corpus is a collection of text or speech that has been brought together according to be a certain set of predetermined criteria.   It arranges text in such a manner  so that preprocessing of data can be done or in simple words document term matrix can be created which represent each term present in the text in one hot encoding in the form of a matrix .
-
-```{r}
-
-
-```
-
-2. Text cleaning
-
 In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
@@ -150,7 +135,7 @@ data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
 
 data$message <- str_replace_all(data$message,fixed("@"),"")
 
-data$message <- str_replace_all(data$message,fixed("#"),"")
+#data$message <- str_replace_all(data$message,fixed("#"),"")
 
 data$message <- str_replace_all(data$message,fixed("<"),"")
 
