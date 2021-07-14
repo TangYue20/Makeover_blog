@@ -141,7 +141,7 @@ data$message
 
 2. Text cleaning
 
-Removing punctuation
+In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
