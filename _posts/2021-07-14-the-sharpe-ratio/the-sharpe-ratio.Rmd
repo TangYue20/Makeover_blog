@@ -133,6 +133,18 @@ In this step, we would like to clean text, including punctuation removal, convet
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
+
+
+### 2.4 Classify Record
+
+```{r}
+junk <- data %>%
+  filter(str_detect(message,"#Grammar|"))  %>%
+  filter(str_detect(author,"KronosQuoth|junkman"))
+           
+```
+
+
 ```{r}
   
 data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
@@ -149,14 +161,7 @@ data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 
 
-### 2.4 Classify Record
 
-```{r}
-
-junk <- data %>%
-  filter(str_detect(message,"#Grammar")) 
-           
-```
 ```
 
 
@@ -172,9 +177,6 @@ Next, with tidy text framework, we need to both break the text into individual t
 
 
 ```
-
-
-
 
 
 

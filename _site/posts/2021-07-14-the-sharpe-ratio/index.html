@@ -2111,6 +2111,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="text-proprecessing">2.3.1 Text proprecessing</h3>
 <p>In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.</p>
 <p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
+<h3 id="classify-record">2.4 Classify Record</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#Grammar|"</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"KronosQuoth|junkman"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>'[[:punct:]]+'</span>, <span class='st'>""</span><span class='op'>)</span>
@@ -2122,14 +2131,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"&lt;"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>"[\u4e00-\u9fa5]+"</span>, <span class='st'>""</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<h3 id="classify-record">2.4 Classify Record</h3>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#Grammar"</span><span class='op'>)</span><span class='op'>)</span> 
 </code></pre>
 </div>
 </div>
@@ -2147,9 +2148,6 @@ Next, with tidy text framework, we need to both break the text into individual t
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;/div&gt;
-
-
-
 
 
 
