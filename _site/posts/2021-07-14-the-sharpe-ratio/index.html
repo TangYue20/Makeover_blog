@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["csv-1700-1830.csv","csv-1831-2000.csv","csv-2001-2131.csv","image/1.files.PNG","the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2132,8 +2132,19 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <h3 id="import-dataset-and-combine-data">2.2 Import dataset and combine data</h3>
 <p>The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.</p>
-<p><img src="image/1.files.PNG" /></p>
-<p>Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package ‘tidyverse’ would be used. The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.</p>
+<p>1<a href="image/1.files.PNG"></a></p>
+<p>Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package ‘tidyverse’ would be used.</p>
+<p>The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='va'>table1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1700-1830.csv"</span><span class='op'>)</span>
+<span class='va'>table2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1831-2000.csv"</span><span class='op'>)</span>
+<span class='va'>table3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-2001-2131.csv"</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>table1</span>, <span class='va'>table2</span>,<span class='va'>table3</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
