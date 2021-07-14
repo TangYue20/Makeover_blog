@@ -15,5 +15,22 @@
     "preview": {},
     "last_modified": "2021-07-14T11:34:38+08:00",
     "input_file": "welcome.knit.md"
+  },
+  {
+    "path": "posts/2021-07-14-the-sharpe-ratio/",
+    "title": "VAST Challenge 2021 - Mini-Challenge 3 ",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Tang Yue",
+        "url": {}
+      }
+    ],
+    "date": "2021-07-14",
+    "categories": [],
+    "contents": "\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-07-14T11:50:35+08:00",
+    "input_file": "the-sharpe-ratio.knit.md"
   }
 ]
