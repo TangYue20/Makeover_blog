@@ -144,6 +144,16 @@ junk <- data %>%
            
 ```
 
+```{r}
+meaningful <- data %>%
+  filter(str_detect(author,"AbilaPost|anaregents"))
+
+```
+
+
+```{r}
+
+```
 
 ```{r}
   
