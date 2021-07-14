@@ -63,7 +63,7 @@ In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packa
 
 ```{r}
 packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels', 'tidytext','tokenizers','DT')
+             'UpSetR','ggplot2','topicmodels','stringr', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -145,7 +145,16 @@ In this step, we would like to clean text, including punctuation removal, convet
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
 ```{r}
+  
+data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
 
+data$message <- str_replace_all(data$message,fixed("@"),"")
+
+data$message <- str_replace_all(data$message,fixed("#"),"")
+
+data$message <- str_replace_all(data$message,fixed("<"),"")
+
+data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 ```
 
@@ -162,17 +171,5 @@ Cleaning the text data starts with making transformations like removing special 
 
 Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
 
-```{r}
-  
-#q2_rally$message <- str_replace_all(q2_rally$message,'[[:punct:]]+', "")
 
-#q2_rally$message <- str_replace_all(q2_rally$message,fixed("@"),"")
-
-#q2_rally$message <- str_replace_all(q2_rally$message,fixed("#"),"")
-
-#q2_rally$message <- str_replace_all(q2_rally$message,fixed("<"),"")
-
-#q2_rally$message <- str_replace_all(q2_rally$message,"[\u4e00-\u9fa5]+", "")
-
-```
 
