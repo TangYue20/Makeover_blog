@@ -2181,6 +2181,24 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <pre><code> POSIXct[1:4063], format: NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 </div>
+<h1 id="preprocessing-data">2.4 preprocessing data</h1>
+<p>In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.</p>
+<p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>'[[:punct:]]+'</span>, <span class='st'>""</span><span class='op'>)</span>
+
+<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"@"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+
+<span class='co'>#data$message &lt;- str_replace_all(data$message,fixed("#"),"")</span>
+
+<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"&lt;"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"˜"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+
+<span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='st'>"[\u4e00-\u9fa5]+"</span>, <span class='st'>""</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
 <h3 id="classify-record">2.3 Classify Record</h3>
 <p>Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2220,60 +2238,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <h3 id="text-proprecessing">2.4 Text proprecessing</h3>
-<p>In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.</p>
-<p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
+<p>Next, we further process “#” in the tag which leave in the before pre-processing code chunk.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_junk</span> <span class='op'>&lt;-</span> <span class='va'>junk</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"^[^&gt;]+[A-Za-z\\d]"</span><span class='op'>)</span>
-         <span class='op'>|</span> <span class='va'>message</span> <span class='op'>==</span> <span class='st'>""</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"writes(:|\\.\\.\\.)$"</span><span class='op'>)</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"^In article &lt;"</span><span class='op'>)</span>
-  <span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>junk</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+<span class='va'>spam</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>spam</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+<span class='va'>meaningful</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>meaningful</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_spam</span> <span class='op'>&lt;-</span> <span class='va'>spam</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"^[^&gt;]+[A-Za-z\\d]"</span><span class='op'>)</span>
-         <span class='op'>|</span> <span class='va'>message</span> <span class='op'>==</span> <span class='st'>""</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"writes(:|\\.\\.\\.)$"</span><span class='op'>)</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"^In article &lt;"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-</code></pre>
-</div>
+
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_meamingful</span> <span class='op'>&lt;-</span> <span class='va'>meaningful</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"^[^&gt;]+[A-Za-z\\d]"</span><span class='op'>)</span>
-         <span class='op'>|</span> <span class='va'>message</span> <span class='op'>==</span> <span class='st'>""</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"writes(:|\\.\\.\\.)$"</span><span class='op'>)</span>,
-         <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
-                     <span class='st'>"^In article &lt;"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#data$message &lt;- str_replace_all(data$message,'[[:punct:]]+', "")</span>
 
-<span class='co'>#data$message &lt;- str_replace_all(data$message,fixed("@"),"")</span>
-
-<span class='co'>#data$message &lt;- str_replace_all(data$message,fixed("#"),"")</span>
-
-<span class='co'>#data$message &lt;- str_replace_all(data$message,fixed("&lt;"),"")</span>
-
-<span class='co'>#data$message &lt;- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")</span>
-</code></pre>
-</div>
 </div>
 <p>Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext’s unnest_tokens() function.</p>
 <div class="layout-chunk" data-layout="l-body">

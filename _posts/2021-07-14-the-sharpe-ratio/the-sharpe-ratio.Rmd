@@ -129,7 +129,26 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
 ```{r}
 glimpse(data$date)
 ```
+# 2.4 preprocessing data
 
+In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.
+
+Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
+
+```{r}
+  
+data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
+
+data$message <- str_replace_all(data$message,fixed("@"),"")
+
+#data$message <- str_replace_all(data$message,fixed("#"),"")
+
+data$message <- str_replace_all(data$message,fixed("<"),"")
+data$message <- str_replace_all(data$message,fixed("˜"),"")
+
+data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
+
+```
 
 ### 2.3 Classify Record
 
@@ -173,61 +192,28 @@ meaningful <- anti_join(meaningful1,spam,by="message")
 
 ### 2.4 Text proprecessing
 
-In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.
 
-Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
+
+Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
 
 ```{r}
-cleaned_junk <- junk %>%
-  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
-         | message == "",
-         !str_detect(message, 
-                     "writes(:|\\.\\.\\.)$"),
-         !str_detect(message, 
-                     "^In article <")
-  )
+junk$message <- str_replace_all(junk$message,fixed("#"),"")
+spam$message <- str_replace_all(spam$message,fixed("#"),"")
+meaningful$message <- str_replace_all(meaningful$message,fixed("#"),"")
+```
+
+```{r}
 
 ```
 
 ```{r}
-cleaned_spam <- spam %>%
-  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
-         | message == "",
-         !str_detect(message, 
-                     "writes(:|\\.\\.\\.)$"),
-         !str_detect(message, 
-                     "^In article <")
-  )
 
-```
-
-```{r}
-cleaned_meamingful <- meaningful %>%
-  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
-         | message == "",
-         !str_detect(message, 
-                     "writes(:|\\.\\.\\.)$"),
-         !str_detect(message, 
-                     "^In article <")
-  )
 
 ```
 
 
 
-```{r}
-  
-#data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
 
-#data$message <- str_replace_all(data$message,fixed("@"),"")
-
-#data$message <- str_replace_all(data$message,fixed("#"),"")
-
-#data$message <- str_replace_all(data$message,fixed("<"),"")
-
-#data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
-
-```
 
 
 
