@@ -2133,10 +2133,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby"</span><span class='op'>)</span><span class='op'>)</span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire"</span><span class='op'>)</span><span class='op'>)</span> 
 
 <span class='va'>meaningful</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice
+
 "</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2145,7 +2146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>spam</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>spam</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|AbilaAllFaith"</span><span class='op'>)</span><span class='op'>)</span>

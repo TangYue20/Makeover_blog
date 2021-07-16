@@ -154,10 +154,11 @@ junk <- data %>%
 
 ```{r}
 meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby")) 
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire")) 
 
 meaningful <- data %>%
-  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved
+  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice
+
 "))
 ```
 
@@ -166,7 +167,7 @@ Spam represents the no meaningful and irrelevant or inappropriate messages post 
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff"))
+  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home"))
 
 spam <- data %>%
   filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|AbilaAllFaith"))
