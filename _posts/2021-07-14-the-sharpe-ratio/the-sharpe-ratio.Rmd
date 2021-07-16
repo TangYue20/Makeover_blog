@@ -258,8 +258,8 @@ The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term
 
 
 ```{r}
-#tf_idf <- words_by_author %>%
-#  bind_tf_idf(word, n) %>%
-#  arrange(desc(tf_idf))
+junk_tf_idf <- words_junk_author %>%
+  bind_tf_idf(word,author, n) %>%
+  arrange(desc(tf_idf))
 
 ```
