@@ -302,6 +302,12 @@ tf_idf %>%
        y = NULL)
 ```
 
+*Q2*
+
+```{r}
+fire_count <- data_classed_token %>% 
+  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
+```
 
 
 ```{r}
@@ -309,4 +315,10 @@ tf_idf %>%
 
 
 
-```
+
+
+
+
+
+
+
