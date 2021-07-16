@@ -193,12 +193,20 @@ meaningful <- anti_join(meaningful1,spam,by="message")
 Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
 
 ```{r}
+junk$class <- "junk"
+spam$class <- "spam"
+meaningful$class <- "meaningful"
+
+```
+
+
+```{r}
 data_classed <- rbind(spam, junk,meaningful)
 
 ```
 
 ```{r}
-data_classed$message <- str_replace_all(junk$message,fixed("#"),"")
+data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
 
 ```
 
@@ -206,6 +214,7 @@ data_classed$message <- str_replace_all(junk$message,fixed("#"),"")
 
 In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
 
+Tokenization step
 ```{r}
 data_classed_token <- data_classed %>%
   unnest_tokens(word, message) %>%
@@ -214,23 +223,24 @@ data_classed_token <- data_classed %>%
 ```
 
 
+Count the frequent word in all data_class
 ```{r}
-#_token %>%
-#  count(word, sort = TRUE)
+data_classed_token %>%
+  count(word, sort = TRUE)
+```
+
+Instead of counting individual word, you can also count words within by newsgroup by using the code chunk below.
+```{r}
+token_by_class <- data_classed_token %>%
+  count(class, word, sort = TRUE) %>%
+  ungroup()
+
 ```
 
 
 ```{r}
-#words_junk_author <- junk_token %>%
-#  count(author, word, sort = TRUE) %>%
-#  ungroup()
-
-```
-
-
-```{r}
-#wordcloud(words_junk_author$word,
-          #words_by_author$n,
+#wordcloud(data_classed_token$word,
+#          #words_by_author$n,
 #          max.words = 300)
 ```
 
@@ -265,7 +275,10 @@ Table below is an interactive table created by using datatable().
 #              target = 'row', 
 #              lineHeight='25%')
 
+```{r}
+rm(TextDoc)
 
+```
 
 
 
