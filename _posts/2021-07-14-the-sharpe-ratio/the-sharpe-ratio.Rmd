@@ -140,15 +140,15 @@ Cleaning the text data starts with making transformations like removing special 
 Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
 ```{r}
-junk <- mbdata %>%
-  filter(str_detect(message,"#Grammar|#artists|#badcreadit|#cars|followme|#nobanks"))  %>%
-  filter(str_detect(author,"KronosQuoth|junkman|carjunkers"))
+junk <- data %>%
+  filter(str_detect(message,"Grammar|#artists|#badcreadit|#cars|followme|#nobanks"))
+  #filter(str_detect(author,"KronosQuoth|junkman|carjunkers"))
            
 ```
 
 ```{r}
-meaningful <- mbdata %>%
-  filter(str_detect(message,"#gowaway|POKrally|AlibaPost|#CentralBulletin|#POKRallyinthePark")) %>%
+meaningful <- data %>%
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews")) %>%
   filter(str_detect(author,"AbilaPost|anaregents"))
 ```
 
@@ -156,8 +156,8 @@ meaningful <- mbdata %>%
 Spam represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
 
 ```{r}
-spam <- mbdata %>%
-  filter(str_detect(message, "POKlove")) %>%
+spam <- data %>%
+  filter(str_detect(message, "#POKlove#Lucio|#getoverit|#baa-baa")) %>%
   filter(str_detect(author,"AbilaPost|anaregents|Clevvah4Evah"))
 ```
 
