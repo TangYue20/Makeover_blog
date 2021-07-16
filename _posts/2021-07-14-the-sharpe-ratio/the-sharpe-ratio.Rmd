@@ -131,14 +131,7 @@ glimpse(data$date)
 ```
 
 
-### 2.3.1 Text proprecessing
-
-In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.
-
-Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
-
-
-### 2.4 Classify Record
+### 2.3 Classify Record
 
 Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
@@ -175,6 +168,49 @@ Apart from the Spam and Junk, other emails would be  classified into meaningful 
 ```{r}
 meaningful1 <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful1,spam,by="message")
+```
+
+
+### 2.4 Text proprecessing
+
+In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.
+
+Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
+
+```{r}
+cleaned_junk <- junk %>%
+  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
+         | message == "",
+         !str_detect(message, 
+                     "writes(:|\\.\\.\\.)$"),
+         !str_detect(message, 
+                     "^In article <")
+  )
+
+```
+
+```{r}
+cleaned_spam <- spam %>%
+  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
+         | message == "",
+         !str_detect(message, 
+                     "writes(:|\\.\\.\\.)$"),
+         !str_detect(message, 
+                     "^In article <")
+  )
+
+```
+
+```{r}
+cleaned_meamingful <- spam %>%
+  filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
+         | message == "",
+         !str_detect(message, 
+                     "writes(:|\\.\\.\\.)$"),
+         !str_detect(message, 
+                     "^In article <")
+  )
+
 ```
 
 
