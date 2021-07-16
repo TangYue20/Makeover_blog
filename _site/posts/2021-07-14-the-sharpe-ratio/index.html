@@ -2182,7 +2182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <pre><code> POSIXct[1:4063], format: NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 </div>
 <h1 id="text-proprecessing">2.3.2 Text proprecessing</h1>
-<p>In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.</p>
+<p>In this step, we would like to clean text, including punctuation removal, converting lower case, stop word removal, extra white space removal and stemming.</p>
 <p>Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2199,7 +2199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<h3 id="classify-record">2.3 Classify Record</h3>
+<h3 id="classify-record">2.3.3 Classify Record</h3>
 <p>Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2246,11 +2246,25 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
+<p>2.3.4 Data Tokenization</p>
+<p>In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.</p>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk_token</span> <span class='op'>&lt;-</span> <span class='va'>junk</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>message</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>, <span class='st'>"[a-z']$"</span><span class='op'>)</span>,
+         <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='va'>stop_words</span><span class='op'>$</span><span class='va'>word</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sapm_token</span> <span class='op'>&lt;-</span> <span class='va'>spam</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>message</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>, <span class='st'>"[a-z']$"</span><span class='op'>)</span>,
+         <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='va'>stop_words</span><span class='op'>$</span><span class='va'>word</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p>Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext’s unnest_tokens() function.</p>
 <div class="layout-chunk" data-layout="l-body">

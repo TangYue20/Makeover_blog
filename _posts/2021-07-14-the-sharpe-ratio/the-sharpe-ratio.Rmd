@@ -131,7 +131,7 @@ glimpse(data$date)
 ```
 # 2.3.2 Text proprecessing
 
-In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.
+In this step, we would like to clean text, including punctuation removal, converting lower case, stop word removal, extra white space removal and stemming.
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
@@ -150,7 +150,7 @@ data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 ```
 
-### 2.3 Classify Record
+### 2.3.3 Classify Record
 
 Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
@@ -198,12 +198,23 @@ spam$message <- str_replace_all(spam$message,fixed("#"),"")
 meaningful$message <- str_replace_all(meaningful$message,fixed("#"),"")
 ```
 
-```{r}
+2.3.4 Data Tokenization 
 
+In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
+
+```{r}
+junk_token <- junk %>%
+  unnest_tokens(word, message) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word)
 ```
 
-```{r}
 
+```{r}
+sapm_token <- spam %>%
+  unnest_tokens(word, message) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word)
 
 ```
 
