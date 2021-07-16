@@ -193,9 +193,13 @@ meaningful <- anti_join(meaningful1,spam,by="message")
 Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
 
 ```{r}
-junk$message <- str_replace_all(junk$message,fixed("#"),"")
-spam$message <- str_replace_all(spam$message,fixed("#"),"")
-meaningful$message <- str_replace_all(meaningful$message,fixed("#"),"")
+data_classed <- rbind(spam, junk,meaningful)
+
+```
+
+```{r}
+data_classed$message <- str_replace_all(junk$message,fixed("#"),"")
+
 ```
 
 2.3.4 Data Tokenization 
@@ -203,64 +207,47 @@ meaningful$message <- str_replace_all(meaningful$message,fixed("#"),"")
 In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
 
 ```{r}
-junk_token <- junk %>%
+data_classed_token <- data_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word)
 ```
 
-The below code chunk was used for spam email tokenization.
-```{r}
-sapm_token <- spam %>%
-  unnest_tokens(word, message) %>%
-  filter(str_detect(word, "[a-z']$"),
-         !word %in% stop_words$word)
-
-```
-
-In same method, the below code chunk was used for meaningful email tokenization.
-```{r}
-meaningful_token <- meaningful %>%
-  unnest_tokens(word, message) %>%
-  filter(str_detect(word, "[a-z']$"),
-         !word %in% stop_words$word)
-
-```
 
 ```{r}
-junk_token %>%
-  count(word, sort = TRUE)
+#_token %>%
+#  count(word, sort = TRUE)
 ```
 
 
 ```{r}
-words_junk_author <- junk_token %>%
-  count(author, word, sort = TRUE) %>%
-  ungroup()
+#words_junk_author <- junk_token %>%
+#  count(author, word, sort = TRUE) %>%
+#  ungroup()
 
 ```
 
 
 ```{r}
-wordcloud(words_junk_author$word,
+#wordcloud(words_junk_author$word,
           #words_by_author$n,
-          max.words = 300)
+#          max.words = 300)
 ```
 
 
 ```{r}
-wordcloud(junk_token$word,
+#wordcloud(junk_token$word,
           #junk_token$n,
-          max.words = 300)
+#          max.words = 300)
 ```
 
 The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
 
 
 ```{r}
-junk_tf_idf <- words_junk_author %>%
-  bind_tf_idf(word,author, n) %>%
-  arrange(desc(tf_idf))
+#junk_tf_idf <- words_junk_author %>%
+#  bind_tf_idf(word,author, n) %>%
+#  arrange(desc(tf_idf))
 
 ```
 
@@ -269,16 +256,16 @@ junk_tf_idf <- words_junk_author %>%
 
 Table below is an interactive table created by using datatable().
 
-```{r}
-DT::datatable(junk_tf_idf, filter = 'top') %>% 
-  formatRound(columns = c('tf', 'idf', 
+#```{r}
+#DT::datatable(junk_tf_idf, filter = 'top') %>% 
+#  formatRound(columns = c('tf', 'idf', 
                           'tf_idf'), 
-              digits = 3) %>%
-  formatStyle(0, 
-              target = 'row', 
-              lineHeight='25%')
+#              digits = 3) %>%
+#  formatStyle(0, 
+#              target = 'row', 
+#              lineHeight='25%')
 
-```
+
 
 
 
