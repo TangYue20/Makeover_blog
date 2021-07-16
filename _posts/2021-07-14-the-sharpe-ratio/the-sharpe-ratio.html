@@ -1494,7 +1494,7 @@
 <h3 id="classify-record">2.4 Classify Record</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>mbdata</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#Grammar|"</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"KronosQuoth|junkman"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
@@ -1502,7 +1502,7 @@
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span> <span class='op'>&lt;-</span> <span class='va'>mbdata</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"AbilaPost|anaregents"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>

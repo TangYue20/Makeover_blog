@@ -138,14 +138,14 @@ Cleaning the text data starts with making transformations like removing special 
 ### 2.4 Classify Record
 
 ```{r}
-junk <- data %>%
+junk <- mbdata %>%
   filter(str_detect(message,"#Grammar|"))  %>%
   filter(str_detect(author,"KronosQuoth|junkman"))
            
 ```
 
 ```{r}
-meaningful <- data %>%
+meaningful <- mbdata %>%
   filter(str_detect(author,"AbilaPost|anaregents"))
 
 ```
