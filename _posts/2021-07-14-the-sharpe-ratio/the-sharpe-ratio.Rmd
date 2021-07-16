@@ -148,7 +148,7 @@ junk <- mbdata %>%
 
 ```{r}
 meaningful <- mbdata %>%
-  filter(str_detect(message,"#gowaway|POKrally|AlibaPost|#CentralBulletin")) %>%
+  filter(str_detect(message,"#gowaway|POKrally|AlibaPost|#CentralBulletin|#POKRallyinthePark")) %>%
   filter(str_detect(author,"AbilaPost|anaregents"))
 ```
 
