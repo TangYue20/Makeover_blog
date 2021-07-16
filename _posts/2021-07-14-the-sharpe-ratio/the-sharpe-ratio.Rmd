@@ -138,7 +138,6 @@ In this step, we would like to clean text, including punctuation removal, convet
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
 
-
 ### 2.4 Classify Record
 
 Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
@@ -153,16 +152,6 @@ junk <- data %>%
            
 ```
 
-```{r}
-meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection|#Abila|#abilafire| #NewsOnline| #rally|#pokrally|#SavePeople|#terrorists|#tellme| #fire| #praying|@carlyscoffee|@dancingdolphin|terorrist| #abilawatcher|#IntNews|#KronosStar|#gettingFired|#GelatoGalore|#helpu #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter|#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting #kidnapping|#troubleatgelato|#Abila| #burnabila|#hostage| #repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|#shooter|#HELPME|#fire|#thanksAFD")) 
-
-meaningful <- data %>%
-  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice|dtennent|ernieO|FriendsOfKronos|joyBubbles|jsmith|martaO|megaMan|panopticon|powercrystals|prettyRain|protoGuy|redisrad|roger_roger|SiaradSea|Sara_Nespola|sarajane|SiaradSea|slamrjamr|sofitees
-
-"))
-```
-
 
 Spam represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
 
@@ -175,10 +164,13 @@ spam <- data %>%
 ```
 
 
-#```{r}
+Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
+
+```{r}
 #library(dplyr)
-#anti_join(data,junk,spam, by="id")
-#```
+meaningful1 <- anti_join(data,junk,by="message") 
+meaningful <- anti_join(meaningful1,spam,by="message")
+```
 
 
 
@@ -194,11 +186,6 @@ spam <- data %>%
 #data$message <- str_replace_all(data$message,fixed("<"),"")
 
 #data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
-
-```
-
-
-
 
 ```
 
