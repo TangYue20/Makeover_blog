@@ -223,6 +223,8 @@ data_classed_token <- data_classed %>%
 ```
 
 
+*Q1.* 
+
 Count the frequent word in all data_class
 ```{r}
 data_classed_token %>%
@@ -278,7 +280,7 @@ DT::datatable(tf_idf, filter = 'top') %>%
 
 ```
 
-
+*Visualising tf-idf as Wordcloud*
 
 ```{r}
 tf_idf %>%
@@ -298,4 +300,13 @@ tf_idf %>%
              scales = "free") +
   labs(x = "tf-idf", 
        y = NULL)
+```
+
+
+
+```{r}
+
+
+
+
 ```
