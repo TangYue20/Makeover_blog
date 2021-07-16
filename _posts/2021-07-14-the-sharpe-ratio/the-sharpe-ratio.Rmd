@@ -202,7 +202,7 @@ cleaned_spam <- spam %>%
 ```
 
 ```{r}
-cleaned_meamingful <- spam %>%
+cleaned_meamingful <- meaningful %>%
   filter(str_detect(message, "^[^>]+[A-Za-z\\d]")
          | message == "",
          !str_detect(message, 

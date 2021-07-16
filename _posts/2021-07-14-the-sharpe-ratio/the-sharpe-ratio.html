@@ -1630,7 +1630,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_meamingful</span> <span class='op'>&lt;-</span> <span class='va'>spam</span> <span class='op'>%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cleaned_meamingful</span> <span class='op'>&lt;-</span> <span class='va'>meaningful</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"^[^&gt;]+[A-Za-z\\d]"</span><span class='op'>)</span>
          <span class='op'>|</span> <span class='va'>message</span> <span class='op'>==</span> <span class='st'>""</span>,
          <span class='op'>!</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, 
