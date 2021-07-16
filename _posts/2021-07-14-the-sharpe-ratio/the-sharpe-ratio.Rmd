@@ -145,19 +145,19 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 
 ```{r}
 junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds| #cancer")) 
+  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome")) 
 
 junk <- data %>%
-  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113"))
+  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113|junkman377|junkman995"))
            
 ```
 
 ```{r}
 meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews")) 
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar")) 
 
 meaningful <- data %>%
-  filter(str_detect(author,"AbilaPost|anaregents"))
+  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland"))
 ```
 
 
@@ -165,10 +165,10 @@ Spam represents the no meaningful and irrelevant or inappropriate messages post 
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove"))
+  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures"))
 
 spam <- data %>%
-  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101"))
+  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real"))
 ```
 
 ```{r}
