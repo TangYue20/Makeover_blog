@@ -147,7 +147,7 @@ junk <- data %>%
   filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing
                     |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
                     #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
-                    #welksFurniture| #swat |#bugs|visit this link")) 
+                    #welksFurniture| #swat |#bugs|visit this link|this site")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113
@@ -176,7 +176,6 @@ Apart from the Spam and Junk, other emails would be  classified into meaningful 
 meaningful1 <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful1,spam,by="message")
 ```
-
 
 
 
