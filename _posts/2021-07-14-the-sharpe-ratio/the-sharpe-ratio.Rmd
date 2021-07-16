@@ -144,11 +144,14 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 
 ```{r}
 junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing|homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|#iThing|visit this|#eastAbila link|#abilajobs|clickhere|#welksFurniture| #swat |#bugs|visit this link")) 
+  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing
+                    |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+                    #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
+                    #welksFurniture| #swat |#bugs|visit this link")) 
 
 junk <- data %>%
-  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113|junkman377|junkman995
-"))
+  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113
+  |junkman377|junkman995"))
            
 ```
 
@@ -157,17 +160,19 @@ Spam represents the no meaningful and irrelevant or inappropriate messages post 
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home|#blackvansrules|#schaber|#abilacityPark|#downwithkronos"))
+  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|
+                    Viktor-E|#hogwash|#RememberElian|#standoff|work from home|#blackvansrules|#schaber|#abilacityPark|#downwithkronos"))
 
 spam <- data %>%
-  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
+  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|
+                    jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|
+                    AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
 ```
 
 
 Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
 
 ```{r}
-#library(dplyr)
 meaningful1 <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful1,spam,by="message")
 ```

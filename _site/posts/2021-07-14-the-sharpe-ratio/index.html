@@ -2189,11 +2189,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing|homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|#iThing|visit this|#eastAbila link|#abilajobs|clickhere|#welksFurniture| #swat |#bugs|visit this link"</span><span class='op'>)</span><span class='op'>)</span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing
+                    |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+                    #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
+                    #welksFurniture| #swat |#bugs|visit this link"</span><span class='op'>)</span><span class='op'>)</span> 
 
 <span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"junkman|carjunkers|eazymoney|junk99902|junkieduck113|junkman377|junkman995
-"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"junkman|carjunkers|eazymoney|junk99902|junkieduck113
+  |junkman377|junkman995"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2201,18 +2204,20 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>spam</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home|#blackvansrules|#schaber|#abilacityPark|#downwithkronos"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|
+                    Viktor-E|#hogwash|#RememberElian|#standoff|work from home|#blackvansrules|#schaber|#abilacityPark|#downwithkronos"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>spam</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>author</span>,<span class='st'>"KronosQuoth|Clevvah4Evah|FriendsOfKronos|
+                    jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|
+                    AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <p>Apart from the Spam and Junk, other emails would be classified into meaningful records, which could be received by the below code chunk.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#library(dplyr)</span>
-<span class='va'>meaningful1</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>data</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful1</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>data</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
 <span class='va'>meaningful</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>meaningful1</span>,<span class='va'>spam</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span>
 </code></pre>
 </div>
