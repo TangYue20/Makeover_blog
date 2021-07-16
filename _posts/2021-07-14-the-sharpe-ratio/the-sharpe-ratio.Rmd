@@ -145,7 +145,7 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 
 ```{r}
 junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired| #pharmacyripoff|#iThing")) 
+  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing|homeworkers.kronos|#abilasFinest|#hungry")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113|junkman377|junkman995"))
@@ -165,7 +165,7 @@ Spam represents the no meaningful and irrelevant or inappropriate messages post 
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares"))
+  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking"))
 
 spam <- data %>%
   filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands"))
