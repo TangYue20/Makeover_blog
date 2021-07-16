@@ -209,7 +209,7 @@ junk_token <- junk %>%
          !word %in% stop_words$word)
 ```
 
-
+The below code chunk was used for spam email tokenization.
 ```{r}
 sapm_token <- spam %>%
   unnest_tokens(word, message) %>%
@@ -218,6 +218,7 @@ sapm_token <- spam %>%
 
 ```
 
+In same method, the below code chunk was used for meaningful email tokenization.
 ```{r}
 meaningful_token <- meaningful %>%
   unnest_tokens(word, message) %>%
@@ -226,33 +227,39 @@ meaningful_token <- meaningful %>%
 
 ```
 
-
-
-
-
-
-
-Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext's unnest_tokens() function.
-
 ```{r}
-#author_count <- data %>%
-# count(author,sort = TRUE)
-#author_count
-
-
-```
-
-
-
-```{r}
-#usenet_words <- data %>%
-#unnest_tokens(word, message) %>%
+junk_token %>%
+  count(word, sort = TRUE)
 ```
 
 
 ```{r}
-
+words_junk_author <- junk_token %>%
+  count(author, word, sort = TRUE) %>%
+  ungroup()
 
 ```
 
 
+```{r}
+wordcloud(words_junk_author$word,
+          #words_by_author$n,
+          max.words = 300)
+```
+
+
+```{r}
+wordcloud(junk_token$word,
+          #junk_token$n,
+          max.words = 300)
+```
+
+The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
+
+
+```{r}
+#tf_idf <- words_by_author %>%
+#  bind_tf_idf(word, n) %>%
+#  arrange(desc(tf_idf))
+
+```

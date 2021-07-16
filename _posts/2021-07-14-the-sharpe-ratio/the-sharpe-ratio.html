@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["csv-1700-1830.csv","csv-1831-2000.csv","csv-2001-2131.csv","image/1.files.PNG","the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["csv-1700-1830.csv","csv-1831-2000.csv","csv-2001-2131.csv","image/1.files.PNG","the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/figure-html5/unnamed-chunk-17-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-18-1.png","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1637,6 +1637,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
+The below code chunk was used for spam email tokenization.
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sapm_token</span> <span class='op'>&lt;-</span> <span class='va'>spam</span> <span class='op'>%&gt;%</span>
@@ -1646,6 +1647,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
+In same method, the below code chunk was used for meaningful email tokenization.
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful_token</span> <span class='op'>&lt;-</span> <span class='va'>meaningful</span> <span class='op'>%&gt;%</span>
@@ -1655,26 +1657,165 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </code></pre>
 </div>
 </div>
-<p>Next, with tidy text framework, we need to both break the text into individual tokens and transform it to a tidy data structure, in this step, we use tidytext’s unnest_tokens() function.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#author_count &lt;- data %&gt;%</span>
-<span class='co'># count(author,sort = TRUE)</span>
-<span class='co'>#author_count</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk_token</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                          word  n
+1                        abila 35
+2                    followers  9
+3                       kronos  7
+4                       online  7
+5                        cheap  6
+6                       credit  6
+7                       refill  6
+8                         100s  4
+9                    badcredit  4
+10                       boost  4
+11                       check  4
+12                        easy  4
+13    fixitkronoscreditratings  4
+14    followerskronosgetpeople  4
+15                        free  4
+16                        hows  4
+17                          im  4
+18                      ithing  4
+19                        lost  4
+20                        meds  4
+21                        nuts  4
+22                prescription  4
+23                     program  4
+24                      rating  4
+25                       swear  4
+26                     article  3
+27      badprofileskronostacky  3
+28                    bestfood  3
+29                       bunch  3
+30                         car  3
+31                        cars  3
+32          carskronoschoppers  3
+33                       click  3
+34         dietkronosstarvenow  3
+35       drugskronoscheappills  3
+36                  medication  3
+37         medskronoscheapmeds  3
+38                        news  3
+39              pharmacyripoff  3
+40                    pictures  3
+41                   questions  3
+42                       sales  3
+43                       stuff  3
+44                        time  3
+45                        vans  3
+46                      weight  3
+47                          5k  2
+48                   abilajobs  2
+49                       cards  2
+50                     contest  2
+51     contestkronosfreeithing  2
+52        dateskronosclickhere  2
+53  easycreditkronosmorecredit  2
+54                      famous  2
+55                        haha  2
+56                       heard  2
+57                       heres  2
+58                        home  2
+59     howworkathomekronosscam  2
+60         makemoneykronoslink  2
+61                    millions  2
+62                          mo  2
+63                     nobanks  2
+64                        paid  2
+65                      people  2
+66                       rally  2
+67                   recommend  2
+68                        site  2
+69                    software  2
+70                       worth  2
+71                       youre  2
+72                      advise  1
+73                      artist  1
+74                     artists  1
+75                       blogs  1
+76                     booking  1
+77        cheapdrugskronosmeds  1
+78     chirpwatchkronoswatchme  1
+79                        city  1
+80                    discount  1
+81                       drugs  1
+82        fastjobskronostricks  1
+83                    feelings  1
+84       followmekronosartists  1
+85                       found  1
+86                         fyi  1
+87                gettingfired  1
+88                     grammar  1
+89                   hesitates  1
+90        hottipskronostrading  1
+91                       human  1
+92                  kronosstar  1
+93                        link  1
+94                       march  1
+95                       month  1
+96                    musician  1
+97                       nasty  1
+98                        park  1
+99                       photo  1
+100             picskronospics  1
+101                        pok  1
+102                   pokrally  1
+103                    profile  1
+104                   required  1
+105                 savepeople  1
+106                  spreading  1
+107                       tear  1
+108                trafficking  1
+109                     viewed  1
+110                      visit  1
+111                   watching  1
+112                      water  1
+113                    website  1
+114                       whos  1
+115                 workathome  1</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>words_junk_author</span> <span class='op'>&lt;-</span> <span class='va'>junk_token</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>author</span>, <span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#usenet_words &lt;- data %&gt;%</span>
-<span class='co'>#unnest_tokens(word, message) %&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>wordcloud</span><span class='op'>(</span><span class='va'>words_junk_author</span><span class='op'>$</span><span class='va'>word</span>,
+          <span class='co'>#words_by_author$n,</span>
+          max.words <span class='op'>=</span> <span class='fl'>300</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>wordcloud</span><span class='op'>(</span><span class='va'>junk_token</span><span class='op'>$</span><span class='va'>word</span>,
+          <span class='co'>#junk_token$n,</span>
+          max.words <span class='op'>=</span> <span class='fl'>300</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<p>The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#tf_idf &lt;- words_by_author %&gt;%</span>
+<span class='co'>#  bind_tf_idf(word, n) %&gt;%</span>
+<span class='co'>#  arrange(desc(tf_idf))</span>
 </code></pre>
 </div>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-
-</div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
