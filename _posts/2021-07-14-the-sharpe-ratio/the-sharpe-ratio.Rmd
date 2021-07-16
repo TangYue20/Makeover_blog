@@ -123,7 +123,7 @@ Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmms
 data$date.yyyyMMddHHmmss.<- as.character(data$date.yyyyMMddHHmmss.)
 data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       zone = "",
-                                      format = "%Y%m%d %H%M%s")
+                                      format = "%Y%m%d %H%m%s")
 ```
 
 ```{r}
@@ -239,25 +239,25 @@ token_by_class <- data_classed_token %>%
 
 
 ```{r}
-#wordcloud(data_classed_token$word,
-#          #words_by_author$n,
-#          max.words = 300)
+wordcloud(data_classed_token$word,
+          #words_by_author$n,
+          max.words = 300)
 ```
 
 
 ```{r}
-#wordcloud(junk_token$word,
-          #junk_token$n,
-#          max.words = 300)
+wordcloud(token_by_class$word,
+          token_by_class$n,
+         max.words = 200)
 ```
 
 The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
 
 
 ```{r}
-#junk_tf_idf <- words_junk_author %>%
-#  bind_tf_idf(word,author, n) %>%
-#  arrange(desc(tf_idf))
+tf_idf <- token_by_class %>%
+  bind_tf_idf(word,class, n) %>%
+  arrange(desc(tf_idf))
 
 ```
 
@@ -266,21 +266,13 @@ The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term
 
 Table below is an interactive table created by using datatable().
 
-#```{r}
-#DT::datatable(junk_tf_idf, filter = 'top') %>% 
-#  formatRound(columns = c('tf', 'idf', 
+```{r}
+DT::datatable(tf_idf, filter = 'top') %>% 
+  formatRound(columns = c('tf', 'idf', 
                           'tf_idf'), 
-#              digits = 3) %>%
-#  formatStyle(0, 
-#              target = 'row', 
-#              lineHeight='25%')
+              digits = 3) %>%
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
 
 ```{r}
-rm(TextDoc)
-
-```
-
-
-
-
-
