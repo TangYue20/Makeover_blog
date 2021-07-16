@@ -137,35 +137,41 @@ Cleaning the text data starts with making transformations like removing special 
 
 ### 2.4 Classify Record
 
+Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
+
 ```{r}
 junk <- mbdata %>%
-  filter(str_detect(message,"#Grammar|"))  %>%
-  filter(str_detect(author,"KronosQuoth|junkman"))
+  filter(str_detect(message,"#Grammar|#artists|#badcreadit|#cars|followme|#nobanks"))  %>%
+  filter(str_detect(author,"KronosQuoth|junkman|carjunkers"))
            
 ```
 
 ```{r}
 meaningful <- mbdata %>%
+  filter(str_detect(message,"#gowaway|POKrally|AlibaPost|#CentralBulletin")) %>%
   filter(str_detect(author,"AbilaPost|anaregents"))
-
 ```
 
 
-```{r}
+Spam represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
 
+```{r}
+spam <- mbdata %>%
+  filter(str_detect(message, "POKlove")) %>%
+  filter(str_detect(author,"AbilaPost|anaregents|Clevvah4Evah"))
 ```
 
 ```{r}
   
-data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
+#data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
 
-data$message <- str_replace_all(data$message,fixed("@"),"")
+#data$message <- str_replace_all(data$message,fixed("@"),"")
 
 #data$message <- str_replace_all(data$message,fixed("#"),"")
 
-data$message <- str_replace_all(data$message,fixed("<"),"")
+#data$message <- str_replace_all(data$message,fixed("<"),"")
 
-data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
+#data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 ```
 
