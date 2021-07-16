@@ -129,7 +129,7 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
 ```{r}
 glimpse(data$date)
 ```
-# 2.4 preprocessing data
+# 2.3.2 Text proprecessing
 
 In this step, we would like to clean text, including punctuation removal, converting lowe case, stop word removal, extra white space removal and stemming.
 
@@ -188,10 +188,6 @@ Apart from the Spam and Junk, other emails would be  classified into meaningful 
 meaningful1 <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful1,spam,by="message")
 ```
-
-
-### 2.4 Text proprecessing
-
 
 
 Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
