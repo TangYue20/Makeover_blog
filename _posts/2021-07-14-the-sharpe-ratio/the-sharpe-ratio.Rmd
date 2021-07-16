@@ -155,7 +155,7 @@ junk <- data %>%
 
 ```{r}
 meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection|#Abila|#abilafire| #rally|#pokrally|#SavePeople|#terrorists|#tellme| #fire| #praying| #abilawatcher #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter")) 
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection|#Abila|#abilafire| #NewsOnline| #rally|#pokrally|#SavePeople|#terrorists|#tellme| #fire| #praying| #abilawatcher|#IntNews|#KronosStar #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter|#norest|#firstresponders")) 
 
 meaningful <- data %>%
   filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice|dtennent|ernieO|FriendsOfKronos
