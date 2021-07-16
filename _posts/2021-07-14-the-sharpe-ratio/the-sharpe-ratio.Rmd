@@ -218,7 +218,13 @@ sapm_token <- spam %>%
 
 ```
 
+```{r}
+meaningful_token <- meaningful %>%
+  unnest_tokens(word, message) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word)
 
+```
 
 
 
