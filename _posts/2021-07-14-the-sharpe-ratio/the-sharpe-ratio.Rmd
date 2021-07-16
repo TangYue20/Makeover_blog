@@ -241,7 +241,7 @@ token_by_class <- data_classed_token %>%
 ```{r}
 wordcloud(data_classed_token$word,
           #words_by_author$n,
-          max.words = 300)
+          max.words = 200)
 ```
 
 
@@ -264,6 +264,7 @@ tf_idf <- token_by_class %>%
 
 *Visualising tf-idf as interactive table*
 
+
 Table below is an interactive table created by using datatable().
 
 ```{r}
@@ -275,4 +276,26 @@ DT::datatable(tf_idf, filter = 'top') %>%
               target = 'row', 
               lineHeight='25%')
 
+```
+
+
+
 ```{r}
+tf_idf %>%
+  #filter(str_detect(class, "^sci\\.")) %>%
+  group_by(class) %>%
+  slice_max(tf_idf, 
+            n = 12) %>%
+  ungroup() %>%
+  mutate(word = reorder(word, 
+                        tf_idf)) %>%
+  ggplot(aes(tf_idf, 
+             word, 
+             fill = class)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ class, 
+             ncol = 2,
+             scales = "free") +
+  labs(x = "tf-idf", 
+       y = NULL)
+```
