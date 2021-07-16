@@ -263,3 +263,24 @@ junk_tf_idf <- words_junk_author %>%
   arrange(desc(tf_idf))
 
 ```
+
+
+*Visualising tf-idf as interactive table*
+
+Table below is an interactive table created by using datatable().
+
+```{r}
+DT::datatable(junk_tf_idf, filter = 'top') %>% 
+  formatRound(columns = c('tf', 'idf', 
+                          'tf_idf'), 
+              digits = 3) %>%
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
+
+```
+
+
+
+
+
