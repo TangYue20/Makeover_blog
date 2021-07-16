@@ -145,16 +145,16 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 
 ```{r}
 junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds")) 
+  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds| #cancer")) 
 
 junk <- data %>%
-  filter(str_detect(author,"junkman|carjunkers|eazymoney"))
+  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113"))
            
 ```
 
 ```{r}
 meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace")) 
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews")) 
 
 meaningful <- data %>%
   filter(str_detect(author,"AbilaPost|anaregents"))
@@ -168,7 +168,7 @@ spam <- data %>%
   filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove"))
 
 spam <- data %>%
-  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos"))
+  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|jaquesjoyce101"))
 ```
 
 ```{r}
