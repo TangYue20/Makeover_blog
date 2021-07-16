@@ -145,7 +145,7 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 
 ```{r}
 junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing|homeworkers.kronos|#abilasFinest|#hungry")) 
+  filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing|homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|#iThing")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113|junkman377|junkman995"))
@@ -154,10 +154,11 @@ junk <- data %>%
 
 ```{r}
 meaningful <- data %>%
-  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire")) 
+  filter(str_detect(message,"#gowaway|#POKrally|#POK|#AlibaPost|#CentralBulletin|#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#Gastech employees|#POK connection| #rally|#pokrally|#SavePeople|#terrorists|#tellme| #fire| #praying| #HI|#newsOnline|#DancingDolphinFire|#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter")) 
 
 meaningful <- data %>%
-  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice
+  filter(str_detect(author,"AbilaPost|anaregents|maha_Homeland|Officia1AbilaPost|ourcountryourrights|AbilaFireDept|AbilaPoliceDepartment|AbilaPost|brewvebeenserved|brontes_riff|CentralBulletin|dangermice|dtennent
+
 
 "))
 ```
