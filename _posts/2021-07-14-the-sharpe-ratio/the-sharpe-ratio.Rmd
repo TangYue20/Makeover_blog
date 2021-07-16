@@ -120,10 +120,14 @@ Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmms
 
 
 ```{r}
-data$date.yyyyMMddHHmmss. <- as.character(data$date.yyyyMMddHHmmss.)
+data$date.yyyyMMddHHmmss.<- as.character(data$date.yyyyMMddHHmmss.)
 data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       zone = "",
                                       format = "%Y%m%d %H%M%s")
+```
+
+```{r}
+glimpse(data$date)
 ```
 
 

@@ -1481,12 +1481,19 @@
 <p>Next, package ‘lubridate’ would be used to convert data type from ‘yyyymmddhhmmss’ to ‘yyyy-mm-dd hh:mm:ss’, and create a new column ‘date’ in data, and the code chunk could be seen below.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>date</span> <span class='op'>&lt;-</span>  <span class='fu'>date_time_parse</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span>,
                                       zone <span class='op'>=</span> <span class='st'>""</span>,
                                       format <span class='op'>=</span> <span class='st'>"%Y%m%d %H%M%s"</span><span class='op'>)</span>
 </code></pre>
 </div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> POSIXct[1:4063], format: NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 </div>
 <h3 id="text-proprecessing">2.3.1 Text proprecessing</h3>
 <p>In this step, we would like to clean text, including punctuation removal, conveting lowe case, stop word removal, extra white space removal and stemming.</p>
