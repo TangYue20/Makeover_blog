@@ -142,7 +142,6 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 ```
 
 
-
 ### 2.6 Classify Record
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
@@ -195,8 +194,6 @@ meaningful <- anti_join(meaningful,spam,by="message")
 ```
 
 
-Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
-
 ```{r}
 junk$class <- "junk"
 spam$class <- "spam"
@@ -210,6 +207,7 @@ data_classed <- rbind(spam, junk, meaningful)
 
 ```
 
+Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
 
 ```{r}
 data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
