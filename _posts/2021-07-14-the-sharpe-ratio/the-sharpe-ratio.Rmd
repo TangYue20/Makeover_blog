@@ -230,14 +230,13 @@ data_classed_token <- data_classed %>%
 
 
 
-Q1.
+Q1.Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam? 
 
 Count the frequent word in all data_class
 
 ```{r}
 data_classed_token %>%
   count(word, sort = TRUE)
-head(10)
 ```
 
 
@@ -252,7 +251,7 @@ token_by_class <- data_classed_token %>%
 
 ```{r}
 wordcloud(data_classed_token$word,
-          #words_by_author$n,
+          #data_classed_token$n,
           max.words = 200)
 ```
 
@@ -320,11 +319,7 @@ fire_count <- data_classed_token %>%
 ```
 
 
-```{r}
 
-
-
-```
 
 
 
