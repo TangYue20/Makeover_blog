@@ -147,17 +147,6 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
 
-```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
-tabl <- "  # simple table creation here
-| Class         | Defination    |
-|---------------|:-------------:|
-| col 3 is      | right-aligned |
-| col 2 is      | centered      |
-| zebra stripes | are neat      | 
-"
-cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
-```
-
 
 **Junk** referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
@@ -165,16 +154,15 @@ cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
 ```{r}
 junk <- data %>%
   filter(str_detect(message,"#artists|#badcreadit|#cars
-|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired
-|#pharmacyripoff|#iThing
-|homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
-#iThing|visit this|#eastAbila link|#abilajobs|clickhere|
-#welksFurniture| #swat |#bugs|visit this link|this site")) 
+  |#followme|#nobanks|#nobank|#meds|#cancer|#bestfood
+  |#workAtHome|#gettingFired|#pharmacyripoff|#iThing
+  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+  #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
+  #welksFurniture| #swat |#bugs|visit this link|this site")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|
-junk99902|junkieduck113
-|junkman377|junkman995"))
+  junk99902|junkieduck113|junkman377|junkman995"))
            
 ```
 
@@ -184,16 +172,16 @@ junk99902|junkieduck113
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire
-|#wishfulthinking|Viktor-E|#hogwash|#RememberElian
-|#standoff|work from home
-|#blackvansrules
-|#schaber|#abilacityPark|#downwithkronos"))
+  filter(str_detect(message,"Grammar||#POKlove#Lucio|#getoverit
+  |#baa-baa| #HomelessAwareness|#trylove|#pictures
+  |#nobodycares|#abilafire|#wishfulthinking|Viktor-E
+  |#hogwash|#RememberElian|#standoff|work from home|
+  #blackvansrules|#schaber|#abilacityPark|#downwithkronos"))
 
 spam <- data %>%
   filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|
-                    jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|
-                    AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
+  jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|
+  AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
 ```
 
 **Meaningful** refers to informative records which spread real news about ongoing or impending events happen in Aliba.
