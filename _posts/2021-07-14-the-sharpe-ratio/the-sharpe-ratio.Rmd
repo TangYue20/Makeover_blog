@@ -34,7 +34,7 @@ in this assignment we would provide some insights to help law enforcement from K
 
 # 2. Exploration and preparation of Data
 
-There are two dataset provides:
+There are three dataset provides in Mini-Challenge 3 :
 
 (1) Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
 
@@ -43,15 +43,15 @@ There are two dataset provides:
 (3) maps of Abila and background documents.
 
 
-Two dataset are stored in 3 csv files, they are csv-1700-1830.csv", "csv-1831-2000.csv' and  "csv-2001-2131.csv":
+The data of Microblog and text transcripts of emergency dispatches are found in three segments:
 
-The data for Mini-Challenge 3 is found in three segments.
+Segment 1  :"csv-1700-1830.csv" - covers the time period from 1700 to 1830 Abila time on January 23.
 
-Segment 1 covers the time period from 1700 to 1830 Abila time on January 23. 
+Segment 2: "csv-1831-2000.csv'- covers the time period from 1830 to 2000 Abila time on January 23.
 
-Segment 2 covers the time period from 1830 to 2000 Abila time on January 23. 
+Segment 3: "csv-2001-2131.csv" - covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
 
-Segment 3 covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
+
 
 ### 2.1 Install and load R package
 
@@ -168,10 +168,12 @@ junk99902|junkieduck113
 
 **Spam** represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
 
+
 ```{r}
 spam <- data %>%
   filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire
-|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home
+|#wishfulthinking|Viktor-E|#hogwash|#RememberElian
+|#standoff|work from home
 |#blackvansrules
 |#schaber|#abilacityPark|#downwithkronos"))
 
