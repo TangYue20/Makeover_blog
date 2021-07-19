@@ -132,13 +132,7 @@ In this step, we would like to clean special characters, including " @, < , ˜ "
 
 
 ```{r}
-  
-#data$message <- str_replace_all(data$message,'[[:punct:]]+', "")
-
 data$message <- str_replace_all(data$message,fixed("@"),"")
-
-#data$message <- str_replace_all(data$message,fixed("#"),"")
-
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
 data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
@@ -152,7 +146,8 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
 
-Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
+**Junk** referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
+
 
 ```{r}
 junk <- data %>%
@@ -164,13 +159,14 @@ junk <- data %>%
 #welksFurniture| #swat |#bugs|visit this link|this site")) 
 
 junk <- data %>%
-  filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113
-  |junkman377|junkman995"))
+  filter(str_detect(author,"junkman|carjunkers|eazymoney|
+junk99902|junkieduck113
+|junkman377|junkman995"))
            
 ```
 
 
-Spam represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
+**Spam** represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.
 
 ```{r}
 spam <- data %>%
@@ -185,6 +181,7 @@ spam <- data %>%
                     AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
 ```
 
+**Meaningful** refers to informative records which spread real news about ongoing or impending events happen in Aliba.
 
 Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
 
