@@ -132,7 +132,7 @@ In this step, we would like to clean text, including punctuation removal, conver
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
-*Remove Special Character and Punctuation*
+### Remove Special Character and Punctuation
 
 ```{r}
   
@@ -149,7 +149,7 @@ data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 ```
 
-*Remove RT mark in repeat records*
+### Remove RT mark in repeat records*
 
 There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
@@ -158,7 +158,7 @@ data$message <- gsub("RT ","",as.character(data$message))
 ```
 
 
-### 2.3.3 Classify Record
+### 2.4 Classify Record
 
 Junk referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
@@ -232,15 +232,18 @@ data_classed_token <- data_classed %>%
 ```
 
 
-*Q1.* 
+Q1.
 
 Count the frequent word in all data_class
+
 ```{r}
 data_classed_token %>%
   count(word, sort = TRUE)
 ```
 
+
 Instead of counting individual word, you can also count words within by newsgroup by using the code chunk below.
+
 ```{r}
 token_by_class <- data_classed_token %>%
   count(class, word, sort = TRUE) %>%
