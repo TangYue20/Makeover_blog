@@ -34,6 +34,8 @@ in this assignment we would provide some insights to help law enforcement from K
 
 # 2. Exploration and preparation of Data
 
+2.1 Data Source
+
 There are three dataset provides in Mini-Challenge 3 :
 
 (1) Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
@@ -53,7 +55,7 @@ Segment 3: "csv-2001-2131.csv" - covers the time period from 2000 to shortly aft
 
 
 
-### 2.1 Install and load R package
+### 2.2 Install and load R package
 
 First, we run the below code to set the environment.
 
@@ -73,7 +75,7 @@ for (p in packages){
 ```
 
 
-### 2.2 Import dataset and combine data
+### 2.3 Import dataset and combine data
 
 The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
 
@@ -103,9 +105,8 @@ mbdata <- subset(data, type == "mbdata")
 ```
 
 
-### 2.3 Data preprocessing
 
-### 2.3.1 Modifying Date formate  
+### 2.4  Modifying Date formate  
 
 Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
 
@@ -126,7 +127,7 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       format = "%Y%m%d %H%m%s")
 ```
 
-# 2.3.2 Remove Special Chacaters
+### 2.5 Remove Special Chacaters
 
 In this step, we would like to clean special characters, including " @, < , ˜ " and none English words. Besides, There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
@@ -142,7 +143,7 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 
 
-### 2.4 Classify Record
+### 2.6 Classify Record
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
 
@@ -214,7 +215,7 @@ data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
 ```
 
 
-2.3.4 Data Tokenization 
+### 2.7 Data Tokenization 
 
 In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
 
@@ -228,6 +229,7 @@ data_classed_token <- data_classed %>%
 ```
 
 
+# 2.8 Data Visualization 
 
 Q1.Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam? 
 
