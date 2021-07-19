@@ -135,16 +135,7 @@ In this step, we would like to clean text, including punctuation removal, conver
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
 
-*Remove RT mark in repeat records*
-
-There are a lot of repeat records which forward from other publisher. 
-
-```{r}
-data$message <- gsub("RT ","",as.character(data$message))
-data
-
-```
-
+*Remove Special Character and Punctuation*
 
 ```{r}
   
@@ -160,6 +151,15 @@ data$message <- str_replace_all(data$message,fixed("˜"),"")
 data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
 
 ```
+
+*Remove RT mark in repeat records*
+
+There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+
+```{r}
+data$message <- gsub("RT ","",as.character(data$message))
+```
+
 
 ### 2.3.3 Classify Record
 
