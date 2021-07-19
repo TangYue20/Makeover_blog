@@ -34,7 +34,7 @@ in this assignment we would provide some insights to help law enforcement from K
 
 # 2. Exploration and preparation of Data
 
-2.1 Data Source
+### 2.1 Data Source
 
 There are three dataset provides in Mini-Challenge 3 :
 
@@ -79,7 +79,7 @@ for (p in packages){
 
 The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
 
-1[](image/1.files.PNG)
+![](1.)
 
 
 Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
@@ -146,6 +146,18 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 ### 2.6 Classify Record
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
+
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+tabl <- "  # simple table creation here
+| Class         | Defination    |
+|---------------|:-------------:|
+| col 3 is      | right-aligned |
+| col 2 is      | centered      |
+| zebra stripes | are neat      | 
+"
+cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
+```
+
 
 **Junk** referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.
 
