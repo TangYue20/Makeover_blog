@@ -165,9 +165,9 @@ Junk referred to advertisements or financial purpose reports. The below code chu
 ```{r}
 junk <- data %>%
   filter(str_detect(message,"#artists|#badcreadit|#cars|#followme|#nobanks|# nobank|#meds|#cancer|#bestfood|#workAtHome|#gettingFired|#pharmacyripoff|#iThing
-                    |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
-                    #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
-                    #welksFurniture| #swat |#bugs|visit this link|this site")) 
+|homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+#iThing|visit this|#eastAbila link|#abilajobs|clickhere|
+#welksFurniture| #swat |#bugs|visit this link|this site")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|junk99902|junkieduck113
@@ -180,8 +180,10 @@ Spam represents the no meaningful and irrelevant or inappropriate messages post 
 
 ```{r}
 spam <- data %>%
-  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire|#wishfulthinking|
-                    Viktor-E|#hogwash|#RememberElian|#standoff|work from home|#blackvansrules|#schaber|#abilacityPark|#downwithkronos"))
+  filter(str_detect(message, "Grammar||#POKlove#Lucio|#getoverit|#baa-baa| #HomelessAwareness|#trylove|#pictures|#nobodycares|#abilafire
+|#wishfulthinking|Viktor-E|#hogwash|#RememberElian|#standoff|work from home
+|#blackvansrules
+|#schaber|#abilacityPark|#downwithkronos"))
 
 spam <- data %>%
   filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|
@@ -248,7 +250,6 @@ Instead of counting individual word, you can also count words within by newsgrou
 token_by_class <- data_classed_token %>%
   count(class, word, sort = TRUE) %>%
   ungroup()
-
 ```
 
 
