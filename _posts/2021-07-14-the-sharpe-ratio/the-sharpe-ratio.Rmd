@@ -127,13 +127,24 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
 ```
 
 ```{r}
-glimpse(data$date)
+glimpse(data)
 ```
 # 2.3.2 Text proprecessing
 
 In this step, we would like to clean text, including punctuation removal, converting lower case, stop word removal, extra white space removal and stemming.
 
 Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
+
+*Remove RT mark in repeat records*
+
+There are a lot of repeat records which forward from other publisher. 
+
+```{r}
+data$message <- gsub("RT ","",as.character(data$message))
+data
+
+```
+
 
 ```{r}
   
@@ -215,6 +226,7 @@ data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
 In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
 
 Tokenization step
+
 ```{r}
 data_classed_token <- data_classed %>%
   unnest_tokens(word, message) %>%
