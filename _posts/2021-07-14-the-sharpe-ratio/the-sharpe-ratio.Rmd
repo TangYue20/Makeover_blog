@@ -126,13 +126,10 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       format = "%Y%m%d %H%m%s")
 ```
 
-# 2.3.2 Text proprecessing
+# 2.3.2 Remove Special Chacaters
 
-In this step, we would like to clean text, including punctuation removal, converting lower case, stop word removal, extra white space removal and stemming.
+In this step, we would like to clean special characters, including " @, < , ˜ " and none English words. Besides, There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
-Cleaning the text data starts with making transformations like removing special characters from the text. This is done using the tm_map() function to replace special characters like / and | with a space. The next step is to remove the unnecessary whitespace and convert the text to lower case.
-
-### Remove Special Character and Punctuation
 
 ```{r}
   
@@ -144,14 +141,14 @@ data$message <- str_replace_all(data$message,fixed("@"),"")
 
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
-
 data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
+data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 ```
 
 ### Remove RT mark in repeat records*
 
-There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+
 
 ```{r}
 data$message <- gsub("RT ","",as.character(data$message))
@@ -242,14 +239,11 @@ data_classed_token <- data_classed %>%
 
 
 
-
-
-
 Q1.
 
 Count the frequent word in all data_class
 
-```{r including = FALSE, warning= FALSE}
+```{r}
 data_classed_token %>%
   count(word, sort = TRUE)
 ```
