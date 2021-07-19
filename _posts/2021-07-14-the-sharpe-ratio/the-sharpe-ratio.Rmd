@@ -126,9 +126,6 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
                                       format = "%Y%m%d %H%m%s")
 ```
 
-```{r}
-glimpse(data)
-```
 # 2.3.2 Text proprecessing
 
 In this step, we would like to clean text, including punctuation removal, converting lower case, stop word removal, extra white space removal and stemming.
