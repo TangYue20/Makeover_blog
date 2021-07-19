@@ -146,13 +146,6 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 ```
 
-### Remove RT mark in repeat records*
-
-
-
-```{r}
-data$message <- gsub("RT ","",as.character(data$message))
-```
 
 
 ### 2.4 Classify Record
@@ -237,8 +230,6 @@ data_classed_token <- data_classed %>%
 
 
 
-
-
 Q1.
 
 Count the frequent word in all data_class
@@ -246,6 +237,7 @@ Count the frequent word in all data_class
 ```{r}
 data_classed_token %>%
   count(word, sort = TRUE)
+head(10)
 ```
 
 
