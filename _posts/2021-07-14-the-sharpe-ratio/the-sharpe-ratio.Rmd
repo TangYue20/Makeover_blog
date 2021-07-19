@@ -152,6 +152,7 @@ Class| Definition
 **Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
 **Spam**|represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.|
 
+The str_detect() is used to detect patterns of Junk records.
 
 
 ```{r}
@@ -169,7 +170,7 @@ junk <- data %>%
            
 ```
 
-
+Using the same way, we detect Spam records by below code chunk.
 
 ```{r}
 spam <- data %>%
