@@ -238,7 +238,7 @@ Q1.
 
 Count the frequent word in all data_class
 
-```{r}
+```{r including = FALSE, warning= FALSE}
 data_classed_token %>%
   count(word, sort = TRUE)
 ```
