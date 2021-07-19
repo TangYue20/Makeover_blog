@@ -234,7 +234,7 @@ Q1.Using visual analytics, characterize the different types of content in the da
 
 Count the frequent word in all data_class
 
-```{r}
+```{r, fig.height = 4}
 data_classed_token %>%
   count(word, sort = TRUE)
 ```
