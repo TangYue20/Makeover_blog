@@ -96,7 +96,7 @@ mbdata <- subset(data, type == "mbdata")
 
 ### 2.4  Modifying Date formate  
 
-Date in table is shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
+* Date in table is shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
 
 ```{r}
 library(lubridate)
@@ -105,8 +105,7 @@ options(scipen = 999)
 
 ```
 
-Next, package 'lubridate' would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
-
+* Next, package 'lubridate' would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 ```{r}
 data$date.yyyyMMddHHmmss.<- as.character(data$date.yyyyMMddHHmmss.)
