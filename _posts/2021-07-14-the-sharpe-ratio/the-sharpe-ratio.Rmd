@@ -152,7 +152,7 @@ Class| Definition
 **Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
 **Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
 
-The str_detect() is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
+* classify Junk records: The str_detect() is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
 
 ```{r}
 junk <- data %>%
@@ -169,7 +169,7 @@ junk <- data %>%
            
 ```
 
-Using the same way, we detect Spam records by below code chunk.
+* Classify Spam records: Using the same way, we detect Spam records by below code chunk.
 
 ```{r}
 spam <- data %>%
@@ -186,13 +186,14 @@ spam <- data %>%
 ```
 
 
-Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
+* Classify Meaningful records: Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
 
 ```{r}
 meaningful <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful,spam,by="message")
 ```
 
+* Next, we add the "class" as a new column to represent the class of every record.
 
 ```{r}
 junk$class <- "junk"
@@ -201,13 +202,14 @@ meaningful$class <- "meaningful"
 
 ```
 
+* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed.
 
 ```{r}
 data_classed <- rbind(spam, junk, meaningful)
 
 ```
 
-Next, we further process "#" in the tag which leave in the before pre-processing code chunk.
+* In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records, then we further move "#" in the tag using below code chunk.
 
 ```{r}
 data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
