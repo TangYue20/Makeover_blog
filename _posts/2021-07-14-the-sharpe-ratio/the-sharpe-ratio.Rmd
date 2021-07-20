@@ -34,11 +34,11 @@ This module will research Mini-Challenge 3 which includes multiple types of text
 
 * There are three dataset provides in Mini-Challenge 3 :
 
-(1) Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
+  + Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
 
-(2) Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.
+  + Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.
 
-(3) maps of Abila and background documents.
+  + maps of Abila and background documents.
 
 
 * The data of Microblog and text transcripts of emergency dispatches are found in three segments:
@@ -51,10 +51,7 @@ This module will research Mini-Challenge 3 which includes multiple types of text
 
 ### 2.2 Install and load R package
 
-First, we run the below code to set the environment.
-
-
-In this assignment, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
+In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
 
 
 ```{r}
@@ -73,8 +70,7 @@ for (p in packages){
 
 The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
 
-![](1.)
-
+![](image/1.files.PNG){width = 80%}
 
 Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
 
@@ -97,7 +93,6 @@ ccdata <- subset(data, type == "ccdata")
 mbdata <- subset(data, type == "mbdata")
 
 ```
-
 
 
 ### 2.4  Modifying Date formate  
