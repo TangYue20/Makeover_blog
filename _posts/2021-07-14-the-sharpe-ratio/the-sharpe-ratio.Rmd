@@ -25,7 +25,7 @@ knitr::opts_chunk$set(fig.retina = 3,
 
 The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see [VAST Challenge 2021]( https://vast-challenge.github.io/2021/index.html).
 
-This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions. 
+This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge has 3 tasks and questions and asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions. 
 
 
 # 2. Data preparation and Exploration 
