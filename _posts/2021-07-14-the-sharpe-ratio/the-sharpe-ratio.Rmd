@@ -32,7 +32,7 @@ On January 23, 2014, multiple events unfolded in Abila. You’ve been asked to c
 in this assignment we would provide some insights to help law enforcement from Kronos and Tethys.
 
 
-# 2. Exploration and preparation of Data
+# 2. Data preparation and Exploration 
 
 ### 2.1 Data Source
 
@@ -150,10 +150,9 @@ Class| Definition
 ------|-------------
 **Junk**| referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.|
 **Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
-**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online. The below code chunk is used to identify the spam reports.|
+**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
 
-The str_detect() is used to detect patterns of Junk records.
-
+The str_detect() is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
 
 ```{r}
 junk <- data %>%
