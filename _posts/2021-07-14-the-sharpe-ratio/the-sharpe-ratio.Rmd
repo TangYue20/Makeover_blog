@@ -1,7 +1,7 @@
 ---
 title: "VAST Challenge 2021 - Mini-Challenge 3 "
 description: |
-  A short description of the post.
+  Using Visual Analytics to Support Decision Making to Solve THE kronos Incident.
 author:
   - name: Tang Yue
     url: {}
@@ -23,13 +23,9 @@ knitr::opts_chunk$set(fig.retina = 3,
 
 # 1. Overview
 
-In the roughly twenty years that Tethys-based GAStech has been operating a natural gas production site in the island country of Kronos, it has produced remarkable profits and developed strong relationships with the government of Kronos. However, GAStech has not been as successful in demonstrating environmental stewardship.
+The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see [VAST Challenge 2021]( https://vast-challenge.github.io/2021/index.html).
 
-In January, 2014, the leaders of GAStech are celebrating their new-found fortune as a result of the initial public offering of their very successful company. In the midst of this celebration, several employees of GAStech go missing. An organization known as the Protectors of Kronos (POK) is suspected in the disappearance, but things may not be what they seem.
-
-On January 23, 2014, multiple events unfolded in Abila. You’ve been asked to come in to perform a retrospective analysis based on limited information about what took place. Your goal is to identify risks and how they could have been mitigated more effectively.
-
-in this assignment we would provide some insights to help law enforcement from Kronos and Tethys.
+This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions. 
 
 
 # 2. Data preparation and Exploration 
