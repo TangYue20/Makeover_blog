@@ -74,9 +74,7 @@ The data of Microblog records and emergency calls are stored in separate csv fil
 
 ![](image/1.files.PNG){width=50%}
 
-Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
-
-The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
+* Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
 
 ```{r}
 library(tidyverse)
@@ -87,7 +85,7 @@ data <- rbind(table1, table2,table3)
 ```
 
 
-Next, we would separate 'ccdata' and 'mbdata', they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
+* Next, we would separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
 
 ```{r}
 ccdata <- subset(data, type == "ccdata")
