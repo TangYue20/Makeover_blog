@@ -242,13 +242,14 @@ data_classed_token %>%
 ```
 
 
-Instead of counting individual word, you can also count words within by newsgroup by using the code chunk below.
+Instead of counting individual words, you can also count words within by class by using the code chunk below. 
 
 ```{r}
 token_by_class <- data_classed_token %>%
   count(class, word, sort = TRUE) %>%
   ungroup()
 ```
+
 
 
 ```{r}
