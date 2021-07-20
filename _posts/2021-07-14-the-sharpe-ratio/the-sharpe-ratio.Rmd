@@ -1,10 +1,12 @@
 ---
 title: "VAST Challenge 2021 - Mini-Challenge 3 "
 description: |
-  Using Visual Analytics to Support Decision Making to Solve THE kronos Incident.
+  Using Visual Analytics to Support Decision Making to Solve The kronos Incident.
 author:
   - name: Tang Yue
     url: {}
+    affiliation: Singapore Management University 
+    Programe: IT In Business
 date: 07-14-2021
 output:
   distill::distill_article:
@@ -74,7 +76,7 @@ The data of Microblog records and emergency calls are stored in separate csv fil
 
 Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
 
-The following R code shows the process of data consolidation, then three dataset with different have been integrated into one file.
+The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
 
 ```{r}
 library(tidyverse)
@@ -85,8 +87,7 @@ data <- rbind(table1, table2,table3)
 ```
 
 
-Next, we would separate 'ccdata' and 'mbdata', they represent microblog record and emergency call center data collected by  the Abila, Kronos local police and fire departments.
-
+Next, we would separate 'ccdata' and 'mbdata', they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
 
 ```{r}
 ccdata <- subset(data, type == "ccdata")
@@ -97,7 +98,7 @@ mbdata <- subset(data, type == "mbdata")
 
 ### 2.4  Modifying Date formate  
 
-Date data in table were shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
+Date in table is shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
 
 ```{r}
 library(lubridate)
@@ -106,7 +107,7 @@ options(scipen = 999)
 
 ```
 
-Next, package 'lubridate' would be used to convert data type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+Next, package 'lubridate' would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 
 ```{r}
@@ -118,7 +119,7 @@ data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
 
 ### 2.5 Remove Special Chacaters
 
-In this step, we would like to clean special characters, including " @, < , ˜ " and none English words. Besides, There are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+In this step, we would like to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
 
 ```{r}
