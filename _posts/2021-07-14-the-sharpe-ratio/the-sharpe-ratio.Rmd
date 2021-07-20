@@ -70,7 +70,7 @@ for (p in packages){
 
 The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
 
-![](image/1.files.PNG){width = 80%}
+![](image/1.files.PNG){width=50%}
 
 Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.
 
