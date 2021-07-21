@@ -93,7 +93,7 @@ mbdata <- subset(data, type == "mbdata")
 ```
 
 
-### 2.4  Modifying Date formate  
+### 2.4  Modifying Date format 
 
 * converting character objects to dates can be made easier by using the <span style="color:blue">*lubridate*</span> package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
@@ -111,7 +111,9 @@ names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
 
 ### 2.5 Remove Special Chacaters
 
-In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words.
+
+Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we keep it. However, avoiding meaningless "RT" affect the word frequency, we move "RT" in ahead.
 
 
 ```{r}
@@ -126,7 +128,7 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 ### 2.6 Classify Record
 
-Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records, using <span style="color:blue">*stringr*</span> package.
+Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records, using <span style="color:blue">*stringr*</span>, <span style="color:blue">*dplyr*</span>package.
 
 
 Class| Definition
@@ -135,7 +137,7 @@ Class| Definition
 |**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
 |**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
 
-* classify Junk records: The  <span style="color:light blue">*str_detect()*</span> function is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
+* classify Junk records: The **str_detect()** function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
 
 ```{r}
 junk <- data %>%
@@ -144,7 +146,7 @@ junk <- data %>%
   |#workAtHome|#gettingFired|#pharmacyripoff|#iThing
   |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
   #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
-  #welksFurniture| #swat |#bugs|visit this link|this site")) 
+  #welksFurniture|#swat|#bugs|visit this link|this site")) 
 
 junk <- data %>%
   filter(str_detect(author,"junkman|carjunkers|eazymoney|
@@ -152,7 +154,7 @@ junk <- data %>%
            
 ```
 
-* Classify Spam records: Using the same way, we detect Spam records by below code chunk.
+* Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
 
 ```{r}
 spam <- data %>%
@@ -169,14 +171,16 @@ spam <- data %>%
 ```
 
 
-* Classify Meaningful records: Apart from the Spam and Junk, other emails would be  classified into meaningful records, which could be received by the below code chunk.
+* Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, **anti_join()** function in <span style="color:blue">*dplyr*</span> package would be used. 
 
 ```{r}
 meaningful <- anti_join(data,junk,by="message") 
 meaningful <- anti_join(meaningful,spam,by="message")
 ```
 
-* Next, we add the "class" as a new column to represent the class of every record.
+Now, all records in Microblog data have been labeled with responding class- **Junk**, **Meanigful** and **Spam**.
+
+* Next, we add "class" as a new column to represent the label of every record.
 
 ```{r}
 junk$class <- "junk"
@@ -185,14 +189,14 @@ meaningful$class <- "meaningful"
 
 ```
 
-* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed.
+* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
 
 ```{r}
 data_classed <- rbind(spam, junk, meaningful)
 
 ```
 
-* In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records, then we further move "#" in the tag using below code chunk.
+* In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
 
 ```{r}
 data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
@@ -201,7 +205,7 @@ data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
 
 ### 2.7 Data Tokenization 
 
-In this code chunk below, unnest_tokens() of tidytext package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
+In this code chunk below, unnest_tokens() of <span style="color:blue">*tidytext*</span> package is used to split the dataset into tokens, while stop_words() is used to remove stop-words.
 
 Tokenization step
 
@@ -215,7 +219,8 @@ data_classed_token <- data_classed %>%
 
 # 2.8 Data Visualization 
 
-Q1.Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam? 
+## Question 1: 
+**Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
 Count the frequent word in all data_class
 
