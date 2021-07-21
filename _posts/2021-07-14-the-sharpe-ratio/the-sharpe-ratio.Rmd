@@ -102,16 +102,21 @@ names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
 
 In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words.
 
-Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we keep it. However, avoiding meaningless "RT" affect the word frequency, we move "RT" in ahead.
-
 
 ```{r}
-data$message <- str_replace_all(data$message,fixed("@"),"")
+#data$message <- str_replace_all(data$message,fixed("@"),"")
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
-data$message <- str_replace_all(data$message,"[\u4e00-\u9fa5]+", "")
-data$message <- str_replace_all(data$message,fixed("RT"),"")
+data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
+#data$message <- str_replace_all(data$message,fixed("RT"),"")
 
+```
+
+
+Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we remove repeat records. 
+
+```{r}
+data <- data[- grep("RT @", data$message),]
 ```
 
 * For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
