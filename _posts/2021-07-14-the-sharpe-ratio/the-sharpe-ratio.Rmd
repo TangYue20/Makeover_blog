@@ -105,14 +105,19 @@ options(scipen = 999)
 
 ```
 
-* Next, package 'lubridate' would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+* Next, converting character objects to dates can be made easier by using the lubridate package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 ```{r}
-data$date.yyyyMMddHHmmss.<- as.character(data$date.yyyyMMddHHmmss.)
-data$date <-  date_time_parse(data$date.yyyyMMddHHmmss.,
-                                      zone = "",
-                                      format = "%Y%m%d %H%m%s")
+data$date.yyyyMMddHHmmss. <- ymd_hms(data$date.yyyyMMddHHmmss.)
+
 ```
+
+* Rename "date.yyyyMMddHHmmss." in data into "date" with concise format.
+
+```{r}
+names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
+```
+
 
 ### 2.5 Remove Special Chacaters
 
