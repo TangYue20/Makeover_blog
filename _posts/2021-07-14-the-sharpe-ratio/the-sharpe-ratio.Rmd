@@ -57,7 +57,9 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 
 
 ```{r}
-packages = c('tidyverse','dplyr','readr','tm','lubridate','wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
+packages = c('tidyverse','dplyr','readr','tm','lubridate',
+'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
+'topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -113,7 +115,7 @@ data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
 ```
 
 
-Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we remove repeat records. 
+Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we remove repeat records.
 
 ```{r}
 data <- data[- grep("RT @", data$message),]
@@ -164,7 +166,8 @@ meaningful<- mbdata %>% filter_at(.vars = vars(message, author),
 any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire
 |rally|shooting|#AlibaPost|#CentralBulletin|
 #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
-#Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
+#Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline
+|#hurtfirefighte|#rally|#pokrally|#SavePeople
 |#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
 terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 |#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
