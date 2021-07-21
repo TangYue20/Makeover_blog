@@ -57,7 +57,7 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 
 
 ```{r}
-packages = c('tidyverse','dplyr','readr','tm','lubridate','wordcloud','SnowballC', 'UpSetR','ggplot2','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
+packages = c('tidyverse','dplyr','readr','tm','lubridate','wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -155,28 +155,19 @@ mbdata <- anti_join(mbdata,junk,by="message")
 * Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
 
 ```{r}
-#Typical_Chatter <- data %>% filter_at(.vars = vars(message, author), 
-#(str_detect(., pattern ="#POKlove#Lucio|#getoverit
-#  |#baa-baa|#HomelessAwareness|#trylove|#pictures|AbilaAllFaith
-#  |#nobodycares|#wishfulthinking|Viktor-E|
-#  |#hogwash|#RememberElian|#standoff|work from home|
-#  #blackvansrules|#schaber|#abilacityPark|#downwithkronos|FriendsOfKronos
-#  |#RememberElianjaquesjoyce101|michelleR|SaveOurWildlands|
-#  AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool")))
-```
-
-```{r}
 meaningful<- mbdata %>% filter_at(.vars = vars(message, author), 
-any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire|rally|shooting|#AlibaPost|#CentralBulletin|
-  #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
-  #Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
-  |#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
-  terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
-  |#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
-  #jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
-  |#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
-  |#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage| #repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
-  #shooter|#HELPME|#fire|#thanksAFD")))
+any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire
+|rally|shooting|#AlibaPost|#CentralBulletin|
+#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
+#Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
+|#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
+terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
+|#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
+#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
+|#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
+|#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage|
+#repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
+#shooter|#HELPME|#fire|#thanksAFD")))
                       
 ```
 
@@ -214,9 +205,12 @@ mbdata_classed$message <- str_replace_all(mbdata_classed$message,fixed("#"),"")
 
 ### 2.7 Data Tokenization and Word Counts
 
-After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records.
+After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records. The below code chunk shows how Multiple functions used to achieve this results:
 
-In this code chunk below, unnest_tokens() function from <span style="color:blue">*tidytext*</span> package is used to split the sentences into tokens, while stop_words() is used to remove stop-words.
+(1) unnest_tokens() function from <span style="color:blue">*tidytext*</span> package is used to split the sentences into tokens, 
+(2) stop_words() is used to remove stop-words.
+(3) str_detect() is used to detect the presence or absence of a pattern in string.
+(4) filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.
 
 ```{r}
 mbdata_classed_token <- mbdata_classed %>%
@@ -235,20 +229,36 @@ mbdata_classed_token %>%
   top_n(15) 
 ```
 
+
+```{r}
+mbdata_classed_token %>%
+  count(word, sort = TRUE) %>%
+  filter(n > 140) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = word)) +
+  theme(legend.position = "none")+
+  geom_col() +
+  labs(y = NULL)
+
+```
+
+* Generate the word cloud
+The importance of words can be illustrated as a word cloud as follow :
+
 ```{r}
 set.seed(1234)
 wordcloud(words = mbdata_classed_token$word,
-          #freq = data_classed_token$n, 
+          #freq = mbdata_classed_token$n,
           min.freq = 10,
-          max.words = 100, 
-          random.order=FALSE,# rot.per=0.40,
+          max.words = 200, 
+          random.order=FALSE, rot.per=0.35,
           colors=brewer.pal(8, "Dark2"))
 ```
 
 # 3. Data Visualization 
 
 ## Question 1: 
-*Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?*
+**Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
@@ -259,6 +269,20 @@ token_by_class <- mbdata_classed_token %>%
   top_n(15) %>%
   ungroup()
 ```
+
+
+
+```{r}
+set.seed(1234)
+token_by_class %>%
+  filter(n > 0) %>%
+ggplot(aes(label = word,
+           size = n)) +
+  geom_text_wordcloud() +
+  theme_minimal() +
+  facet_wrap(~class)
+```
+
 
 The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
 
@@ -299,7 +323,6 @@ tf_idf %>%
              word, 
              fill = class)) +
   geom_col(show.legend = FALSE) +
-  
   facet_wrap(~ class, 
              ncol = 2,
              scales = "free") +
@@ -309,7 +332,9 @@ tf_idf %>%
   
 ```
 
-*Q2*
+## Question 2
+
+**Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
 
 ```{r}
 #fire_count <- data_classed_token %>% 

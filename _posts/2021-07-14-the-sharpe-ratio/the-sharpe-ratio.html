@@ -1512,7 +1512,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'lubridate'</span>,<span class='st'>'wordcloud'</span>,<span class='st'>'SnowballC'</span>, <span class='st'>'UpSetR'</span>,<span class='st'>'ggplot2'</span>,<span class='st'>'topicmodels'</span>,<span class='st'>'stringr'</span>,<span class='st'>'clock'</span>, <span class='st'>'tidytext'</span>,<span class='st'>'tokenizers'</span>,<span class='st'>'DT'</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'lubridate'</span>,<span class='st'>'wordcloud'</span>,<span class='st'>'SnowballC'</span>, <span class='st'>'UpSetR'</span>,<span class='st'>'ggplot2'</span>,<span class='st'>'ggwordcloud'</span>,<span class='st'>'topicmodels'</span>,<span class='st'>'stringr'</span>,<span class='st'>'clock'</span>, <span class='st'>'tidytext'</span>,<span class='st'>'tokenizers'</span>,<span class='st'>'DT'</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
   <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
@@ -1636,30 +1636,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#Typical_Chatter &lt;- data %&gt;% filter_at(.vars = vars(message, author), </span>
-<span class='co'>#(str_detect(., pattern ="#POKlove#Lucio|#getoverit</span>
-<span class='co'>#  |#baa-baa|#HomelessAwareness|#trylove|#pictures|AbilaAllFaith</span>
-<span class='co'>#  |#nobodycares|#wishfulthinking|Viktor-E|</span>
-<span class='co'>#  |#hogwash|#RememberElian|#standoff|work from home|</span>
-<span class='co'>#  #blackvansrules|#schaber|#abilacityPark|#downwithkronos|FriendsOfKronos</span>
-<span class='co'>#  |#RememberElianjaquesjoyce101|michelleR|SaveOurWildlands|</span>
-<span class='co'>#  AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool")))</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span><span class='op'>&lt;-</span> <span class='va'>mbdata</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_at</span><span class='op'>(</span>.vars <span class='op'>=</span> <span class='fu'>vars</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>author</span><span class='op'>)</span>, 
-<span class='fu'>any_vars</span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>.</span>, pattern <span class='op'>=</span><span class='st'>"#gowaway|#POKrally|van|gun|fire|rally|shooting|#AlibaPost|#CentralBulletin|
-  #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
-  #Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
-  |#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
-  terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
-  |#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
-  #jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
-  |#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
-  |#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage| #repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
-  #shooter|#HELPME|#fire|#thanksAFD"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>any_vars</span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>.</span>, pattern <span class='op'>=</span><span class='st'>"#gowaway|#POKrally|van|gun|fire
+|rally|shooting|#AlibaPost|#CentralBulletin|
+#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
+#Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
+|#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
+terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
+|#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
+#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
+|#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
+|#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage|
+#repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
+#shooter|#HELPME|#fire|#thanksAFD"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -1704,8 +1693,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 </div>
 <h3 id="data-tokenization-and-word-counts">2.7 Data Tokenization and Word Counts</h3>
-<p>After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records.</p>
-<p>In this code chunk below, unnest_tokens() function from <span style="color:blue"><em>tidytext</em></span> package is used to split the sentences into tokens, while stop_words() is used to remove stop-words.</p>
+<p>After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records. The below code chunk shows how Multiple functions used to achieve this results:</p>
+<ol type="1">
+<li>unnest_tokens() function from <span style="color:blue"><em>tidytext</em></span> package is used to split the sentences into tokens,</li>
+<li>stop_words() is used to remove stop-words.</li>
+<li>str_detect() is used to detect the presence or absence of a pattern in string.</li>
+<li>filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.</li>
+</ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed_token</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
@@ -1743,12 +1737,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed_token</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;</span> <span class='fl'>140</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>word <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>word</span>, fill <span class='op'>=</span> <span class='va'>word</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<ul>
+<li>Generate the word cloud The importance of words can be illustrated as a word cloud as follow :</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
 <span class='fu'>wordcloud</span><span class='op'>(</span>words <span class='op'>=</span> <span class='va'>mbdata_classed_token</span><span class='op'>$</span><span class='va'>word</span>,
-          <span class='co'>#freq = data_classed_token$n, </span>
+          <span class='co'>#freq = mbdata_classed_token$n,</span>
           min.freq <span class='op'>=</span> <span class='fl'>10</span>,
-          max.words <span class='op'>=</span> <span class='fl'>100</span>, 
-          random.order<span class='op'>=</span><span class='cn'>FALSE</span>,<span class='co'># rot.per=0.40,</span>
+          max.words <span class='op'>=</span> <span class='fl'>200</span>, 
+          random.order<span class='op'>=</span><span class='cn'>FALSE</span>, rot.per<span class='op'>=</span><span class='fl'>0.35</span>,
           colors<span class='op'>=</span><span class='fu'>brewer.pal</span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1756,7 +1767,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h1 id="data-visualization">3. Data Visualization</h1>
 <h2 id="question-1">Question 1:</h2>
-<p><em>Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?</em></p>
+<p><strong>Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?</strong></p>
 <p>Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1767,6 +1778,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='va'>token_by_class</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>word</span>,
+           size <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_text_wordcloud</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_minimal</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>class</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
 </div>
 <p>The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1790,8 +1815,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
               lineHeight<span class='op'>=</span><span class='st'>'25%'</span><span class='op'>)</span>
 </code></pre>
 </div>
-<div id="htmlwidget-b1ce972738ad7a1e2430" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b1ce972738ad7a1e2430">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"18\" data-max=\"1259\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.015888147442008\" data-max=\"0.400063552589769\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1.09861228866811\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.172024700004971\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46"],["Typical_Chatter","junk","meaningful","meaningful","Typical_Chatter","junk","junk","meaningful","Typical_Chatter","junk","Typical_Chatter","meaningful","Typical_Chatter","Typical_Chatter","junk","meaningful","meaningful","Typical_Chatter","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","junk","junk","Typical_Chatter","meaningful","junk","meaningful","junk","junk","junk","junk","junk","meaningful","meaningful","Typical_Chatter","junk","meaningful","junk","Typical_Chatter"],["tag","pokrally","abilapost","fire","viktor","kronosstar","life","centralbulletin","newman","grammar","dr","dancing","megaman","swat","success","dolphin","kronosstar","jakab","van","park","sow.kronos","guy","lucio","police","standoff","building","people","police","time","rally","homelandilluminations","homelandilluminations","person","apd","day","failure","successful","world","living","rally","pokrally","apd","people","pok","pok","pok"],[88,1259,404,393,65,596,202,186,31,157,28,141,25,25,138,129,335,23,118,22,22,21,18,248,91,89,46,43,75,169,30,153,58,146,54,53,52,52,50,124,112,18,70,275,162,57],[0.156583629893238,0.400063552589768,0.137228260869565,0.133491847826087,0.115658362989324,0.189386717508738,0.0641881156657134,0.063179347826087,0.0551601423487545,0.0498887829679059,0.0498220640569395,0.0478940217391304,0.0444839857651246,0.0444839857651246,0.0438512869399428,0.0438179347826087,0.113790760869565,0.0409252669039146,0.0400815217391304,0.0391459074733096,0.0391459074733096,0.0373665480427046,0.0320284697508897,0.0842391304347826,0.0309103260869565,0.0302309782608696,0.0818505338078292,0.0765124555160142,0.0238322211630124,0.0537019383539879,0.0533807829181495,0.0519701086956522,0.0184302510327296,0.0495923913043478,0.0171591992373689,0.0168414362885288,0.0165236733396886,0.0165236733396886,0.0158881474420083,0.0421195652173913,0.0380434782608696,0.0320284697508897,0.0222434064188116,0.0934103260869565,0.0514775977121068,0.101423487544484],[1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0,0,0],[0.172024700004971,0.162211811600947,0.150760653743857,0.146655784458752,0.127063698867308,0.076789705888931,0.0705178526568027,0.069409607911776,0.0605996102290239,0.0548084300352378,0.0547351318197635,0.0526169608363463,0.0488706534105031,0.0488706534105031,0.0481755627061326,0.0481389216162317,0.0461381831576885,0.0449610011376629,0.0440340523311267,0.0430061750012427,0.0430061750012427,0.0410513488648226,0.0351868704555622,0.0341560281286769,0.0339584640858689,0.0332121242158498,0.0331875355391024,0.0310231310474218,0.0261823710359416,0.0217742622403177,0.0216440449168059,0.0210720657406757,0.0202477002677948,0.0201079843015598,0.018851307145878,0.0185022088653987,0.0181531105849195,0.0181531105849195,0.0174549140239611,0.0170780140643384,0.0154253030258541,0.0129864269500836,0.00901892518829727,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>class<\/th>\n      <th>word<\/th>\n      <th>n<\/th>\n      <th>tf<\/th>\n      <th>idf<\/th>\n      <th>tf_idf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":4,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":5,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":6,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"rowCallback":"function(row, data) {\nvar value=data[0]; $(row).css({'line-height':'25%'});\n}"}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.rowCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-52b1f4f7d9d645fb13a8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-52b1f4f7d9d645fb13a8">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"1259\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.015888147442008\" data-max=\"0.400063552589769\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1.09861228866811\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.162211811600947\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46"],["junk","Typical_Chatter","meaningful","meaningful","Typical_Chatter","junk","junk","meaningful","Typical_Chatter","meaningful","Typical_Chatter","junk","meaningful","Typical_Chatter","junk","meaningful","meaningful","Typical_Chatter","Typical_Chatter","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","junk","junk","junk","meaningful","junk","junk","junk","junk","junk","meaningful","meaningful","junk","meaningful","junk","Typical_Chatter"],["pokrally","tag","abilapost","fire","viktor","kronosstar","life","centralbulletin","newman","apd","park","grammar","dancing","dr","success","dolphin","kronosstar","megaman","swat","van","jakab","sow.kronos","guy","corner","gelato","police","standoff","building","police","people","homelandilluminations","time","rally","person","homelandilluminations","day","failure","successful","world","living","rally","pokrally","people","pok","pok","pok"],[1259,88,404,378,65,596,202,186,31,146,30,157,140,28,138,127,335,25,25,118,23,22,21,20,20,51,91,89,240,47,44,75,169,58,139,54,53,52,52,50,124,112,70,275,162,57],[0.400063552589768,0.147403685092127,0.139118457300275,0.130165289256198,0.108877721943049,0.189386717508738,0.0641881156657134,0.0640495867768595,0.0519262981574539,0.0502754820936639,0.050251256281407,0.0498887829679059,0.0482093663911846,0.0469011725293132,0.0438512869399428,0.043732782369146,0.115358126721763,0.0418760469011725,0.0418760469011725,0.040633608815427,0.0385259631490787,0.0368509212730318,0.0351758793969849,0.033500837520938,0.033500837520938,0.085427135678392,0.03133608815427,0.0306473829201102,0.0826446280991736,0.0787269681742044,0.0737018425460637,0.0238322211630124,0.0537019383539879,0.0184302510327296,0.0478650137741047,0.0171591992373689,0.0168414362885288,0.0165236733396886,0.0165236733396886,0.0158881474420083,0.0426997245179063,0.0385674931129477,0.0222434064188116,0.0946969696969697,0.0514775977121068,0.0954773869346734],[0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0,0,0],[0.162211811600947,0.161939499837175,0.152837246770632,0.143001186334899,0.119614403288823,0.076789705888931,0.0705178526568027,0.0703656631171723,0.0570468692608231,0.0552332624468127,0.0552066476717643,0.0548084300352378,0.0529634023462587,0.0515262044936467,0.0481755627061326,0.0480453721283918,0.046773695322395,0.0460055397264703,0.0460055397264703,0.0446405819775609,0.0423250965483526,0.0404848749592938,0.038644653370235,0.0368044317811762,0.0368044317811762,0.03463772280321,0.0344262115250682,0.0336695914915502,0.0335095130667904,0.0319210386617818,0.0298835255557106,0.0261823710359416,0.0217742622403177,0.0202477002677948,0.0194075929845161,0.018851307145878,0.0185022088653987,0.0181531105849195,0.0181531105849195,0.0174549140239611,0.0173132484178417,0.0156377727645022,0.00901892518829727,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>class<\/th>\n      <th>word<\/th>\n      <th>n<\/th>\n      <th>tf<\/th>\n      <th>idf<\/th>\n      <th>tf_idf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":4,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":5,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":6,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"rowCallback":"function(row, data) {\nvar value=data[0]; $(row).css({'line-height':'25%'});\n}"}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <p><em>Visualising tf-idf within Three Records Classes</em></p>
 <p>Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.</p>
@@ -1808,7 +1833,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
              <span class='va'>word</span>, 
              fill <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_col</span><span class='op'>(</span>show.legend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
-  
   <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>class</span>, 
              ncol <span class='op'>=</span> <span class='fl'>2</span>,
              scales <span class='op'>=</span> <span class='st'>"free"</span><span class='op'>)</span> <span class='op'>+</span>
@@ -1817,9 +1841,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
        title <span class='op'>=</span> <span class='st'>"15 most frequent words in Three Record Classes"</span><span class='op'>)</span> 
 </code></pre>
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
 </div>
-<p><em>Q2</em></p>
+<h2 id="question-2">Question 2</h2>
+<p><strong>Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.</strong></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#fire_count &lt;- data_classed_token %&gt;% </span>
