@@ -156,13 +156,13 @@ any_vars(str_detect(., pattern = "#artists|#badcreadit|#cars
 ```
 
 ```{r}
-mbdata <- anti_join(mbdata,junk,by="message") 
+mbdata1 <- anti_join(mbdata,junk,by="message") 
 ```
 
 * Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
 
 ```{r}
-meaningful<- mbdata %>% filter_at(.vars = vars(message, author), 
+meaningful<- mbdata1 %>% filter_at(.vars = vars(message, author), 
 any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire
 |rally|shooting|#AlibaPost|#CentralBulletin|
 #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
@@ -339,6 +339,17 @@ tf_idf %>%
        title = "15 most frequent words in Three Record Classes") 
   
 ```
+(2) explore whether there is relationship between records length and classes.
+(3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
+
+
+
+
+```{r}
+
+length(unique(mbdata$location))
+```
+
 
 ## Question 2
 
