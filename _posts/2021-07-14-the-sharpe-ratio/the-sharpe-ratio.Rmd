@@ -73,7 +73,7 @@ The data of Microblog records and emergency calls are stored in separate csv fil
 
 ![](image/1.files.PNG){width=50%}
 
-* Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package 'tidyverse' would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
+* Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package <span style="color:blue">*tidyverse*</span> would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
 
 ```{r}
 library(tidyverse)
@@ -95,7 +95,7 @@ mbdata <- subset(data, type == "mbdata")
 
 ### 2.4  Modifying Date formate  
 
-* converting character objects to dates can be made easier by using the *lubridate* package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+* converting character objects to dates can be made easier by using the <span style="color:blue">*lubridate*</span> package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 ```{r}
 data$date.yyyyMMddHHmmss. <- ymd_hms(data$date.yyyyMMddHHmmss.)
@@ -111,7 +111,7 @@ names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
 
 ### 2.5 Remove Special Chacaters
 
-In this step, we would like to use package *stringr* to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
 
 ```{r}
@@ -128,13 +128,14 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records, using <span style="color:blue">*stringr*</span> package.
 
-Class| Definition
-------|-------------
-**Junk**| referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.|
-**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
-**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
 
-* classify Junk records: The str_detect() is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
+Class| Definition
+|------|----------|
+|**Junk**| referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.|
+|**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
+|**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
+
+* classify Junk records: The  <span style="color:light blue">*str_detect()*</span> function is used to detect patterns of Junk records. The below code chunk is used to identify the junk reports.|
 
 ```{r}
 junk <- data %>%
