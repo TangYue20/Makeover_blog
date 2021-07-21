@@ -57,8 +57,7 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 
 
 ```{r}
-packages = c('tidyverse','dplyr','readr','tm','wordcloud','SnowballC',
-             'UpSetR','ggplot2','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
+packages = c('tidyverse','dplyr','readr','tm','lubridate','wordcloud','SnowballC', 'UpSetR','ggplot2','topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -96,16 +95,7 @@ mbdata <- subset(data, type == "mbdata")
 
 ### 2.4  Modifying Date formate  
 
-* Date in table is shown as scientific notation, so we firstly disabling scientific notation in R for further date processing.
-
-```{r}
-library(lubridate)
-
-options(scipen = 999)
-
-```
-
-* Next, converting character objects to dates can be made easier by using the lubridate package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+* converting character objects to dates can be made easier by using the *lubridate* package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 ```{r}
 data$date.yyyyMMddHHmmss. <- ymd_hms(data$date.yyyyMMddHHmmss.)
@@ -121,7 +111,7 @@ names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
 
 ### 2.5 Remove Special Chacaters
 
-In this step, we would like to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
+In this step, we would like to use package *stringr* to clean special characters, including " @, < , ˜ " and none English words. Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". To avoid the affect the word frequency, we move "RT" in ahead.
 
 
 ```{r}
@@ -136,7 +126,7 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 ### 2.6 Classify Record
 
-Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records. 
+Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records, using <span style="color:blue">*stringr*</span> package.
 
 Class| Definition
 ------|-------------
