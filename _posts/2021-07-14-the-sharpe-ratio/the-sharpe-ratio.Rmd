@@ -214,72 +214,71 @@ data_classed_token <- data_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
-         !word %in% c("aliba","abila")) %>%
-  count(word,sort = TRUE) %>%
-  top_n(15) %>%
-  mutate(word = fct_inorder(word))
-head(data_classed_token,15)
+         !word %in% c("aliba","abila"))
 
 ```
 
+The most common words in entire dataset could be seen from below code chunk. 
+
+```{r}
+data_classed_token %>%
+  count(word,sort = TRUE) %>%
+  top_n(15) 
+```
+
+```{r}
+set.seed(1234)
+wordcloud(words = data_classed_token$word,
+          #freq = data_classed_token$n, 
+          min.freq = 10,
+          max.words = 100, 
+          random.order=FALSE,# rot.per=0.40,
+          colors=brewer.pal(8, "Dark2"))
+```
 
 # 3. Data Visualization 
 
 ## Question 1: 
 *Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?*
 
-
-Instead of counting individual words, you can also count words within by class by using the code chunk below. 
+Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
-#token_by_class <- data_classed_token %>%
-#  count(class, word, sort = TRUE) %>%
-#  ungroup()
-```
-
-
-
-```{r}
-set.seed(1234)
-wordcloud(data_classed_token$word,
-          #data_classed_token$n,
-          max.words = 200)
-```
-
-
-```{r}
-#set.seed(1234)
-#wordcloud(token_by_class$word,
-#          token_by_class$n,
-#         max.words = 200)
+token_by_class <- data_classed_token %>%
+  count(class, word, sort = TRUE) %>%
+  group_by(class) %>%
+  top_n(15) %>%
+  ungroup()
 ```
 
 The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
 
 
 ```{r}
-#tf_idf <- token_by_class %>%
-#  bind_tf_idf(word,class, n) %>%
-#  arrange(desc(tf_idf))
+tf_idf <- token_by_class %>%
+  bind_tf_idf(word,class, n) %>%
+  arrange(desc(tf_idf))
 
 ```
-
-
-*Visualising tf-idf as interactive table*
-
 
 Table below is an interactive table created by using datatable().
 
 ```{r}
-#DT::datatable(tf_idf, filter = 'top') %>% 
-#  formatRound(columns = c('tf', 'idf', 
-#                          'tf_idf'), 
-#              digits = 3) %>%
-#  formatStyle(0, 
-#              target = 'row', 
-#              lineHeight='25%')
-
+DT::datatable(tf_idf, filter = 'top') %>% 
+  formatRound(columns = c('tf', 'idf', 
+                          'tf_idf'), 
+              digits = 3) %>%
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
 ```
+
+* Leveraging wordcloud() of wordcloud package to plot a static wordcloud for three class - Junk, Spam, Meaningful records.
+
+*Visualising tf-idf as interactive table*
+
+
+
 
 *Visualising tf-idf as Wordcloud*
 
@@ -306,8 +305,8 @@ Table below is an interactive table created by using datatable().
 *Q2*
 
 ```{r}
-fire_count <- data_classed_token %>% 
-  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
+#fire_count <- data_classed_token %>% 
+#  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
 ```
 
 
