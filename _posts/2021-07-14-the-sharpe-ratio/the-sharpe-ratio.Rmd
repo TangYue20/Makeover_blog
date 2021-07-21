@@ -83,23 +83,12 @@ table3 <- read.csv("csv-2001-2131.csv")
 data <- rbind(table1, table2,table3)
 ```
 
-
-* Next, we would separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
-
-```{r}
-ccdata <- subset(data, type == "ccdata")
-mbdata <- subset(data, type == "mbdata")
-
-```
-
-
 ### 2.4  Modifying Date format 
 
 * converting character objects to dates can be made easier by using the <span style="color:blue">*lubridate*</span> package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
 
 ```{r}
 data$date.yyyyMMddHHmmss. <- ymd_hms(data$date.yyyyMMddHHmmss.)
-
 ```
 
 * Rename "date.yyyyMMddHHmmss." in data into "date" with concise format.
@@ -125,57 +114,77 @@ data$message <- str_replace_all(data$message,fixed("RT"),"")
 
 ```
 
+* For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
+
+```{r}
+ccdata <- subset(data, type == "ccdata")
+mbdata <- subset(data, type == "mbdata")
+
+```
 
 ### 2.6 Classify Record
 
-Based on content of data provided, we classified records into three segments, Junk, Spam and Meaningful records, using <span style="color:blue">*stringr*</span>, <span style="color:blue">*dplyr*</span>package.
+Based on content of data provided, we classified records into three segments, Junk, Typical_Chatter and Meaningful records, using <span style="color:blue">*stringr*</span>, <span style="color:blue">*dplyr*</span>package. Because emergency call center data is credible and reliable, here we just classify Microblog data into three classes.
 
 
 Class| Definition
 |------|----------|
-|**Junk**| referred to advertisements or financial purpose reports. The below code chunk is used to identify the spam reports.|
+|**Junk**| referred to advertisements or financial purpose reports.|
 |**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
-|**Spam**|represents the no meaningful and irrelevant or inappropriate messages post online.|
+|**Typical Chatter**|represents no meaningful and irrelevant or inappropriate messages post online. |
 
 * classify Junk records: The **str_detect()** function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
 
 ```{r}
-junk <- data %>%
-  filter(str_detect(message,"#artists|#badcreadit|#cars
-  |#followme|#nobanks|#nobank|#meds|#cancer|#bestfood
-  |#workAtHome|#gettingFired|#pharmacyripoff|#iThing
-  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
-  #iThing|visit this|#eastAbila link|#abilajobs|clickhere|
-  #welksFurniture|#swat|#bugs|visit this link|this site")) 
-
-junk <- data %>%
-  filter(str_detect(author,"junkman|carjunkers|eazymoney|
-  junk99902|junkieduck113|junkman377|junkman995"))
+junk <- mbdata %>% filter_at(.vars = vars(message, author), 
+any_vars(str_detect(., pattern = "#artists|#badcreadit|#cars
+  |#followme|#nobank|#meds|#cancer|#bestfood|#Grammar|cars.kronos
+  |#workAtHome|#gettingFired|#pharmacyripoff|#iThing|sellstuff
+  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|Officia1AbilaPost|
+  visit this|#eastAbila link|#abilajobs|clickhere|#abilajobs|
+  #welksFurniture|#swat|#bugs|visit this link|this site|
+  junkman|carjunkers|eazymoney|junk99902|junkieduck113
+  |junkman377|junkman995|KronosQuoth|Clevvah4Evah")))
            
+```
+
+```{r}
+mbdata <- anti_join(mbdata,junk,by="message") 
 ```
 
 * Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
 
 ```{r}
-spam <- data %>%
-  filter(str_detect(message,"Grammar||#POKlove#Lucio|#getoverit
-  |#baa-baa| #HomelessAwareness|#trylove|#pictures
-  |#nobodycares|#abilafire|#wishfulthinking|Viktor-E
-  |#hogwash|#RememberElian|#standoff|work from home|
-  #blackvansrules|#schaber|#abilacityPark|#downwithkronos"))
-
-spam <- data %>%
-  filter(str_detect(author,"KronosQuoth|Clevvah4Evah|FriendsOfKronos|
-  jaquesjoyce101|klingon4real|michelleR|SaveOurWildlands|
-  AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool"))
+#Typical_Chatter <- data %>% filter_at(.vars = vars(message, author), 
+#(str_detect(., pattern ="#POKlove#Lucio|#getoverit
+#  |#baa-baa|#HomelessAwareness|#trylove|#pictures|AbilaAllFaith
+#  |#nobodycares|#wishfulthinking|Viktor-E|
+#  |#hogwash|#RememberElian|#standoff|work from home|
+#  #blackvansrules|#schaber|#abilacityPark|#downwithkronos|FriendsOfKronos
+#  |#RememberElianjaquesjoyce101|michelleR|SaveOurWildlands|
+#  AbilaAllFaith|footfingers|GreyCatCollectibles|luvwool")))
 ```
 
+```{r}
+meaningful<- mbdata %>% filter_at(.vars = vars(message, author), 
+any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire|rally|shooting|#AlibaPost|#CentralBulletin|
+  #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
+  #Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline|#hurtfirefighte|#rally|#pokrally|#SavePeople
+  |#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
+  terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
+  |#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
+  #jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
+  |#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
+  |#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage| #repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
+  #shooter|#HELPME|#fire|#thanksAFD")))
+                      
+```
 
 * Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, **anti_join()** function in <span style="color:blue">*dplyr*</span> package would be used. 
 
 ```{r}
-meaningful <- anti_join(data,junk,by="message") 
-meaningful <- anti_join(meaningful,spam,by="message")
+Typical_Chatter <- anti_join(mbdata,junk,by="message") 
+Typical_Chatter <- anti_join(Typical_Chatter,meaningful,by="message")
 ```
 
 Now, all records in Microblog data have been labeled with responding class- **Junk**, **Meanigful** and **Spam**.
@@ -184,7 +193,7 @@ Now, all records in Microblog data have been labeled with responding class- **Ju
 
 ```{r}
 junk$class <- "junk"
-spam$class <- "spam"
+Typical_Chatter$class <- "Typical_Chatter"
 meaningful$class <- "meaningful"
 
 ```
@@ -192,14 +201,14 @@ meaningful$class <- "meaningful"
 * Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
 
 ```{r}
-data_classed <- rbind(spam, junk, meaningful)
+mbdata_classed <- rbind(junk, Typical_Chatter, meaningful)
 
 ```
 
 * In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
 
 ```{r}
-data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
+mbdata_classed$message <- str_replace_all(mbdata_classed$message,fixed("#"),"")
 ```
 
 
@@ -210,7 +219,7 @@ After cleaning the text data, the next step is to segment sentence and count the
 In this code chunk below, unnest_tokens() function from <span style="color:blue">*tidytext*</span> package is used to split the sentences into tokens, while stop_words() is used to remove stop-words.
 
 ```{r}
-data_classed_token <- data_classed %>%
+mbdata_classed_token <- mbdata_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
@@ -221,14 +230,14 @@ data_classed_token <- data_classed %>%
 The most common words in entire dataset could be seen from below code chunk. 
 
 ```{r}
-data_classed_token %>%
+mbdata_classed_token %>%
   count(word,sort = TRUE) %>%
   top_n(15) 
 ```
 
 ```{r}
 set.seed(1234)
-wordcloud(words = data_classed_token$word,
+wordcloud(words = mbdata_classed_token$word,
           #freq = data_classed_token$n, 
           min.freq = 10,
           max.words = 100, 
@@ -244,7 +253,7 @@ wordcloud(words = data_classed_token$word,
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
-token_by_class <- data_classed_token %>%
+token_by_class <- mbdata_classed_token %>%
   count(class, word, sort = TRUE) %>%
   group_by(class) %>%
   top_n(15) %>%
@@ -282,21 +291,22 @@ Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spa
 tf_idf %>%
   group_by(class) %>%
   slice_max(tf_idf, 
-            n = 15) %>%
+            n = 12) %>%
   ungroup() %>%
   mutate(word = reorder(word, 
                         tf_idf)) %>%
   ggplot(aes(tf_idf, 
              word, 
-      
              fill = class)) +
   geom_col(show.legend = FALSE) +
+  
   facet_wrap(~ class, 
              ncol = 2,
              scales = "free") +
   labs(x = "tf-idf", 
        y = NULL,
-       title = "15 most frequent words in Three Record Classes")
+       title = "15 most frequent words in Three Record Classes") 
+  
 ```
 
 *Q2*
