@@ -261,7 +261,9 @@ tf_idf <- token_by_class %>%
 
 ```
 
-Table below is an interactive table created by using datatable().
+*Visualising tf-idf as interactive table*
+
+Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
 ```{r}
 DT::datatable(tf_idf, filter = 'top') %>% 
@@ -272,34 +274,29 @@ DT::datatable(tf_idf, filter = 'top') %>%
               target = 'row', 
               lineHeight='25%')
 ```
+*Visualising tf-idf within Three Records Classes*
 
-* Leveraging wordcloud() of wordcloud package to plot a static wordcloud for three class - Junk, Spam, Meaningful records.
-
-*Visualising tf-idf as interactive table*
-
-
-
-
-*Visualising tf-idf as Wordcloud*
+Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.
 
 ```{r}
-#tf_idf %>%
-  #filter(str_detect(class, "^sci\\.")) %>%
-#  group_by(class) %>%
-#  slice_max(tf_idf, 
-#            n = 12) %>%
-#  ungroup() %>%
-#  mutate(word = reorder(word, 
-#                        tf_idf)) %>%
-#  ggplot(aes(tf_idf, 
-#             word, 
-#             fill = class)) +
-#  geom_col(show.legend = FALSE) +
-#  facet_wrap(~ class, 
-#             ncol = 2,
-#             scales = "free") +
-#  labs(x = "tf-idf", 
-#       y = NULL)
+tf_idf %>%
+  group_by(class) %>%
+  slice_max(tf_idf, 
+            n = 15) %>%
+  ungroup() %>%
+  mutate(word = reorder(word, 
+                        tf_idf)) %>%
+  ggplot(aes(tf_idf, 
+             word, 
+      
+             fill = class)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ class, 
+             ncol = 2,
+             scales = "free") +
+  labs(x = "tf-idf", 
+       y = NULL,
+       title = "15 most frequent words in Three Record Classes")
 ```
 
 *Q2*
