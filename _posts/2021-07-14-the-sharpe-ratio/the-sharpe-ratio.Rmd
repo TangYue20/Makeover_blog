@@ -268,6 +268,8 @@ wordcloud(words = mbdata_classed_token$word,
 ## Question 1: 
 **Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
+
+*1.Visualizing word frequency as word cloud* 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
@@ -302,7 +304,7 @@ tf_idf <- token_by_class %>%
 
 ```
 
-*Visualising tf-idf as interactive table*
+*2. Visualising tf-idf as interactive table*
 
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
@@ -315,7 +317,7 @@ DT::datatable(tf_idf, filter = 'top') %>%
               target = 'row', 
               lineHeight='25%')
 ```
-*Visualising tf-idf within Three Records Classes*
+**3. Visualising tf-idf within Three Records Classes**
 
 Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.
 
@@ -342,18 +344,30 @@ tf_idf %>%
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
+**4.Visualising count of latitude and longitude by classification as bar chart**
+
 ```{r}
-#length(unique(mbdata_classed$location))
-
+mbdata_classed %>%
+  select(class,latitude, longitude) %>%
+  filter(latitude >0, longitude >0 ) %>%
+  group_by(class) %>%
+  summarise(total_count= n()) %>%
+ggplot(aes(x=class, y=total_count)) +
+  geom_bar(aes(fill= class),stat="identity")+
+  labs(title="Count of Latitude and Longtitude by Classification", x="Class", y="Count of Latitude and Longtitude") +
+  geom_text(aes(label=total_count), vjust=-0.3, size=3.5)+
+  theme_minimal()
 ```
+**3. Visualizing Word Length within Three Records Classes**
 
+To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
 
 ```{r}
 mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
 
 ```
 
-**Visualizing Word Length within Three Records Classes**
+A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
 ```{r}
 ggplot(data = mbdata_classed, aes(x=as.character(class), y=length)) +
