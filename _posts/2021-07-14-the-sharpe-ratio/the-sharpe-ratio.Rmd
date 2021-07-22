@@ -288,10 +288,12 @@ set.seed(1234)
 token_by_class %>%
   filter(n > 0) %>%
 ggplot(aes(label = word,
-           size = n)) +
+           size = n,
+           color= class))+
   geom_text_wordcloud() +
   theme_minimal() +
-  facet_wrap(~class)
+  facet_wrap(~class, scales = "free_y") +
+  labs(x = "Record Classification")
 ```
 
 
