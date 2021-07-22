@@ -1868,11 +1868,11 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </code></pre>
 </div>
 </div>
-<p><em>Visualising Word Length within Three Records Classes</em></p>
+<p><strong>Visualizing Word Length within Three Records Classes</strong></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mbdata_classed</span>, <span class='fu'>aes</span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>class</span><span class='op'>)</span>, y<span class='op'>=</span><span class='va'>length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'>geom_boxplot</span><span class='op'>(</span>fill<span class='op'>=</span><span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_boxplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill<span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>labs</span><span class='op'>(</span>title<span class='op'>=</span><span class='st'>"Word Length Distribution by Classification"</span>, x<span class='op'>=</span><span class='st'>"Class"</span>, y<span class='op'>=</span><span class='st'>"Word Length"</span><span class='op'>)</span>
 </code></pre>
 </div>

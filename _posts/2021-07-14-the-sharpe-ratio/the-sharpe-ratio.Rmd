@@ -353,11 +353,11 @@ mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlis
 
 ```
 
-*Visualising Word Length within Three Records Classes*
+**Visualizing Word Length within Three Records Classes**
 
 ```{r}
 ggplot(data = mbdata_classed, aes(x=as.character(class), y=length)) +
-    geom_boxplot(fill="steelblue") +
+    geom_boxplot(aes(fill= class)) +
     labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
 
 ```
