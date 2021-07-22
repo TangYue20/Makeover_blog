@@ -195,20 +195,21 @@ Now, all records in Microblog data have been labeled with responding class- **Ju
 junk$class <- "junk"
 Typical_Chatter$class <- "Typical_Chatter"
 meaningful$class <- "meaningful"
+ccdata$class <- 'meaningful'
 
 ```
 
 * Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
 
 ```{r}
-mbdata_classed <- rbind(junk, Typical_Chatter, meaningful)
+data_classed <- rbind(junk, Typical_Chatter, meaningful,ccdata)
 
 ```
 
 * In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
 
 ```{r}
-mbdata_classed$message <- str_replace_all(mbdata_classed$message,fixed("#"),"")
+data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
 ```
 
 
@@ -222,7 +223,7 @@ After cleaning the text data, the next step is to segment sentence and count the
 (4) filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.
 
 ```{r}
-mbdata_classed_token <- mbdata_classed %>%
+data_classed_token <- data_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
@@ -233,14 +234,14 @@ mbdata_classed_token <- mbdata_classed %>%
 The most common words in entire dataset could be seen from below code chunk. 
 
 ```{r}
-mbdata_classed_token %>%
+data_classed_token %>%
   count(word,sort = TRUE) %>%
   top_n(15) 
 ```
 
 
 ```{r}
-mbdata_classed_token %>%
+data_classed_token %>%
   count(word, sort = TRUE) %>%
   filter(n > 140) %>%
   mutate(word = reorder(word, n)) %>%
@@ -256,7 +257,7 @@ The importance of words can be illustrated as a word cloud as follow :
 
 ```{r}
 set.seed(1234)
-wordcloud(words = mbdata_classed_token$word,
+wordcloud(words = data_classed_token$word,
           #freq = mbdata_classed_token$n,
           min.freq = 10,
           max.words = 200, 
@@ -274,7 +275,7 @@ wordcloud(words = mbdata_classed_token$word,
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
-token_by_class <- mbdata_classed_token %>%
+token_by_class <- data_classed_token %>%
   count(class,author, word, sort = TRUE) %>%
   group_by(class) %>%
   top_n(15) %>%
@@ -390,7 +391,7 @@ class_cors %>%
 **4.Visualising count of latitude and longitude by classification as bar chart**
 
 ```{r}
-mbdata_classed %>%
+data_classed %>%
   select(class,latitude, longitude) %>%
   filter(latitude >0, longitude >0 ) %>%
   group_by(class) %>%
@@ -406,21 +407,21 @@ ggplot(aes(x=class, y=total_count)) +
 To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
 
 ```{r}
-mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
+data_classed$length <- sapply(data_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
 
 ```
 
 A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
 ```{r}
-ggplot(data = mbdata_classed, aes(x=as.character(class), y=length)) +
+ggplot(data = data_classed, aes(x=as.character(class), y=length)) +
     geom_boxplot(aes(fill= class)) +
     labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
 
 ```
 
 ```{r}
-ggplot(mbdata_classed, aes(x = class, y = length)) + 
+ggplot(data_classed, aes(x = class, y = length)) + 
   geom_violin(aes(fill = class), trim = FALSE) +
   geom_boxplot(width = 0.1) +
   theme_classic() +
@@ -428,7 +429,7 @@ ggplot(mbdata_classed, aes(x = class, y = length)) +
 ```
 ```{r}
 
-mbdata_classed %>%
+data_classed %>%
   group_by(class) %>%
   ggplot(aes(
     x = length, y = reorder(class, -length),
@@ -440,6 +441,38 @@ mbdata_classed %>%
 
 
 ```
+
+**Visualizing contribution to record classification by bar chart**
+
+
+```{r}
+
+data_classed_token %>%
+  count(class, word) %>%
+  ungroup() %>%
+  filter(n >= 100) %>%
+  mutate(n = ifelse(class == "junk", -n, n)) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = class)) +
+  geom_col() +
+  labs(x = "Contribution to record classification", y = NULL)
+
+```
+```{r}
+
+data_classed_token %>%
+  count(class, word) %>%
+  ungroup() %>%
+  filter(n >= 100) %>%
+  mutate(n = ifelse(class == "meaningful", -n, n)) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = class)) +
+  geom_col() +
+  labs(x = "Contribution to record classification", y = NULL)
+
+```
+
+
 **Interpretation  for violin plot**: 
 
 This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
@@ -452,8 +485,34 @@ This violin plot shows the relationship of record classes to sentence length. We
 We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.
 
 ```{r}
-#fire_count <- data_classed_token %>% 
-#  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
+#data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
+#data_lda
+
+
+```
+
+In this question, we would combine mbdata and ccdata into analysis. 
+
+
+```{r}
+
+
+```
+
+```{r}
+#fire_term_counts <- data_classed %>%
+#  extract(message, "fire", "(\\d+)", convert = TRUE) %>%
+#  complete(fire, word, fill = list(count = 0)) %>%
+#  group_by(fire) %>%
+#  mutate(fire_total = sum(count))
+
+```
+
+
+
+```{r}
+fire_count <- data_classed_token %>% 
+  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
 ```
 
 
