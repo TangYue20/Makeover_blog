@@ -418,7 +418,22 @@ ggplot(data = mbdata_classed, aes(x=as.character(class), y=length)) +
     labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
 
 ```
+```{r}
 
+mbdata_classed$class = with(mbdata_classed, reorder(class, length, median))
+
+p <- mbdata_classed %>%
+  ggplot( aes(x=class, y=length, fill=class)) + 
+    geom_violin() +
+    xlab("class") +
+    theme(legend.position="none") +
+    xlab("")
+#p + stat_summary(fun.y=median, geom="point", size=2, color="red")
+#p + stat_summary(fun.data="mean_sdl", mult=1, 
+                 #geom="crossbar", width=0.2 )
+p + stat_summary(fun.data=mean_sdl, mult=4, 
+                 geom="pointrange", color="red")
+```
 ## Question 2
 
 **Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
