@@ -110,7 +110,7 @@ In this step, we would like to use package <span style="color:blue">*stringr*</s
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
 data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
-#data$message <- str_replace_all(data$message,fixed("RT"),"")
+#data$message <- str_replace_all(data$message,fixed("RT @.+ "),"")
 
 ```
 
@@ -118,7 +118,7 @@ data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
 Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we remove repeat records.
 
 ```{r}
-data <- data[- grep("RT @", data$message),]
+#data <- data[- grep("RT @", data$message),]
 ```
 
 * For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
@@ -182,8 +182,8 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 * Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, **anti_join()** function in <span style="color:blue">*dplyr*</span> package would be used. 
 
 ```{r}
-Typical_Chatter <- anti_join(mbdata,junk,by="message") 
-Typical_Chatter <- anti_join(Typical_Chatter,meaningful,by="message")
+Typical_Chatter <- anti_join(mbdata1,junk,by="message") 
+Typical_Chatter <- anti_join(mbdata1,meaningful,by="message")
 ```
 
 Now, all records in Microblog data have been labeled with responding class- **Junk**, **Meanigful** and **Spam**.
@@ -225,7 +225,7 @@ mbdata_classed_token <- mbdata_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
-         !word %in% c("aliba","abila"))
+         !word %in% c("aliba","abila","rt","homelandilluminations"))
 
 ```
 
@@ -342,14 +342,25 @@ tf_idf %>%
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
+```{r}
+#length(unique(mbdata_classed$location))
 
+```
 
 
 ```{r}
+mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
 
-length(unique(mbdata$location))
 ```
 
+*Visualising Word Length within Three Records Classes*
+
+```{r}
+ggplot(data = mbdata_classed, aes(x=as.character(class), y=length)) +
+    geom_boxplot(fill="steelblue") +
+    labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
+
+```
 
 ## Question 2
 
