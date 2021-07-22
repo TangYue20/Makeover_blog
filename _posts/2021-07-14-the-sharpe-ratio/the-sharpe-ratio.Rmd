@@ -60,7 +60,7 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
-'igraph','ggraph','DT')
+'igraph','ggraph','DT','topicmodels')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -426,7 +426,20 @@ ggplot(mbdata_classed, aes(x = class, y = length)) +
   theme_classic() +
   theme(legend.position = "none")
 ```
+```{r}
 
+mbdata_classed %>%
+  group_by(class) %>%
+  ggplot(aes(
+    x = length, y = reorder(class, -length),
+    color = class
+  )) +
+  geom_jitter(position = position_jitter(seed = 2020, width = 0.2), alpha = 0.4, size = 2) +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "red", alpha = 1)
+
+
+
+```
 **Interpretation  for violin plot**: 
 
 This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
@@ -435,6 +448,8 @@ This violin plot shows the relationship of record classes to sentence length. We
 ## Question 2
 
 **Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+
+We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.
 
 ```{r}
 #fire_count <- data_classed_token %>% 
