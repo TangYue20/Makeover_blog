@@ -57,9 +57,10 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 
 
 ```{r}
-packages = c('tidyverse','dplyr','readr','tm','lubridate',
+packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
-'topicmodels','stringr','clock', 'tidytext','tokenizers','DT')
+'topicmodels','stringr','clock', 'tidytext','tokenizers',
+'igraph','ggraph','DT')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -274,7 +275,7 @@ Firstly, we count words for three classes- Junk, Spam, Meaningful using the code
 
 ```{r echo=TRUE} 
 token_by_class <- mbdata_classed_token %>%
-  count(class, word, sort = TRUE) %>%
+  count(class,author, word, sort = TRUE) %>%
   group_by(class) %>%
   top_n(15) %>%
   ungroup()
@@ -343,6 +344,46 @@ tf_idf %>%
 ```
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
+
+** Visualizing correlation as a network
+
+To explore the relationship between three classes in network graph, we count the number of times that two words appear within the same document, or to see how correlated they are.
+
+Most operations for finding pairwise counts or correlations need to turn the data into a wide matrix first. we would use widyr package 'casts' a tidy datasets into a wide matrix, performs an operation such as a correlation on it, then re-tidies the result. 
+
+In this code chunk below, pairwise_cor() of widyr package is used to compute the correlation between newsgroup based on the common words found.
+
+```{r}
+
+class_cors <- token_by_class %>%
+  pairwise_cor(author, 
+               word, 
+               n, 
+               sort = TRUE)
+```
+
+
+```{r}
+set.seed(1234)
+class_cors %>%
+  filter(correlation > .01) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(alpha = correlation, 
+                     width = correlation)) +
+  geom_node_point(size = 3, 
+                  color = "lightblue") +
+  geom_node_text(aes(label = name),
+                 color = "red",
+                 repel = TRUE) +
+  theme_void() +
+  labs(title = "Network of Microblog authors") 
+  
+  
+```
+
+
+
 
 **4.Visualising count of latitude and longitude by classification as bar chart**
 
