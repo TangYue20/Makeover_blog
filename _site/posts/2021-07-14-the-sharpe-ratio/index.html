@@ -2550,23 +2550,17 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>mbdata_classed</span>, <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>class</span>, <span class='va'>length</span>, <span class='va'>median</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ggplot</span><span class='op'>(</span> <span class='fu'>aes</span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>class</span>, y<span class='op'>=</span><span class='va'>length</span>, fill<span class='op'>=</span><span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-    <span class='fu'>geom_violin</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'>xlab</span><span class='op'>(</span><span class='st'>"class"</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'>theme</span><span class='op'>(</span>legend.position<span class='op'>=</span><span class='st'>"none"</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'>xlab</span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span>
-<span class='co'>#p + stat_summary(fun.y=median, geom="point", size=2, color="red")</span>
-<span class='co'>#p + stat_summary(fun.data="mean_sdl", mult=1, </span>
-                 <span class='co'>#geom="crossbar", width=0.2 )</span>
-<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>stat_summary</span><span class='op'>(</span>fun.data<span class='op'>=</span><span class='va'>mean_sdl</span>, mult<span class='op'>=</span><span class='fl'>4</span>, 
-                 geom<span class='op'>=</span><span class='st'>"pointrange"</span>, color<span class='op'>=</span><span class='st'>"red"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>mbdata_classed</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>class</span>, y <span class='op'>=</span> <span class='va'>length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_violin</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span>, trim <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_boxplot</span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
 </div>
+<p><strong>Interpretation for violin plot</strong>:</p>
+<p>This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median.</p>
 <h2 id="question-2">Question 2</h2>
 <p><strong>Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.</strong></p>
 <div class="layout-chunk" data-layout="l-body">
