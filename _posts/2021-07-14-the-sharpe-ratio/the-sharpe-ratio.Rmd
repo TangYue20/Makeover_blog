@@ -60,7 +60,7 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
-'igraph','ggraph','DT','topicmodels')
+'igraph','ggraph','DT','topicmodels','xts','dygraphs')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -446,8 +446,6 @@ contribution_plot2
 ```
 
 
-
-
 ## Question 2
 
 **Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
@@ -457,6 +455,7 @@ We can use the LDA() function from the topicmodels package, setting k = 4, to cr
 ```{r}
 ccdata$class <- "meaningful"
 data2 <- rbind(ccdata, meaningful)
+#data2 <- meaningful
 ```
 
 ```{r}
@@ -473,7 +472,7 @@ usenet_words <- data2%>%
 ```{r}
 top_terms_by_topic_LDA <- function(word,
                                    plot = T,
-                                   number_of_topics = 8)
+                                   number_of_topics = 6)
 {
     Corpus <- Corpus(VectorSource(usenet_words$word)) 
     DTM <- DocumentTermMatrix(Corpus) 
@@ -490,8 +489,9 @@ top_terms_by_topic_LDA <- function(word,
     if(plot == T){
         
         top_terms %>% 
+        
           mutate(term = reorder(term, beta)) %>%  
-          ggplot(aes(term, beta, fill = factor(topic))) +
+          ggplot(aes(term,beta, fill = factor(topic))) +
           geom_col(show.legend = FALSE) + 
           facet_wrap(~ topic, scales = "free") + 
           labs(x = NULL, y = "Beta") + 
@@ -505,7 +505,7 @@ top_terms_by_topic_LDA <- function(word,
 
 ```{r}
 # plot top ten terms in the hotel reviews by topic
-top_terms_by_topic_LDA(reviews$text, number_of_topics = 8)
+top_terms_by_topic_LDA(reviews$text, number_of_topics = 6)
 ```
 
 In this question, we would combine mbdata and ccdata into analysis. 
@@ -527,13 +527,49 @@ In this question, we would combine mbdata and ccdata into analysis.
 ```
 
 
+**Event 1: POK rally**
+
 ```{r}
-fire_count <- mb_usenet_words %>% 
-  filter(str_detect(word,"fire|Dancing Dolphin Department")) %>%
+rally_count <- usenet_words %>% 
+  filter(str_detect(word,"POKRally|rally|park|Rallypark|Parkcheck|POKliesinthepark|POKRallyinthepark")) %>%
   group_by(date) %>%
-  count(word)
+  count(date)
 
 
+  ggplot(rally_count,aes(x=date, y=n)) +
+    geom_area(fill="#69b3a2", alpha=0.5) +
+    geom_line(color="#69b3a2") +
+    ylab("bitcoin price ($)") 
+    #theme_ipsum()
+
+```
+
+```{r}
+#rally_count$date <- ymd_hms(rally_count$datet)
+don <- xts(x = rally_count$n, order.by = rally_count$date)
+
+# Finally the plot
+p <- dygraph(don) %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+p
+
+```
+
+
+**Event 2: Fire in Dancing Dolphin**
+
+```{r}
+fire_count <- usenet_words %>% 
+  filter(str_detect(word,"fire|Dancing|Dolphin|Department")) %>%
+  group_by(date) %>%
+  count(date)
+
+ggplot(data = fire_count, aes(x = date, y = n, color = n )) +
+    geom_line()
 ```
 
 
