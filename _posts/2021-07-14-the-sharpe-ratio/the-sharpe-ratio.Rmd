@@ -463,7 +463,7 @@ data2$message <- str_replace_all(data2$message,fixed("#"),"")
 
 usenet_words <- data2%>%
   unnest_tokens(word, message) %>%
-  filter(str_detect(word, "[a-z']$"),
+  filter(#str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
          !word %in% c("aliba","abila","rt","homelandilluminations","centralbulletin", "alibapost", "grammar","kronosstar", "pok","abilapost"))
 ```
@@ -516,22 +516,19 @@ In this question, we would combine mbdata and ccdata into analysis.
 
 ```
 
-```{r}
-#fire_term_counts <- mb_usenet_words%>%
-#  count(date, word) %>%
-#  extract(word, "fire", "(\\d+)", convert = TRUE) %>%
-#  complete(fire, word, fill = list(count = 0)) %>%
-#  group_by(fire) %>%
-#  mutate(fire_total = sum(count))
 
+
+**Event 1: POK rally** usenet_words
+
+```{r}
+rally <- data2 %>% 
+  filter(str_detect(message,"POKRally|rally|park|Rallypark|Parkcheck|
+                    POKliesinthepark|POKRallyinthepark")) 
 ```
 
 
-**Event 1: POK rally**
-
 ```{r}
-rally_count <- usenet_words %>% 
-  filter(str_detect(word,"POKRally|rally|park|Rallypark|Parkcheck|POKliesinthepark|POKRallyinthepark")) %>%
+rally_count <- rally %>%
   group_by(date) %>%
   count(date)
 
@@ -539,18 +536,28 @@ rally_count <- usenet_words %>%
   ggplot(rally_count,aes(x=date, y=n)) +
     geom_area(fill="#69b3a2", alpha=0.5) +
     geom_line(color="#69b3a2") +
-    ylab("bitcoin price ($)") 
-    #theme_ipsum()
+    ylab("event frequency") 
 
 ```
 
+How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
+
 ```{r}
-#rally_count$date <- ymd_hms(rally_count$datet)
+rally_people_number <- rally %>%
+  filter(str_detect(message,"[0-9]+")) %>%
+  mutate(number = extract_numeric(message)) %>%
+  filter(number >0)
+max(rally_people_number$number)
+           
+```
+
+
+```{r}
+
 don <- xts(x = rally_count$n, order.by = rally_count$date)
 
-# Finally the plot
 p <- dygraph(don) %>%
-  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.2, drawGrid = FALSE, colors="#D8AE5A") %>%
   dyRangeSelector() %>%
   dyCrosshair(direction = "vertical") %>%
   dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
@@ -563,14 +570,74 @@ p
 **Event 2: Fire in Dancing Dolphin**
 
 ```{r}
-fire_count <- usenet_words %>% 
-  filter(str_detect(word,"fire|Dancing|Dolphin|Department")) %>%
+fire <- data2 %>% 
+  filter(str_detect(message,"fire|Dancing|Dolphin|Department|
+                    building|Dancingdolfinfire"))
+```
+
+
+```{r}
+fire_count <- fire %>%
+  group_by(date) %>%
+  count(date)
+ggplot(fire_count,aes(x=date, y=n)) +
+    geom_area(fill="#69b3a2", alpha=0.5) +
+    geom_line(color="#69b3a2") +
+    ylab("event frequency)") 
+```
+How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
+
+```{r}
+fire_people_number <- fire %>%
+  filter(str_detect(message,"[0-9]+")) %>%
+  mutate(number = extract_numeric(message)) %>%
+  filter(number >0)
+fire_people_number$number
+           
+```
+
+
+
+**Event 3: Hit & Run Accident**
+
+```{r}
+hit_count <- usenet_words %>% 
+  filter(str_detect(word,"van|bicyclist|hit|Cafe|@Brew'veBeenServed
+                    |escaped|Jerkdrivers|Vehicle Accident-Report")) %>%
   group_by(date) %>%
   count(date)
 
-ggplot(data = fire_count, aes(x = date, y = n, color = n )) +
-    geom_line()
+
 ```
+
+
+**Event 4: Shooting and standoff**
+
+```{r}
+shooting_count <- usenet_words %>% 
+  filter(str_detect(word,"shooting|standoff|gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
+  group_by(date) %>%
+  count(word,date)
+
+```
+
+
+```{r}
+#rally_count <- usenet_words %>% 
+#  filter(str_detect(word,"POKRally|rally|park|Rallypark|Parkcheck|
+#                    POKliesinthepark|POKRallyinthepark")) %>%
+
+
+
+```
+
+
+
+
+
+
+
+
 
 
 
