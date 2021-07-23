@@ -235,6 +235,7 @@ The most common words in entire dataset could be seen from below code chunk.
 
 ```{r}
 data_classed_token %>%
+  filter(type == "mbdata") %>%
   count(word,sort = TRUE) %>%
   top_n(15) 
 ```
@@ -242,6 +243,7 @@ data_classed_token %>%
 
 ```{r}
 data_classed_token %>%
+  filter(type == "mbdata") %>%
   count(word, sort = TRUE) %>%
   filter(n > 140) %>%
   mutate(word = reorder(word, n)) %>%
@@ -258,7 +260,7 @@ The importance of words can be illustrated as a word cloud as follow :
 ```{r}
 set.seed(1234)
 wordcloud(words = data_classed_token$word,
-          #freq = mbdata_classed_token$n,
+          #freq = data_classed_token$n,
           min.freq = 10,
           max.words = 200, 
           random.order=FALSE, rot.per=0.35,
@@ -276,9 +278,9 @@ Firstly, we count words for three classes- Junk, Spam, Meaningful using the code
 
 ```{r echo=TRUE} 
 token_by_class <- data_classed_token %>%
-  count(class,author, word, sort = TRUE) %>%
+  count(type, class,author, word, sort = TRUE) %>%
   group_by(class) %>%
-  top_n(15) %>%
+  #top_n(15) %>%
   ungroup()
 ```
 
@@ -287,7 +289,7 @@ token_by_class <- data_classed_token %>%
 ```{r}
 set.seed(1234)
 token_by_class %>%
-  filter(n > 0) %>%
+  filter(n > 12) %>%
 ggplot(aes(label = word,
            size = n,
            color= class))+
@@ -303,7 +305,7 @@ The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term
 
 ```{r}
 tf_idf <- token_by_class %>%
-  bind_tf_idf(word,class, n) %>%
+  bind_tf_idf(word,class,n) %>%
   arrange(desc(tf_idf))
 
 ```
@@ -313,6 +315,8 @@ tf_idf <- token_by_class %>%
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
 ```{r}
+tf_idf %>%
+  filter(type == "mbdata",n>20) %>%
 DT::datatable(tf_idf, filter = 'top') %>% 
   formatRound(columns = c('tf', 'idf', 
                           'tf_idf'), 
@@ -324,12 +328,17 @@ DT::datatable(tf_idf, filter = 'top') %>%
 **3. Visualising tf-idf within Three Records Classes**
 
 Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.
+```{r}
+
+
+
+```
 
 ```{r}
 tf_idf %>%
   group_by(class) %>%
-  slice_max(tf_idf, 
-            n = 12) %>%
+  slice_max(tf_idf,
+            n = 15) %>%
   ungroup() %>%
   mutate(word = reorder(word, 
                         tf_idf)) %>%
@@ -392,8 +401,8 @@ class_cors %>%
 
 ```{r}
 data_classed %>%
-  select(class,latitude, longitude) %>%
-  filter(latitude >0, longitude >0 ) %>%
+  select(type, class,latitude, longitude) %>%
+  filter(type == "mbdata", latitude >0, longitude >0 ) %>%
   group_by(class) %>%
   summarise(total_count= n()) %>%
 ggplot(aes(x=class, y=total_count)) +
@@ -414,14 +423,18 @@ data_classed$length <- sapply(data_classed$message, function(x) length(unlist(st
 A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
 ```{r}
-ggplot(data = data_classed, aes(x=as.character(class), y=length)) +
+data_classed %>%
+  filter(type == "mbdata") %>%
+ggplot(aes(x=as.character(class), y=length)) +
     geom_boxplot(aes(fill= class)) +
     labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
 
 ```
 
 ```{r}
-ggplot(data_classed, aes(x = class, y = length)) + 
+data_classed %>%
+  filter(type == "mbdata") %>%
+ggplot(aes(x = class, y = length)) + 
   geom_violin(aes(fill = class), trim = FALSE) +
   geom_boxplot(width = 0.1) +
   theme_classic() +
@@ -430,6 +443,7 @@ ggplot(data_classed, aes(x = class, y = length)) +
 ```{r}
 
 data_classed %>%
+  filter(type == "mbdata") %>%
   group_by(class) %>%
   ggplot(aes(
     x = length, y = reorder(class, -length),
@@ -446,7 +460,6 @@ data_classed %>%
 
 
 ```{r}
-
 data_classed_token %>%
   count(class, word) %>%
   ungroup() %>%
@@ -485,8 +498,8 @@ This violin plot shows the relationship of record classes to sentence length. We
 We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.
 
 ```{r}
-#data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
-#data_lda
+data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
+data_lda
 
 
 ```
