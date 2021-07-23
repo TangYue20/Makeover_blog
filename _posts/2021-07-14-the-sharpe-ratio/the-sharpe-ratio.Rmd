@@ -330,21 +330,20 @@ Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spa
 
 
 ```{r}
-mb_tf_idf_plot <- mb_tf_idf %>% 
+mb_tf_idf_count <- mb_tf_idf %>% 
   arrange(desc(tf_idf)) %>% 
   group_by(class) %>% 
   top_n(15) %>% 
   ungroup() %>% 
   mutate(word = fct_inorder(word))
 
-ggplot(mb_tf_idf_plot, 
+ggplot(mb_tf_idf_count, 
        aes(y = fct_rev(word), x = tf_idf, fill = class)) +
   geom_col() +
   guides(fill = FALSE) +
   labs(x = "tf-idf", y = NULL) +
   facet_wrap(~ class, ncol = 2, scales = "free") +
   theme_bw()
-
 ```
 
 
@@ -453,11 +452,60 @@ contribution_plot2
 
 **Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
 
-We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.
+We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model. 
 
 ```{r}
-#data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
-#data_lda
+ccdata$class <- "meaningful"
+data2 <- rbind(ccdata, meaningful)
+```
+
+```{r}
+data2$message <- str_replace_all(data2$message,fixed("#"),"")
+
+usenet_words <- data2%>%
+  unnest_tokens(word, message) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word,
+         !word %in% c("aliba","abila","rt","homelandilluminations","centralbulletin", "alibapost", "grammar","kronosstar", "pok","abilapost"))
+```
+
+
+```{r}
+top_terms_by_topic_LDA <- function(word,
+                                   plot = T,
+                                   number_of_topics = 8)
+{
+    Corpus <- Corpus(VectorSource(usenet_words$word)) 
+    DTM <- DocumentTermMatrix(Corpus) 
+    unique_indexes <- unique(DTM$i) 
+    DTM <- DTM[unique_indexes,] 
+    lda <- LDA(DTM, k = number_of_topics, control = list(seed = 1234))
+    topics <- tidy(lda, matrix = "beta")
+
+    top_terms <- topics  %>% 
+      group_by(topic) %>% 
+      top_n(10, beta) %>%
+      ungroup() %>% 
+      arrange(topic, -beta) 
+    if(plot == T){
+        
+        top_terms %>% 
+          mutate(term = reorder(term, beta)) %>%  
+          ggplot(aes(term, beta, fill = factor(topic))) +
+          geom_col(show.legend = FALSE) + 
+          facet_wrap(~ topic, scales = "free") + 
+          labs(x = NULL, y = "Beta") + 
+          coord_flip() 
+    }else{ 
+        
+        return(top_terms)
+    }
+}
+```
+
+```{r}
+# plot top ten terms in the hotel reviews by topic
+top_terms_by_topic_LDA(reviews$text, number_of_topics = 8)
 ```
 
 In this question, we would combine mbdata and ccdata into analysis. 
@@ -469,8 +517,9 @@ In this question, we would combine mbdata and ccdata into analysis.
 ```
 
 ```{r}
-#fire_term_counts <- data_classed %>%
-#  extract(message, "fire", "(\\d+)", convert = TRUE) %>%
+#fire_term_counts <- mb_usenet_words%>%
+#  count(date, word) %>%
+#  extract(word, "fire", "(\\d+)", convert = TRUE) %>%
 #  complete(fire, word, fill = list(count = 0)) %>%
 #  group_by(fire) %>%
 #  mutate(fire_total = sum(count))
@@ -479,8 +528,12 @@ In this question, we would combine mbdata and ccdata into analysis.
 
 
 ```{r}
-#fire_count <- data_classed_token %>% 
-#  filter(str_detect(word,"fire|Dancing Dolphin Department")) 
+fire_count <- mb_usenet_words %>% 
+  filter(str_detect(word,"fire|Dancing Dolphin Department")) %>%
+  group_by(date) %>%
+  count(word)
+
+
 ```
 
 

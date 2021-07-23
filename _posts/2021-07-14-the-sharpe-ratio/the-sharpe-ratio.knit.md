@@ -1,2138 +1,56 @@
-<!DOCTYPE html>
+---
+title: "VAST Challenge 2021 - Mini-Challenge 3 "
+description: |
+  Using Visual Analytics to Support Decision Making to Solve The kronos Incident.
+author:
+  - name: Tang Yue
+    url: {}
+    affiliation: Singapore Management University 
+    Programe: IT In Business
+date: 07-14-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-  <meta name="generator" content="distill" />
 
-  <style type="text/css">
-  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
-  body {
-    visibility: hidden;
-  }
-  </style>
 
- <!--radix_placeholder_import_source-->
- <!--/radix_placeholder_import_source-->
+# 1. Overview
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ad0000; } /* Alert */
-code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
-code span.bn { color: #ad0000; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
-code span.ch { color: #20794d; } /* Char */
-code span.cn { color: #8f5902; } /* Constant */
-code span.co { color: #5e5e5e; } /* Comment */
-code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-code span.dt { color: #ad0000; } /* DataType */
-code span.dv { color: #ad0000; } /* DecVal */
-code span.er { color: #ad0000; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #ad0000; } /* Float */
-code span.fu { color: #4758ab; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
-code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
-code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
-code span.ss { color: #20794d; } /* SpecialString */
-code span.st { color: #20794d; } /* String */
-code span.va { color: #111111; } /* Variable */
-code span.vs { color: #20794d; } /* VerbatimString */
-code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-</style>
+The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see [VAST Challenge 2021]( https://vast-challenge.github.io/2021/index.html).
 
-  <!--radix_placeholder_meta_tags-->
-<title>R for Data Science and Analysis: VAST Challenge 2021 - Mini-Challenge 3 </title>
+This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge has 3 tasks and questions and asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions. 
 
-<meta property="description" itemprop="description" content="Using Visual Analytics to Support Decision Making to Solve The kronos Incident."/>
 
+# 2. Data preparation and Exploration 
 
-<!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-07-14"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-07-14"/>
-<meta name="article:author" content="Tang Yue"/>
+### 2.1 Data Source
 
-<!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="R for Data Science and Analysis: VAST Challenge 2021 - Mini-Challenge 3 "/>
-<meta property="og:type" content="article"/>
-<meta property="og:description" content="Using Visual Analytics to Support Decision Making to Solve The kronos Incident."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:site_name" content="R for Data Science and Analysis"/>
+* There are three dataset provides in Mini-Challenge 3 :
 
-<!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="R for Data Science and Analysis: VAST Challenge 2021 - Mini-Challenge 3 "/>
-<meta property="twitter:description" content="Using Visual Analytics to Support Decision Making to Solve The kronos Incident."/>
+  + Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
 
-<!--/radix_placeholder_meta_tags-->
-  <!--radix_placeholder_rmarkdown_metadata-->
+  + Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.
 
-<script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["VAST Challenge 2021 - Mini-Challenge 3 "]},{"type":"character","attributes":{},"value":["Using Visual Analytics to Support Decision Making to Solve The kronos Incident."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","Programe"]}},"value":[{"type":"character","attributes":{},"value":["Tang Yue"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]},{"type":"character","attributes":{},"value":["Singapore Management University"]},{"type":"character","attributes":{},"value":["IT In Business"]}]}]},{"type":"character","attributes":{},"value":["07-14-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
-</script>
-<!--/radix_placeholder_rmarkdown_metadata-->
-  
-  <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["csv-1700-1830.csv","csv-1831-2000.csv","csv-2001-2131.csv","image/1.files.PNG","the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/anchor/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/bowser/bowser.min.js","the-sharpe-ratio_files/crosstalk/css/crosstalk.css","the-sharpe-ratio_files/crosstalk/js/crosstalk.js","the-sharpe-ratio_files/crosstalk/js/crosstalk.js.map","the-sharpe-ratio_files/crosstalk/js/crosstalk.min.js","the-sharpe-ratio_files/crosstalk/js/crosstalk.min.js.map","the-sharpe-ratio_files/datatables-binding/datatables.js","the-sharpe-ratio_files/datatables-css/datatables-crosstalk.css","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/distill/template.v2.js","the-sharpe-ratio_files/dt-core/css/jquery.dataTables.extra.css","the-sharpe-ratio_files/dt-core/css/jquery.dataTables.min.css","the-sharpe-ratio_files/dt-core/js/jquery.dataTables.min.js","the-sharpe-ratio_files/figure-html5/unnamed-chunk-15-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-16-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-17-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-18-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-19-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-20-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-21-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-22-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-23-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-24-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-25-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-26-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-27-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-28-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-29-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-30-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-31-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-32-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-33-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-34-1.png","the-sharpe-ratio_files/htmlwidgets/htmlwidgets.js","the-sharpe-ratio_files/jquery-1.11.3/jquery.min.js","the-sharpe-ratio_files/jquery/jquery.min.js","the-sharpe-ratio_files/jquery/LICENSE.txt","the-sharpe-ratio_files/nouislider/jquery.nouislider.min.css","the-sharpe-ratio_files/nouislider/jquery.nouislider.min.js","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/popper/popper.min.js","the-sharpe-ratio_files/selectize/selectize.bootstrap3.css","the-sharpe-ratio_files/selectize/selectize.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/tippy/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy/tippy-light-border.css","the-sharpe-ratio_files/tippy/tippy.css","the-sharpe-ratio_files/tippy/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js","the-sharpe-ratio_files/webcomponents/webcomponents.js"]}
-  </script>
-  <!--radix_placeholder_navigation_in_header-->
-<meta name="distill:offset" content="../.."/>
+  + maps of Abila and background documents.
 
-<script type="application/javascript">
 
-  window.headroom_prevent_pin = false;
+* The data of Microblog and text transcripts of emergency dispatches are found in three segments:
 
-  window.document.addEventListener("DOMContentLoaded", function (event) {
+  + Segment 1  :"csv-1700-1830.csv" - covers the time period from 1700 to 1830 Abila time on January 23.
+  + Segment 2: "csv-1831-2000.csv'- covers the time period from 1830 to 2000 Abila time on January 23.
+  + Segment 3: "csv-2001-2131.csv" - covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
 
-    // initialize headroom for banner
-    var header = $('header').get(0);
-    var headerHeight = header.offsetHeight;
-    var headroom = new Headroom(header, {
-      tolerance: 5,
-      onPin : function() {
-        if (window.headroom_prevent_pin) {
-          window.headroom_prevent_pin = false;
-          headroom.unpin();
-        }
-      }
-    });
-    headroom.init();
-    if(window.location.hash)
-      headroom.unpin();
-    $(header).addClass('headroom--transition');
 
-    // offset scroll location for banner on hash change
-    // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-    window.addEventListener("hashchange", function(event) {
-      window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-    });
 
-    // responsive menu
-    $('.distill-site-header').each(function(i, val) {
-      var topnav = $(this);
-      var toggle = topnav.find('.nav-toggle');
-      toggle.on('click', function() {
-        topnav.toggleClass('responsive');
-      });
-    });
+### 2.2 Install and load R package
 
-    // nav dropdowns
-    $('.nav-dropbtn').click(function(e) {
-      $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-      $(this).parent().siblings('.nav-dropdown')
-         .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-    });
-    $("body").click(function(e){
-      $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-    });
-    $(".nav-dropdown").click(function(e){
-      e.stopPropagation();
-    });
-  });
-</script>
+In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
 
-<style type="text/css">
 
-/* Theme (user-documented overrideables for nav appearance) */
-
-.distill-site-nav {
-  color: rgba(255, 255, 255, 0.8);
-  background-color: #0F2E3D;
-  font-size: 15px;
-  font-weight: 300;
-}
-
-.distill-site-nav a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.distill-site-nav a:hover {
-  color: white;
-}
-
-@media print {
-  .distill-site-nav {
-    display: none;
-  }
-}
-
-.distill-site-header {
-
-}
-
-.distill-site-footer {
-
-}
-
-
-/* Site Header */
-
-.distill-site-header {
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 3;
-}
-
-.distill-site-header .nav-left {
-  display: inline-block;
-  margin-left: 8px;
-}
-
-@media screen and (max-width: 768px) {
-  .distill-site-header .nav-left {
-    margin-left: 0;
-  }
-}
-
-
-.distill-site-header .nav-right {
-  float: right;
-  margin-right: 8px;
-}
-
-.distill-site-header a,
-.distill-site-header .title {
-  display: inline-block;
-  text-align: center;
-  padding: 14px 10px 14px 10px;
-}
-
-.distill-site-header .title {
-  font-size: 18px;
-  min-width: 150px;
-}
-
-.distill-site-header .logo {
-  padding: 0;
-}
-
-.distill-site-header .logo img {
-  display: none;
-  max-height: 20px;
-  width: auto;
-  margin-bottom: -4px;
-}
-
-.distill-site-header .nav-image img {
-  max-height: 18px;
-  width: auto;
-  display: inline-block;
-  margin-bottom: -3px;
-}
-
-
-
-@media screen and (min-width: 1000px) {
-  .distill-site-header .logo img {
-    display: inline-block;
-  }
-  .distill-site-header .nav-left {
-    margin-left: 20px;
-  }
-  .distill-site-header .nav-right {
-    margin-right: 20px;
-  }
-  .distill-site-header .title {
-    padding-left: 12px;
-  }
-}
-
-
-.distill-site-header .nav-toggle {
-  display: none;
-}
-
-.nav-dropdown {
-  display: inline-block;
-  position: relative;
-}
-
-.nav-dropdown .nav-dropbtn {
-  border: none;
-  outline: none;
-  color: rgba(255, 255, 255, 0.8);
-  padding: 16px 10px;
-  background-color: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  margin: 0;
-  margin-top: 1px;
-  z-index: 2;
-}
-
-.nav-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 200px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 4px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-  z-index: 1;
-  margin-top: 2px;
-  white-space: nowrap;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.nav-dropdown-content hr {
-  margin-top: 4px;
-  margin-bottom: 4px;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.nav-dropdown-active {
-  display: block;
-}
-
-.nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-  color: black;
-  padding: 6px 24px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.nav-dropdown-content .nav-dropdown-header {
-  display: block;
-  padding: 5px 24px;
-  padding-bottom: 0;
-  text-transform: uppercase;
-  font-size: 14px;
-  color: #999999;
-  white-space: nowrap;
-}
-
-.nav-dropdown:hover .nav-dropbtn {
-  color: white;
-}
-
-.nav-dropdown-content a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.nav-right .nav-dropdown-content {
-  margin-left: -45%;
-  right: 0;
-}
-
-@media screen and (max-width: 768px) {
-  .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-  .distill-site-header a.nav-toggle {
-    float: right;
-    display: block;
-  }
-  .distill-site-header .title {
-    margin-left: 0;
-  }
-  .distill-site-header .nav-right {
-    margin-right: 0;
-  }
-  .distill-site-header {
-    overflow: hidden;
-  }
-  .nav-right .nav-dropdown-content {
-    margin-left: 0;
-  }
-}
-
-
-@media screen and (max-width: 768px) {
-  .distill-site-header.responsive {position: relative; min-height: 500px; }
-  .distill-site-header.responsive a.nav-toggle {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .distill-site-header.responsive a,
-  .distill-site-header.responsive .nav-dropdown {
-    display: block;
-    text-align: left;
-  }
-  .distill-site-header.responsive .nav-left,
-  .distill-site-header.responsive .nav-right {
-    width: 100%;
-  }
-  .distill-site-header.responsive .nav-dropdown {float: none;}
-  .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-  .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
-}
-
-/* Site Footer */
-
-.distill-site-footer {
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  z-index: 3;
-  margin-top: 30px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  text-align: center;
-}
-
-/* Headroom */
-
-d-title {
-  padding-top: 6rem;
-}
-
-@media print {
-  d-title {
-    padding-top: 4rem;
-  }
-}
-
-.headroom {
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.headroom--transition {
-  transition: all .4s ease-in-out;
-}
-
-.headroom--unpinned {
-  top: -100px;
-}
-
-.headroom--pinned {
-  top: 0;
-}
-
-/* adjust viewport for navbar height */
-/* helps vertically center bootstrap (non-distill) content */
-.min-vh-100 {
-  min-height: calc(100vh - 100px) !important;
-}
-
-</style>
-
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
-<link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-<link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-<script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
-<script src="../../site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-<script src="../../site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-<script type="application/javascript">
-
-function getMeta(metaName) {
-  var metas = document.getElementsByTagName('meta');
-  for (let i = 0; i < metas.length; i++) {
-    if (metas[i].getAttribute('name') === metaName) {
-      return metas[i].getAttribute('content');
-    }
-  }
-  return '';
-}
-
-function offsetURL(url) {
-  var offset = getMeta('distill:offset');
-  return offset ? offset + '/' + url : url;
-}
-
-function createFuseIndex() {
-
-  // create fuse index
-  var options = {
-    keys: [
-      { name: 'title', weight: 20 },
-      { name: 'categories', weight: 15 },
-      { name: 'description', weight: 10 },
-      { name: 'contents', weight: 5 },
-    ],
-    ignoreLocation: true,
-    threshold: 0
-  };
-  var fuse = new window.Fuse([], options);
-
-  // fetch the main search.json
-  return fetch(offsetURL('search.json'))
-    .then(function(response) {
-      if (response.status == 200) {
-        return response.json().then(function(json) {
-          // index main articles
-          json.articles.forEach(function(article) {
-            fuse.add(article);
-          });
-          // download collections and index their articles
-          return Promise.all(json.collections.map(function(collection) {
-            return fetch(offsetURL(collection)).then(function(response) {
-              if (response.status === 200) {
-                return response.json().then(function(articles) {
-                  articles.forEach(function(article) {
-                    fuse.add(article);
-                  });
-                })
-              } else {
-                return Promise.reject(
-                  new Error('Unexpected status from search index request: ' +
-                            response.status)
-                );
-              }
-            });
-          })).then(function() {
-            return fuse;
-          });
-        });
-
-      } else {
-        return Promise.reject(
-          new Error('Unexpected status from search index request: ' +
-                      response.status)
-        );
-      }
-    });
-}
-
-window.document.addEventListener("DOMContentLoaded", function (event) {
-
-  // get search element (bail if we don't have one)
-  var searchEl = window.document.getElementById('distill-search');
-  if (!searchEl)
-    return;
-
-  createFuseIndex()
-    .then(function(fuse) {
-
-      // make search box visible
-      searchEl.classList.remove('hidden');
-
-      // initialize autocomplete
-      var options = {
-        autoselect: true,
-        hint: false,
-        minLength: 2,
-      };
-      window.autocomplete(searchEl, options, [{
-        source: function(query, callback) {
-          const searchOptions = {
-            isCaseSensitive: false,
-            shouldSort: true,
-            minMatchCharLength: 2,
-            limit: 10,
-          };
-          var results = fuse.search(query, searchOptions);
-          callback(results
-            .map(function(result) { return result.item; })
-          );
-        },
-        templates: {
-          suggestion: function(suggestion) {
-            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-              : '';
-            var html = `
-              <div class="search-item">
-                <h3>${suggestion.title}</h3>
-                <div class="search-item-description">
-                  ${suggestion.description || ''}
-                </div>
-                <div class="search-item-preview">
-                  ${img}
-                </div>
-              </div>
-            `;
-            return html;
-          }
-        }
-      }]).on('autocomplete:selected', function(event, suggestion) {
-        window.location.href = offsetURL(suggestion.path);
-      });
-      // remove inline display style on autocompleter (we want to
-      // manage responsive display via css)
-      $('.algolia-autocomplete').css("display", "");
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-
-});
-
-</script>
-
-<style type="text/css">
-
-.nav-search {
-  font-size: x-small;
-}
-
-/* Algolioa Autocomplete */
-
-.algolia-autocomplete {
-  display: inline-block;
-  margin-left: 10px;
-  vertical-align: sub;
-  background-color: white;
-  color: black;
-  padding: 6px;
-  padding-top: 8px;
-  padding-bottom: 0;
-  border-radius: 6px;
-  border: 1px #0F2E3D solid;
-  width: 180px;
-}
-
-
-@media screen and (max-width: 768px) {
-  .distill-site-nav .algolia-autocomplete {
-    display: none;
-    visibility: hidden;
-  }
-  .distill-site-nav.responsive .algolia-autocomplete {
-    display: inline-block;
-    visibility: visible;
-  }
-  .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-    margin-left: 0;
-    width: 400px;
-    max-height: 400px;
-  }
-}
-
-.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-  width: 90%;
-  outline: none;
-  border: none;
-}
-
-.algolia-autocomplete .aa-hint {
-  color: #999;
-}
-.algolia-autocomplete .aa-dropdown-menu {
-  width: 550px;
-  max-height: 70vh;
-  overflow-x: visible;
-  overflow-y: scroll;
-  padding: 5px;
-  margin-top: 3px;
-  margin-left: -150px;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #999;
-  border-top: none;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-  cursor: pointer;
-  padding: 5px 4px;
-  border-bottom: 1px solid #eee;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-  border-bottom: none;
-  margin-bottom: 2px;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-  overflow: hidden;
-  font-size: 0.8em;
-  line-height: 1.4em;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-  font-size: 1rem;
-  margin-block-start: 0;
-  margin-block-end: 5px;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-  display: inline-block;
-  overflow: hidden;
-  height: 2.8em;
-  width: 80%;
-  margin-right: 4%;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-  display: inline-block;
-  width: 15%;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-  height: 3em;
-  width: auto;
-  display: none;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-  display: initial;
-}
-
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-  background-color: #eee;
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-  font-weight: bold;
-  font-style: normal;
-}
-
-</style>
-
-
-<!--/radix_placeholder_navigation_in_header-->
-  <!--radix_placeholder_distill-->
-
-<style type="text/css">
-
-body {
-  background-color: white;
-}
-
-.pandoc-table {
-  width: 100%;
-}
-
-.pandoc-table>caption {
-  margin-bottom: 10px;
-}
-
-.pandoc-table th:not([align]) {
-  text-align: left;
-}
-
-.pagedtable-footer {
-  font-size: 15px;
-}
-
-d-byline .byline {
-  grid-template-columns: 2fr 2fr;
-}
-
-d-byline .byline h3 {
-  margin-block-start: 1.5em;
-}
-
-d-byline .byline .authors-affiliations h3 {
-  margin-block-start: 0.5em;
-}
-
-.authors-affiliations .orcid-id {
-  width: 16px;
-  height:16px;
-  margin-left: 4px;
-  margin-right: 4px;
-  vertical-align: middle;
-  padding-bottom: 2px;
-}
-
-d-title .dt-tags {
-  margin-top: 1em;
-  grid-column: text;
-}
-
-.dt-tags .dt-tag {
-  text-decoration: none;
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0em 0.4em;
-  margin-right: 0.5em;
-  margin-bottom: 0.4em;
-  font-size: 70%;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-d-article table.gt_table td,
-d-article table.gt_table th {
-  border-bottom: none;
-}
-
-.html-widget {
-  margin-bottom: 2.0em;
-}
-
-.l-screen-inset {
-  padding-right: 16px;
-}
-
-.l-screen .caption {
-  margin-left: 10px;
-}
-
-.shaded {
-  background: rgb(247, 247, 247);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shaded .html-widget {
-  margin-bottom: 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shaded .shaded-content {
-  background: white;
-}
-
-.text-output {
-  margin-top: 0;
-  line-height: 1.5em;
-}
-
-.hidden {
-  display: none !important;
-}
-
-d-article {
-  padding-top: 2.5rem;
-  padding-bottom: 30px;
-}
-
-d-appendix {
-  padding-top: 30px;
-}
-
-d-article>p>img {
-  width: 100%;
-}
-
-d-article h2 {
-  margin: 1rem 0 1.5rem 0;
-}
-
-d-article h3 {
-  margin-top: 1.5rem;
-}
-
-d-article iframe {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 2.0em;
-  width: 100%;
-}
-
-/* Tweak code blocks */
-
-d-article div.sourceCode code,
-d-article pre code {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-}
-
-d-article pre,
-d-article div.sourceCode,
-d-article div.sourceCode pre {
-  overflow: auto;
-}
-
-d-article div.sourceCode {
-  background-color: white;
-}
-
-d-article div.sourceCode pre {
-  padding-left: 10px;
-  font-size: 12px;
-  border-left: 2px solid rgba(0,0,0,0.1);
-}
-
-d-article pre {
-  font-size: 12px;
-  color: black;
-  background: none;
-  margin-top: 0;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-d-article pre a {
-  border-bottom: none;
-}
-
-d-article pre a:hover {
-  border-bottom: none;
-  text-decoration: underline;
-}
-
-d-article details {
-  grid-column: text;
-  margin-bottom: 0.8em;
-}
-
-@media(min-width: 768px) {
-
-d-article pre,
-d-article div.sourceCode,
-d-article div.sourceCode pre {
-  overflow: visible !important;
-}
-
-d-article div.sourceCode pre {
-  padding-left: 18px;
-  font-size: 14px;
-}
-
-d-article pre {
-  font-size: 14px;
-}
-
-}
-
-figure img.external {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  box-sizing: border-box;
-}
-
-/* CSS for d-contents */
-
-.d-contents {
-  grid-column: text;
-  color: rgba(0,0,0,0.8);
-  font-size: 0.9em;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-  padding-bottom: 0.5em;
-  margin-bottom: 1em;
-  padding-left: 0.25em;
-  justify-self: start;
-}
-
-@media(min-width: 1000px) {
-  .d-contents.d-contents-float {
-    height: 0;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    justify-self: center;
-    padding-right: 3em;
-    padding-left: 2em;
-  }
-}
-
-.d-contents nav h3 {
-  font-size: 18px;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-
-.d-contents li {
-  list-style-type: none
-}
-
-.d-contents nav > ul {
-  padding-left: 0;
-}
-
-.d-contents ul {
-  padding-left: 1em
-}
-
-.d-contents nav ul li {
-  margin-top: 0.6em;
-  margin-bottom: 0.2em;
-}
-
-.d-contents nav a {
-  font-size: 13px;
-  border-bottom: none;
-  text-decoration: none
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.d-contents nav a:hover {
-  text-decoration: underline solid rgba(0, 0, 0, 0.6)
-}
-
-.d-contents nav > ul > li > a {
-  font-weight: 600;
-}
-
-.d-contents nav > ul > li > ul {
-  font-weight: inherit;
-}
-
-.d-contents nav > ul > li > ul > li {
-  margin-top: 0.2em;
-}
-
-
-.d-contents nav ul {
-  margin-top: 0;
-  margin-bottom: 0.25em;
-}
-
-.d-article-with-toc h2:nth-child(2) {
-  margin-top: 0;
-}
-
-
-/* Figure */
-
-.figure {
-  position: relative;
-  margin-bottom: 2.5em;
-  margin-top: 1.5em;
-}
-
-.figure img {
-  width: 100%;
-}
-
-.figure .caption {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-  line-height: 1.5em;
-}
-
-.figure img.external {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  box-sizing: border-box;
-}
-
-.figure .caption a {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.figure .caption b,
-.figure .caption strong, {
-  font-weight: 600;
-  color: rgba(0, 0, 0, 1.0);
-}
-
-/* Citations */
-
-d-article .citation {
-  color: inherit;
-  cursor: inherit;
-}
-
-div.hanging-indent{
-  margin-left: 1em; text-indent: -1em;
-}
-
-/* Citation hover box */
-
-.tippy-box[data-theme~=light-border] {
-  background-color: rgba(250, 250, 250, 0.95);
-}
-
-.tippy-content > p {
-  margin-bottom: 0;
-  padding: 2px;
-}
-
-
-/* Tweak 1000px media break to show more text */
-
-@media(min-width: 1000px) {
-  .base-grid,
-  distill-header,
-  d-title,
-  d-abstract,
-  d-article,
-  d-appendix,
-  distill-appendix,
-  d-byline,
-  d-footnote-list,
-  d-citation-list,
-  distill-footer {
-    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
-    grid-column-gap: 16px;
-  }
-
-  .grid {
-    grid-column-gap: 16px;
-  }
-
-  d-article {
-    font-size: 1.06rem;
-    line-height: 1.7em;
-  }
-  figure .caption, .figure .caption, figure figcaption {
-    font-size: 13px;
-  }
-}
-
-@media(min-width: 1180px) {
-  .base-grid,
-  distill-header,
-  d-title,
-  d-abstract,
-  d-article,
-  d-appendix,
-  distill-appendix,
-  d-byline,
-  d-footnote-list,
-  d-citation-list,
-  distill-footer {
-    grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
-    grid-column-gap: 32px;
-  }
-
-  .grid {
-    grid-column-gap: 32px;
-  }
-}
-
-
-/* Get the citation styles for the appendix (not auto-injected on render since
-   we do our own rendering of the citation appendix) */
-
-d-appendix .citation-appendix,
-.d-appendix .citation-appendix {
-  font-size: 11px;
-  line-height: 15px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left: 18px;
-  border: 1px solid rgba(0,0,0,0.1);
-  background: rgba(0, 0, 0, 0.02);
-  padding: 10px 18px;
-  border-radius: 3px;
-  color: rgba(150, 150, 150, 1);
-  overflow: hidden;
-  margin-top: -12px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-/* Include appendix styles here so they can be overridden */
-
-d-appendix {
-  contain: layout style;
-  font-size: 0.8em;
-  line-height: 1.7em;
-  margin-top: 60px;
-  margin-bottom: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  color: rgba(0,0,0,0.5);
-  padding-top: 60px;
-  padding-bottom: 48px;
-}
-
-d-appendix h3 {
-  grid-column: page-start / text-start;
-  font-size: 15px;
-  font-weight: 500;
-  margin-top: 1em;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.65);
-}
-
-d-appendix h3 + * {
-  margin-top: 1em;
-}
-
-d-appendix ol {
-  padding: 0 0 0 15px;
-}
-
-@media (min-width: 768px) {
-  d-appendix ol {
-    padding: 0 0 0 30px;
-    margin-left: -30px;
-  }
-}
-
-d-appendix li {
-  margin-bottom: 1em;
-}
-
-d-appendix a {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-d-appendix > * {
-  grid-column: text;
-}
-
-d-appendix > d-footnote-list,
-d-appendix > d-citation-list,
-d-appendix > distill-appendix {
-  grid-column: screen;
-}
-
-/* Include footnote styles here so they can be overridden */
-
-d-footnote-list {
-  contain: layout style;
-}
-
-d-footnote-list > * {
-  grid-column: text;
-}
-
-d-footnote-list a.footnote-backlink {
-  color: rgba(0,0,0,0.3);
-  padding-left: 0.5em;
-}
-
-
-
-/* Anchor.js */
-
-.anchorjs-link {
-  /*transition: all .25s linear; */
-  text-decoration: none;
-  border-bottom: none;
-}
-*:hover > .anchorjs-link {
-  margin-left: -1.125em !important;
-  text-decoration: none;
-  border-bottom: none;
-}
-
-/* Social footer */
-
-.social_footer {
-  margin-top: 30px;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.67);
-}
-
-.disqus-comments {
-  margin-right: 30px;
-}
-
-.disqus-comment-count {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-}
-
-#disqus_thread {
-  margin-top: 30px;
-}
-
-.article-sharing a {
-  border-bottom: none;
-  margin-right: 8px;
-}
-
-.article-sharing a:hover {
-  border-bottom: none;
-}
-
-.sidebar-section.subscribe {
-  font-size: 12px;
-  line-height: 1.6em;
-}
-
-.subscribe p {
-  margin-bottom: 0.5em;
-}
-
-
-.article-footer .subscribe {
-  font-size: 15px;
-  margin-top: 45px;
-}
-
-
-.sidebar-section.custom {
-  font-size: 12px;
-  line-height: 1.6em;
-}
-
-.custom p {
-  margin-bottom: 0.5em;
-}
-
-/* Styles for listing layout (hide title) */
-.layout-listing d-title, .layout-listing .d-title {
-  display: none;
-}
-
-/* Styles for posts lists (not auto-injected) */
-
-
-.posts-with-sidebar {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.posts-list .description h2,
-.posts-list .description p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-}
-
-.posts-list .description h2 {
-  font-weight: 700;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.posts-list h2.post-tag {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-}
-.posts-list {
-  margin-top: 60px;
-  margin-bottom: 24px;
-}
-
-.posts-list .post-preview {
-  text-decoration: none;
-  overflow: hidden;
-  display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 24px 0;
-}
-
-.post-preview-last {
-  border-bottom: none !important;
-}
-
-.posts-list .posts-list-caption {
-  grid-column: screen;
-  font-weight: 400;
-}
-
-.posts-list .post-preview h2 {
-  margin: 0 0 6px 0;
-  line-height: 1.2em;
-  font-style: normal;
-  font-size: 24px;
-}
-
-.posts-list .post-preview p {
-  margin: 0 0 12px 0;
-  line-height: 1.4em;
-  font-size: 16px;
-}
-
-.posts-list .post-preview .thumbnail {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  position: relative;
-  max-width: 500px;
-}
-.posts-list .post-preview img {
-  width: 100%;
-  display: block;
-}
-
-.posts-list .metadata {
-  font-size: 12px;
-  line-height: 1.4em;
-  margin-bottom: 18px;
-}
-
-.posts-list .metadata > * {
-  display: inline-block;
-}
-
-.posts-list .metadata .publishedDate {
-  margin-right: 2em;
-}
-
-.posts-list .metadata .dt-authors {
-  display: block;
-  margin-top: 0.3em;
-  margin-right: 2em;
-}
-
-.posts-list .dt-tags {
-  display: block;
-  line-height: 1em;
-}
-
-.posts-list .dt-tags .dt-tag {
-  display: inline-block;
-  color: rgba(0,0,0,0.6);
-  padding: 0.3em 0.4em;
-  margin-right: 0.2em;
-  margin-bottom: 0.4em;
-  font-size: 60%;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.posts-list img {
-  opacity: 1;
-}
-
-.posts-list img[data-src] {
-  opacity: 0;
-}
-
-.posts-more {
-  clear: both;
-}
-
-
-.posts-sidebar {
-  font-size: 16px;
-}
-
-.posts-sidebar h3 {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.sidebar-section {
-  margin-bottom: 30px;
-}
-
-.categories ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.categories li {
-  color: rgba(0, 0, 0, 0.8);
-  margin-bottom: 0;
-}
-
-.categories li>a {
-  border-bottom: none;
-}
-
-.categories li>a:hover {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-.categories .active {
-  font-weight: 600;
-}
-
-.categories .category-count {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-
-@media(min-width: 768px) {
-  .posts-list .post-preview h2 {
-    font-size: 26px;
-  }
-  .posts-list .post-preview .thumbnail {
-    float: right;
-    width: 30%;
-    margin-bottom: 0;
-  }
-  .posts-list .post-preview .description {
-    float: left;
-    width: 45%;
-  }
-  .posts-list .post-preview .metadata {
-    float: left;
-    width: 20%;
-    margin-top: 8px;
-  }
-  .posts-list .post-preview p {
-    margin: 0 0 12px 0;
-    line-height: 1.5em;
-    font-size: 16px;
-  }
-  .posts-with-sidebar .posts-list {
-    float: left;
-    width: 75%;
-  }
-  .posts-with-sidebar .posts-sidebar {
-    float: right;
-    width: 20%;
-    margin-top: 60px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
-}
-
-
-/* Improve display for browsers without grid (IE/Edge <= 15) */
-
-.downlevel {
-  line-height: 1.6em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  margin: 0;
-}
-
-.downlevel .d-title {
-  padding-top: 6rem;
-  padding-bottom: 1.5rem;
-}
-
-.downlevel .d-title h1 {
-  font-size: 50px;
-  font-weight: 700;
-  line-height: 1.1em;
-  margin: 0 0 0.5rem;
-}
-
-.downlevel .d-title p {
-  font-weight: 300;
-  font-size: 1.2rem;
-  line-height: 1.55em;
-  margin-top: 0;
-}
-
-.downlevel .d-byline {
-  padding-top: 0.8em;
-  padding-bottom: 0.8em;
-  font-size: 0.8rem;
-  line-height: 1.8em;
-}
-
-.downlevel .section-separator {
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.downlevel .d-article {
-  font-size: 1.06rem;
-  line-height: 1.7em;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-}
-
-
-.downlevel .d-appendix {
-  padding-left: 0;
-  padding-right: 0;
-  max-width: none;
-  font-size: 0.8em;
-  line-height: 1.7em;
-  margin-bottom: 0;
-  color: rgba(0,0,0,0.5);
-  padding-top: 40px;
-  padding-bottom: 48px;
-}
-
-.downlevel .footnotes ol {
-  padding-left: 13px;
-}
-
-.downlevel .base-grid,
-.downlevel .distill-header,
-.downlevel .d-title,
-.downlevel .d-abstract,
-.downlevel .d-article,
-.downlevel .d-appendix,
-.downlevel .distill-appendix,
-.downlevel .d-byline,
-.downlevel .d-footnote-list,
-.downlevel .d-citation-list,
-.downlevel .distill-footer,
-.downlevel .appendix-bottom,
-.downlevel .posts-container {
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-@media(min-width: 768px) {
-  .downlevel .base-grid,
-  .downlevel .distill-header,
-  .downlevel .d-title,
-  .downlevel .d-abstract,
-  .downlevel .d-article,
-  .downlevel .d-appendix,
-  .downlevel .distill-appendix,
-  .downlevel .d-byline,
-  .downlevel .d-footnote-list,
-  .downlevel .d-citation-list,
-  .downlevel .distill-footer,
-  .downlevel .appendix-bottom,
-  .downlevel .posts-container {
-  padding-left: 150px;
-  padding-right: 150px;
-  max-width: 900px;
-}
-}
-
-.downlevel pre code {
-  display: block;
-  border-left: 2px solid rgba(0, 0, 0, .1);
-  padding: 0 0 0 20px;
-  font-size: 14px;
-}
-
-.downlevel code, .downlevel pre {
-  color: black;
-  background: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-.downlevel .posts-list .post-preview {
-  color: inherit;
-}
-
-
-
-</style>
-
-<script type="application/javascript">
-
-function is_downlevel_browser() {
-  if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
-                                 window.navigator.userAgent)) {
-    return true;
-  } else {
-    return window.load_distill_framework === undefined;
-  }
-}
-
-// show body when load is complete
-function on_load_complete() {
-
-  // add anchors
-  if (window.anchors) {
-    window.anchors.options.placement = 'left';
-    window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
-  }
-
-
-  // set body to visible
-  document.body.style.visibility = 'visible';
-
-  // force redraw for leaflet widgets
-  if (window.HTMLWidgets) {
-    var maps = window.HTMLWidgets.findAll(".leaflet");
-    $.each(maps, function(i, el) {
-      var map = this.getMap();
-      map.invalidateSize();
-      map.eachLayer(function(layer) {
-        if (layer instanceof L.TileLayer)
-          layer.redraw();
-      });
-    });
-  }
-
-  // trigger 'shown' so htmlwidgets resize
-  $('d-article').trigger('shown');
-}
-
-function init_distill() {
-
-  init_common();
-
-  // create front matter
-  var front_matter = $('<d-front-matter></d-front-matter>');
-  $('#distill-front-matter').wrap(front_matter);
-
-  // create d-title
-  $('.d-title').changeElementType('d-title');
-
-  // create d-byline
-  var byline = $('<d-byline></d-byline>');
-  $('.d-byline').replaceWith(byline);
-
-  // create d-article
-  var article = $('<d-article></d-article>');
-  $('.d-article').wrap(article).children().unwrap();
-
-  // move posts container into article
-  $('.posts-container').appendTo($('d-article'));
-
-  // create d-appendix
-  $('.d-appendix').changeElementType('d-appendix');
-
-  // flag indicating that we have appendix items
-  var appendix = $('.appendix-bottom').children('h3').length > 0;
-
-  // replace footnotes with <d-footnote>
-  $('.footnote-ref').each(function(i, val) {
-    appendix = true;
-    var href = $(this).attr('href');
-    var id = href.replace('#', '');
-    var fn = $('#' + id);
-    var fn_p = $('#' + id + '>p');
-    fn_p.find('.footnote-back').remove();
-    var text = fn_p.html();
-    var dtfn = $('<d-footnote></d-footnote>');
-    dtfn.html(text);
-    $(this).replaceWith(dtfn);
-  });
-  // remove footnotes
-  $('.footnotes').remove();
-
-  // move refs into #references-listing
-  $('#references-listing').replaceWith($('#refs'));
-
-  $('h1.appendix, h2.appendix').each(function(i, val) {
-    $(this).changeElementType('h3');
-  });
-  $('h3.appendix').each(function(i, val) {
-    var id = $(this).attr('id');
-    $('.d-contents a[href="#' + id + '"]').parent().remove();
-    appendix = true;
-    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
-  });
-
-  // show d-appendix if we have appendix content
-  $("d-appendix").css('display', appendix ? 'grid' : 'none');
-
-  // localize layout chunks to just output
-  $('.layout-chunk').each(function(i, val) {
-
-    // capture layout
-    var layout = $(this).attr('data-layout');
-
-    // apply layout to markdown level block elements
-    var elements = $(this).children().not('details, div.sourceCode, pre, script');
-    elements.each(function(i, el) {
-      var layout_div = $('<div class="' + layout + '"></div>');
-      if (layout_div.hasClass('shaded')) {
-        var shaded_content = $('<div class="shaded-content"></div>');
-        $(this).wrap(shaded_content);
-        $(this).parent().wrap(layout_div);
-      } else {
-        $(this).wrap(layout_div);
-      }
-    });
-
-
-    // unwrap the layout-chunk div
-    $(this).children().unwrap();
-  });
-
-  // remove code block used to force  highlighting css
-  $('.distill-force-highlighting-css').parent().remove();
-
-  // remove empty line numbers inserted by pandoc when using a
-  // custom syntax highlighting theme
-  $('code.sourceCode a:empty').remove();
-
-  // load distill framework
-  load_distill_framework();
-
-  // wait for window.distillRunlevel == 4 to do post processing
-  function distill_post_process() {
-
-    if (!window.distillRunlevel || window.distillRunlevel < 4)
-      return;
-
-    // hide author/affiliations entirely if we have no authors
-    var front_matter = JSON.parse($("#distill-front-matter").html());
-    var have_authors = front_matter.authors && front_matter.authors.length > 0;
-    if (!have_authors)
-      $('d-byline').addClass('hidden');
-
-    // article with toc class
-    $('.d-contents').parent().addClass('d-article-with-toc');
-
-    // strip links that point to #
-    $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
-
-    // add orcid ids
-    $('.authors-affiliations').find('.author').each(function(i, el) {
-      var orcid_id = front_matter.authors[i].orcidID;
-      if (orcid_id) {
-        var a = $('<a></a>');
-        a.attr('href', 'https://orcid.org/' + orcid_id);
-        var img = $('<img></img>');
-        img.addClass('orcid-id');
-        img.attr('alt', 'ORCID ID');
-        img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
-        a.append(img);
-        $(this).append(a);
-      }
-    });
-
-    // hide elements of author/affiliations grid that have no value
-    function hide_byline_column(caption) {
-      $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
-    }
-
-    // affiliations
-    var have_affiliations = false;
-    for (var i = 0; i<front_matter.authors.length; ++i) {
-      var author = front_matter.authors[i];
-      if (author.affiliation !== "&nbsp;") {
-        have_affiliations = true;
-        break;
-      }
-    }
-    if (!have_affiliations)
-      $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
-
-    // published date
-    if (!front_matter.publishedDate)
-      hide_byline_column("Published");
-
-    // document object identifier
-    var doi = $('d-byline').find('h3:contains("DOI")');
-    var doi_p = doi.next().empty();
-    if (!front_matter.doi) {
-      // if we have a citation and valid citationText then link to that
-      if ($('#citation').length > 0 && front_matter.citationText) {
-        doi.html('Citation');
-        $('<a href="#citation"></a>')
-          .text(front_matter.citationText)
-          .appendTo(doi_p);
-      } else {
-        hide_byline_column("DOI");
-      }
-    } else {
-      $('<a></a>')
-         .attr('href', "https://doi.org/" + front_matter.doi)
-         .html(front_matter.doi)
-         .appendTo(doi_p);
-    }
-
-     // change plural form of authors/affiliations
-    if (front_matter.authors.length === 1) {
-      var grid = $('.authors-affiliations');
-      grid.children('h3:contains("Authors")').text('Author');
-      grid.children('h3:contains("Affiliations")').text('Affiliation');
-    }
-
-    // remove d-appendix and d-footnote-list local styles
-    $('d-appendix > style:first-child').remove();
-    $('d-footnote-list > style:first-child').remove();
-
-    // move appendix-bottom entries to the bottom
-    $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
-    $('.appendix-bottom').remove();
-
-    // hoverable references
-    $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
-      window.tippy(this, {
-        allowHTML: true,
-        content: refHtml,
-        maxWidth: 500,
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'light-border',
-        placement: 'bottom-start'
-      });
-    });
-
-    // clear polling timer
-    clearInterval(tid);
-
-    // show body now that everything is ready
-    on_load_complete();
-  }
-
-  var tid = setInterval(distill_post_process, 50);
-  distill_post_process();
-
-}
-
-function init_downlevel() {
-
-  init_common();
-
-   // insert hr after d-title
-  $('.d-title').after($('<hr class="section-separator"/>'));
-
-  // check if we have authors
-  var front_matter = JSON.parse($("#distill-front-matter").html());
-  var have_authors = front_matter.authors && front_matter.authors.length > 0;
-
-  // manage byline/border
-  if (!have_authors)
-    $('.d-byline').remove();
-  $('.d-byline').after($('<hr class="section-separator"/>'));
-  $('.d-byline a').remove();
-
-  // remove toc
-  $('.d-contents').remove();
-
-  // move appendix elements
-  $('h1.appendix, h2.appendix').each(function(i, val) {
-    $(this).changeElementType('h3');
-  });
-  $('h3.appendix').each(function(i, val) {
-    $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
-  });
-
-
-  // inject headers into references and footnotes
-  var refs_header = $('<h3></h3>');
-  refs_header.text('References');
-  $('#refs').prepend(refs_header);
-
-  var footnotes_header = $('<h3></h3');
-  footnotes_header.text('Footnotes');
-  $('.footnotes').children('hr').first().replaceWith(footnotes_header);
-
-  // move appendix-bottom entries to the bottom
-  $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
-  $('.appendix-bottom').remove();
-
-  // remove appendix if it's empty
-  if ($('.d-appendix').children().length === 0)
-    $('.d-appendix').remove();
-
-  // prepend separator above appendix
-  $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
-
-  // trim code
-  $('pre>code').each(function(i, val) {
-    $(this).html($.trim($(this).html()));
-  });
-
-  // move posts-container right before article
-  $('.posts-container').insertBefore($('.d-article'));
-
-  $('body').addClass('downlevel');
-
-  on_load_complete();
-}
-
-
-function init_common() {
-
-  // jquery plugin to change element types
-  (function($) {
-    $.fn.changeElementType = function(newType) {
-      var attrs = {};
-
-      $.each(this[0].attributes, function(idx, attr) {
-        attrs[attr.nodeName] = attr.nodeValue;
-      });
-
-      this.replaceWith(function() {
-        return $("<" + newType + "/>", attrs).append($(this).contents());
-      });
-    };
-  })(jQuery);
-
-  // prevent underline for linked images
-  $('a > img').parent().css({'border-bottom' : 'none'});
-
-  // mark non-body figures created by knitr chunks as 100% width
-  $('.layout-chunk').each(function(i, val) {
-    var figures = $(this).find('img, .html-widget');
-    if ($(this).attr('data-layout') !== "l-body") {
-      figures.css('width', '100%');
-    } else {
-      figures.css('max-width', '100%');
-      figures.filter("[width]").each(function(i, val) {
-        var fig = $(this);
-        fig.css('width', fig.attr('width') + 'px');
-      });
-
-    }
-  });
-
-  // auto-append index.html to post-preview links in file: protocol
-  // and in rstudio ide preview
-  $('.post-preview').each(function(i, val) {
-    if (window.location.protocol === "file:")
-      $(this).attr('href', $(this).attr('href') + "index.html");
-  });
-
-  // get rid of index.html references in header
-  if (window.location.protocol !== "file:") {
-    $('.distill-site-header a[href]').each(function(i,val) {
-      $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
-    });
-  }
-
-  // add class to pandoc style tables
-  $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
-  $('.kable-table').children('table').addClass('pandoc-table');
-
-  // add figcaption style to table captions
-  $('caption').parent('table').addClass("figcaption");
-
-  // initialize posts list
-  if (window.init_posts_list)
-    window.init_posts_list();
-
-  // implmement disqus comment link
-  $('.disqus-comment-count').click(function() {
-    window.headroom_prevent_pin = true;
-    $('#disqus_thread').toggleClass('hidden');
-    if (!$('#disqus_thread').hasClass('hidden')) {
-      var offset = $(this).offset();
-      $(window).resize();
-      $('html, body').animate({
-        scrollTop: offset.top - 35
-      });
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  if (is_downlevel_browser())
-    init_downlevel();
-  else
-    window.addEventListener('WebComponentsReady', init_distill);
-});
-
-</script>
-
-<!--/radix_placeholder_distill-->
-  <script src="../../site_libs/htmlwidgets/htmlwidgets.js"></script>
-  <script src="../../site_libs/jquery/jquery.min.js"></script>
-  <link href="../../site_libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
-  <script src="../../site_libs/datatables-binding/datatables.js"></script>
-  <link href="../../site_libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
-  <link href="../../site_libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
-  <script src="../../site_libs/dt-core/js/jquery.dataTables.min.js"></script>
-  <link href="../../site_libs/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
-  <script src="../../site_libs/nouislider/jquery.nouislider.min.js"></script>
-  <link href="../../site_libs/selectize/selectize.bootstrap3.css" rel="stylesheet" />
-  <script src="../../site_libs/selectize/selectize.min.js"></script>
-  <link href="../../site_libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
-  <script src="../../site_libs/crosstalk/js/crosstalk.min.js"></script>
-  <script src="../../site_libs/popper/popper.min.js"></script>
-  <link href="../../site_libs/tippy/tippy.css" rel="stylesheet" />
-  <link href="../../site_libs/tippy/tippy-light-border.css" rel="stylesheet" />
-  <script src="../../site_libs/tippy/tippy.umd.min.js"></script>
-  <script src="../../site_libs/anchor/anchor.min.js"></script>
-  <script src="../../site_libs/bowser/bowser.min.js"></script>
-  <script src="../../site_libs/webcomponents/webcomponents.js"></script>
-  <script src="../../site_libs/distill/template.v2.js"></script>
-  <!--radix_placeholder_site_in_header-->
-<!--/radix_placeholder_site_in_header-->
-
-
-</head>
-
-<body>
-
-<!--radix_placeholder_front_matter-->
-
-<script id="distill-front-matter" type="text/json">
-{"title":"VAST Challenge 2021 - Mini-Challenge 3 ","description":"Using Visual Analytics to Support Decision Making to Solve The kronos Incident.","authors":[{"author":"Tang Yue","authorURL":{},"affiliation":"Singapore Management University","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-07-14T00:00:00.000+08:00","citationText":"Yue, 2021"}
-</script>
-
-<!--/radix_placeholder_front_matter-->
-<!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="../../index.html" class="title">R for Data Science and Analysis</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="../../index.html">Home</a>
-<a href="../../about.html">About</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
-<!--/radix_placeholder_navigation_before_body-->
-<!--radix_placeholder_site_before_body-->
-<!--/radix_placeholder_site_before_body-->
-
-<div class="d-title">
-<h1>VAST Challenge 2021 - Mini-Challenge 3</h1>
-<!--radix_placeholder_categories-->
-<!--/radix_placeholder_categories-->
-<p><p>Using Visual Analytics to Support Decision Making to Solve The kronos Incident.</p></p>
-</div>
-
-<div class="d-byline">
-  Tang Yue true (Singapore Management University)
-  
-<br/>07-14-2021
-</div>
-
-<div class="d-article">
-<h1 id="overview">1. Overview</h1>
-<p>The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see <a href="https://vast-challenge.github.io/2021/index.html">VAST Challenge 2021</a>.</p>
-<p>This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge has 3 tasks and questions and asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions.</p>
-<h1 id="data-preparation-and-exploration">2. Data preparation and Exploration</h1>
-<h3 id="data-source">2.1 Data Source</h3>
-<ul>
-<li><p>There are three dataset provides in Mini-Challenge 3 :</p>
-<ul>
-<li><p>Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident</p></li>
-<li><p>Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.</p></li>
-<li><p>maps of Abila and background documents.</p></li>
-</ul></li>
-<li><p>The data of Microblog and text transcripts of emergency dispatches are found in three segments:</p>
-<ul>
-<li>Segment 1 :“csv-1700-1830.csv” - covers the time period from 1700 to 1830 Abila time on January 23.</li>
-<li>Segment 2: "csv-1831-2000.csv’- covers the time period from 1830 to 2000 Abila time on January 23.</li>
-<li>Segment 3: “csv-2001-2131.csv” - covers the time period from 2000 to shortly after 2130 Abila time on January 23.</li>
-</ul></li>
-</ul>
-<h3 id="install-and-load-r-package">2.2 Install and load R package</h3>
-<p>In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'widyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'lubridate'</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>,<span class='st'>'dplyr'</span>,<span class='st'>'widyr'</span>,<span class='st'>'readr'</span>,<span class='st'>'tm'</span>,<span class='st'>'lubridate'</span>,
 <span class='st'>'wordcloud'</span>,<span class='st'>'SnowballC'</span>, <span class='st'>'UpSetR'</span>,<span class='st'>'ggplot2'</span>,<span class='st'>'ggwordcloud'</span>,
 <span class='st'>'topicmodels'</span>,<span class='st'>'stringr'</span>,<span class='st'>'clock'</span>, <span class='st'>'tidytext'</span>,<span class='st'>'tokenizers'</span>,
 <span class='st'>'igraph'</span>,<span class='st'>'ggraph'</span>,<span class='st'>'DT'</span>,<span class='st'>'topicmodels'</span><span class='op'>)</span>
@@ -2142,99 +60,93 @@ document.addEventListener('DOMContentLoaded', function() {
   <span class='op'>}</span>
   <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>p</span>,character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
 <span class='op'>}</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="import-dataset-and-combine-data">2.3 Import dataset and combine data</h3>
-<p>The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.</p>
-<p><img src="image/1.files.PNG" style="width:50.0%" /></p>
-<ul>
-<li>Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package <span style="color:blue"><em>tidyverse</em></span> would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.</li>
-</ul>
+
+
+
+### 2.3 Import dataset and combine data
+
+The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
+
+![](image/1.files.PNG){width=50%}
+
+* Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package <span style="color:blue">*tidyverse*</span> would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 <span class='va'>table1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1700-1830.csv"</span><span class='op'>)</span>
 <span class='va'>table2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-1831-2000.csv"</span><span class='op'>)</span>
 <span class='va'>table3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"csv-2001-2131.csv"</span><span class='op'>)</span>
 <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>table1</span>, <span class='va'>table2</span>,<span class='va'>table3</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="modifying-date-format">2.4 Modifying Date format</h3>
-<ul>
-<li>converting character objects to dates can be made easier by using the <span style="color:blue"><em>lubridate</em></span> package, which would be used to convert date type from ‘yyyymmddhhmmss’ to ‘yyyy-mm-dd hh:mm:ss’, and create a new column ‘date’ in data, and the code chunk could be seen below.</li>
-</ul>
+
+
+### 2.4  Modifying Date format 
+
+* converting character objects to dates can be made easier by using the <span style="color:blue">*lubridate*</span> package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span> <span class='op'>&lt;-</span> <span class='fu'>ymd_hms</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span> <span class='op'>&lt;-</span> <span class='fu'>ymd_hms</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>date.yyyyMMddHHmmss.</span><span class='op'>)</span>
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>Rename “date.yyyyMMddHHmmss.” in data into “date” with concise format.</li>
-</ul>
+
+
+* Rename "date.yyyyMMddHHmmss." in data into "date" with concise format.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"date.yyyyMMddHHmmss."</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"date"</span>
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"date.yyyyMMddHHmmss."</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"date"</span>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="remove-special-chacaters">2.5 Remove Special Chacaters</h3>
-<p>In this step, we would like to use package <span style="color:blue"><em>stringr</em></span> to clean special characters, including " @, &lt; , ˜ " and none English words.</p>
+
+
+
+### 2.5 Remove Special Chacaters
+
+In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words.
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"&lt;"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"&lt;"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"˜"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"[\u4e00-\u9fa5]+"</span><span class='op'>)</span>, <span class='st'>""</span><span class='op'>)</span>
 <span class='co'>#data$message &lt;- str_replace_all(data$message,fixed("RT @.+ "),"")</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>For convenience of further analysis, we separate ‘ccdata’ and ‘mbdata’ from “data”, they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.</li>
-</ul>
+
+
+
+* For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"ccdata"</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"ccdata"</span><span class='op'>)</span>
 <span class='va'>mbdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>type</span> <span class='op'>==</span> <span class='st'>"mbdata"</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="classify-record">2.6 Classify Record</h3>
-<p>Based on content of data provided, we classified records into three segments, Junk, Typical_Chatter and Meaningful records, using <span style="color:blue"><em>stringr</em></span>, <span style="color:blue"><em>dplyr</em></span>package. Because emergency call center data is credible and reliable, here we just classify Microblog data into three classes.</p>
-<table>
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 62%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Class</th>
-<th>Definition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Junk</strong></td>
-<td>referred to advertisements or financial purpose reports.</td>
-</tr>
-<tr class="even">
-<td><strong>Meaningful</strong></td>
-<td>refers to informative records which spread real news about ongoing or impending events happen in Aliba.</td>
-</tr>
-<tr class="odd">
-<td><strong>Typical Chatter</strong></td>
-<td>represents no meaningful and irrelevant or inappropriate messages post online.</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>classify Junk records: The <strong>str_detect()</strong> function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|</li>
-</ul>
+
+
+### 2.6 Classify Record
+
+Based on content of data provided, we classified records into three segments, Junk, Typical_Chatter and Meaningful records, using <span style="color:blue">*stringr*</span>, <span style="color:blue">*dplyr*</span>package. Because emergency call center data is credible and reliable, here we just classify Microblog data into three classes.
+
+
+Class| Definition
+|------|----------|
+|**Junk**| referred to advertisements or financial purpose reports.|
+|**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
+|**Typical Chatter**|represents no meaningful and irrelevant or inappropriate messages post online. |
+
+* classify Junk records: The **str_detect()** function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>mbdata</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_at</span><span class='op'>(</span>.vars <span class='op'>=</span> <span class='fu'>vars</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>author</span><span class='op'>)</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span> <span class='op'>&lt;-</span> <span class='va'>mbdata</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_at</span><span class='op'>(</span>.vars <span class='op'>=</span> <span class='fu'>vars</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>author</span><span class='op'>)</span>, 
 <span class='fu'>any_vars</span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>.</span>, pattern <span class='op'>=</span> <span class='st'>"#artists|#badcreadit|#cars
   |#followme|#nobank|#meds|#cancer|#bestfood|#Grammar|cars.kronos
   |#workAtHome|#gettingFired|#pharmacyripoff|#iThing|sellstuff
@@ -2243,21 +155,22 @@ document.addEventListener('DOMContentLoaded', function() {
   #welksFurniture|#swat|#bugs|visit this link|this site|
   junkman|carjunkers|eazymoney|junk99902|junkieduck113
   |junkman377|junkman995|KronosQuoth|Clevvah4Evah"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata1</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>mbdata</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata1</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>mbdata</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.</li>
-</ul>
+
+
+* Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span><span class='op'>&lt;-</span> <span class='va'>mbdata1</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_at</span><span class='op'>(</span>.vars <span class='op'>=</span> <span class='fu'>vars</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>author</span><span class='op'>)</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>meaningful</span><span class='op'>&lt;-</span> <span class='va'>mbdata1</span> <span class='op'>%&gt;%</span> <span class='fu'>filter_at</span><span class='op'>(</span>.vars <span class='op'>=</span> <span class='fu'>vars</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>author</span><span class='op'>)</span>, 
 <span class='fu'>any_vars</span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>.</span>, pattern <span class='op'>=</span><span class='st'>"#gowaway|#POKrally|van|gun|fire
 |rally|shooting|#AlibaPost|#CentralBulletin|
 #POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
@@ -2271,84 +184,92 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 |#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage|
 #repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
 #shooter|#HELPME|#fire|#thanksAFD"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, <strong>anti_join()</strong> function in <span style="color:blue"><em>dplyr</em></span> package would be used.</li>
-</ul>
+
+
+* Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, **anti_join()** function in <span style="color:blue">*dplyr*</span> package would be used. 
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Typical_Chatter</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>mbdata1</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Typical_Chatter</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>mbdata1</span>,<span class='va'>junk</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span> 
 <span class='va'>Typical_Chatter</span> <span class='op'>&lt;-</span> <span class='fu'>anti_join</span><span class='op'>(</span><span class='va'>mbdata1</span>,<span class='va'>meaningful</span>,by<span class='op'>=</span><span class='st'>"message"</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<p>Now, all records in Microblog data have been labeled with responding class- <strong>Junk</strong>, <strong>Meanigful</strong> and <strong>Spam</strong>.</p>
-<ul>
-<li>Next, we add “class” as a new column to represent the label of every record.</li>
-</ul>
+
+
+Now, all records in Microblog data have been labeled with responding class- **Junk**, **Meanigful** and **Spam**.
+
+* Next, we add "class" as a new column to represent the label of every record.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"junk"</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>junk</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"junk"</span>
 <span class='va'>Typical_Chatter</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"Typical_Chatter"</span>
 <span class='va'>meaningful</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"meaningful"</span>
 <span class='co'>#ccdata$class &lt;- 'meaningful'</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the <strong>rbind</strong> function of dplry package would be used.</li>
-</ul>
+
+
+* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>junk</span>, <span class='va'>Typical_Chatter</span>, <span class='va'>meaningful</span><span class='op'>)</span>
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>junk</span>, <span class='va'>Typical_Chatter</span>, <span class='va'>meaningful</span><span class='op'>)</span>
+</code></pre></div>
+
 </div>
-</div>
-<ul>
-<li>In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move “#” in the tag using below code chunk.</li>
-</ul>
+
+
+* In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+</code></pre></div>
+
 </div>
-</div>
-<h3 id="data-tokenization-and-word-counts">2.7 Data Tokenization and Word Counts</h3>
-<p>After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records. The below code chunk shows how Multiple functions used to achieve this results:</p>
-<ol type="1">
-<li>unnest_tokens() function from <span style="color:blue"><em>tidytext</em></span> package is used to split the sentences into tokens,</li>
-<li>stop_words() is used to remove stop-words.</li>
-<li>str_detect() is used to detect the presence or absence of a pattern in string.</li>
-<li>filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.</li>
-</ol>
+
+
+
+### 2.7 Data Tokenization and Word Counts
+
+After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records. The below code chunk shows how Multiple functions used to achieve this results:
+
+(1) unnest_tokens() function from <span style="color:blue">*tidytext*</span> package is used to split the sentences into tokens, 
+(2) stop_words() is used to remove stop-words.
+(3) str_detect() is used to detect the presence or absence of a pattern in string.
+(4) filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usenet_words</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usenet_words</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
   <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>message</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>, <span class='st'>"[a-z']$"</span><span class='op'>)</span>,
          <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='va'>stop_words</span><span class='op'>$</span><span class='va'>word</span>,
          <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"aliba"</span>,<span class='st'>"abila"</span>,<span class='st'>"rt"</span>,<span class='st'>"homelandilluminations"</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
-<p>The most common words in entire dataset could be seen from below code chunk.</p>
+
+
+The most common words in entire dataset could be seen from below code chunk. 
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#ccdata_usenet_words &lt;- subset(usenet_words, type == "ccdata")</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#ccdata_usenet_words &lt;- subset(usenet_words, type == "ccdata")</span>
 <span class='co'>#mbdata_usenet_words &lt;- subset(usenet_words, type == "mbdata")</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usenet_words</span><span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usenet_words</span><span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>,sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>top_n</span><span class='op'>(</span><span class='fl'>15</span><span class='op'>)</span> 
-</code></pre>
-</div>
-<pre><code>              word    n
+</code></pre></div>
+
+```
+              word    n
 1         pokrally 1373
 2       kronosstar  931
 3              pok  494
@@ -2363,11 +284,15 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 12         grammar  157
 13         dancing  143
 14         success  141
-15         dolphin  130</code></pre>
+15         dolphin  130
+```
+
 </div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usnet_word_pot</span> <span class='op'>&lt;-</span><span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_usnet_word_pot</span> <span class='op'>&lt;-</span><span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;</span> <span class='fl'>140</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mutate</span><span class='op'>(</span>word <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -2376,49 +301,57 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 <span class='va'>mb_usnet_word_pot</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-17-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
-</div>
-<ul>
-<li>Generate the word cloud The importance of words can be illustrated as a word cloud as follow :</li>
-</ul>
+
+
+* Generate the word cloud
+The importance of words can be illustrated as a word cloud as follow :
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
 <span class='fu'>wordcloud</span><span class='op'>(</span>words <span class='op'>=</span> <span class='va'>mb_usenet_words</span><span class='op'>$</span><span class='va'>word</span>,
           <span class='co'>#freq = data_classed_token$n,</span>
           min.freq <span class='op'>=</span> <span class='fl'>10</span>,
           max.words <span class='op'>=</span> <span class='fl'>200</span>, 
           random.order<span class='op'>=</span><span class='cn'>FALSE</span>, rot.per<span class='op'>=</span><span class='fl'>0.35</span>,
           colors<span class='op'>=</span><span class='fu'>brewer.pal</span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-18-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
-</div>
-<h1 id="data-visualization">3. Data Visualization</h1>
-<h2 id="question-1">Question 1:</h2>
-<p><strong>Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?</strong></p>
-<p>Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. Our exploration and discussion are described below:</p>
-<ol type="1">
-<li>explore the difference of most common words in three records classification.</li>
-<li>explore whether there is relationship between records length and classes.</li>
-<li>explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)</li>
-</ol>
-<p><em>1.Visualizing word frequency as word cloud</em> Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.</p>
+
+
+# 3. Data Visualization 
+
+## Question 1: 
+**Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
+
+Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. Our exploration and discussion are described below: 
+
+(1) explore the difference of most common words in three records classification.
+(2) explore whether there is relationship between records length and classes.
+(3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
+
+*1.Visualizing word frequency as word cloud* 
+Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbwords_by_class</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbwords_by_class</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>class</span>, <span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'>#group_by(class) %&gt;%</span>
   <span class='co'>#top_n(20) %&gt;%</span>
   <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
 <span class='va'>mbwords_by_class_plot</span> <span class='op'>&lt;-</span> <span class='va'>mbwords_by_class</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>word</span>,
@@ -2429,40 +362,51 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>class</span>, scales <span class='op'>=</span> <span class='st'>"free_y"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Record Classification"</span><span class='op'>)</span>
 <span class='va'>mbwords_by_class_plot</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-20-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
-</div>
-<p><em>2. Visualising tf-idf as interactive table</em></p>
-<p>Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting “class” in DT table.</p>
-<p>The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.</p>
+
+*2. Visualising tf-idf as interactive table*
+
+Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
+
+The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_tf_idf</span> <span class='op'>&lt;-</span> <span class='va'>mbwords_by_class</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_tf_idf</span> <span class='op'>&lt;-</span> <span class='va'>mbwords_by_class</span> <span class='op'>%&gt;%</span>
   <span class='fu'>bind_tf_idf</span><span class='op'>(</span><span class='va'>word</span>,<span class='va'>class</span>,<span class='va'>n</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>tf_idf</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>DT</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DT/man/datatable.html'>datatable</a></span><span class='op'>(</span><span class='va'>mb_tf_idf</span>, filter <span class='op'>=</span> <span class='st'>'top'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>DT</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DT/man/datatable.html'>datatable</a></span><span class='op'>(</span><span class='va'>mb_tf_idf</span>, filter <span class='op'>=</span> <span class='st'>'top'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>formatRound</span><span class='op'>(</span>columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tf'</span>, <span class='st'>'idf'</span>, 
                           <span class='st'>'tf_idf'</span><span class='op'>)</span>, 
               digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>formatStyle</span><span class='op'>(</span><span class='fl'>0</span>, 
               target <span class='op'>=</span> <span class='st'>'row'</span>, 
               lineHeight<span class='op'>=</span><span class='st'>'25%'</span><span class='op'>)</span>
-</code></pre>
-</div>
+</code></pre></div>
+
+```{=html}
 <div id="htmlwidget-13a8be463c5fb2457ee4" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-13a8be463c5fb2457ee4">{"x":{"filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"1259\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0.000100959111559\" data-max=\"0.143492135855938\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1.09861228866811\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.027542421293876\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","471","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","542","543","544","545","546","547","548","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573","574","575","576","577","578","579","580","581","582","583","584","585","586","587","588","589","590","591","592","593","594","595","596","597","598","599","600","601","602","603","604","605","606","607","608","609","610","611","612","613","614","615","616","617","618","619","620","621","622","623","624","625","626","627","628","629","630","631","632","633","634","635","636","637","638","639","640","641","642","643","644","645","646","647","648","649","650","651","652","653","654","655","656","657","658","659","660","661","662","663","664","665","666","667","668","669","670","671","672","673","674","675","676","677","678","679","680","681","682","683","684","685","686","687","688","689","690","691","692","693","694","695","696","697","698","699","700","701","702","703","704","705","706","707","708","709","710","711","712","713","714","715","716","717","718","719","720","721","722","723","724","725","726","727","728","729","730","731","732","733","734","735","736","737","738","739","740","741","742","743","744","745","746","747","748","749","750","751","752","753","754","755","756","757","758","759","760","761","762","763","764","765","766","767","768","769","770","771","772","773","774","775","776","777","778","779","780","781","782","783","784","785","786","787","788","789","790","791","792","793","794","795","796","797","798","799","800","801","802","803","804","805","806","807","808","809","810","811","812","813","814","815","816","817","818","819","820","821","822","823","824","825","826","827","828","829","830","831","832","833","834","835","836","837","838","839","840","841","842","843","844","845","846","847","848","849","850","851","852","853","854","855","856","857","858","859","860","861","862","863","864","865","866","867","868","869","870","871","872","873","874","875","876","877","878","879","880","881","882","883","884","885","886","887","888","889","890","891","892","893","894","895","896","897","898","899","900","901","902","903","904","905","906","907","908","909","910","911","912","913","914","915","916","917","918","919","920","921","922","923","924","925","926","927","928","929","930","931","932","933","934","935","936","937","938","939","940","941","942","943","944","945","946","947","948","949","950","951","952","953","954","955","956","957","958","959","960","961","962","963","964","965","966","967","968","969","970","971","972","973","974","975","976","977","978","979","980","981","982","983","984","985","986","987","988","989","990","991","992","993","994","995","996","997","998","999","1000","1001","1002","1003","1004","1005","1006","1007","1008","1009","1010","1011","1012","1013","1014","1015","1016","1017","1018","1019","1020","1021","1022","1023","1024","1025","1026","1027","1028","1029","1030","1031","1032","1033","1034","1035","1036","1037","1038","1039","1040","1041","1042","1043","1044","1045","1046","1047","1048","1049","1050","1051","1052","1053","1054","1055","1056","1057","1058","1059","1060","1061","1062","1063","1064","1065","1066","1067","1068","1069","1070","1071","1072","1073","1074","1075","1076","1077","1078","1079","1080","1081","1082","1083","1084","1085","1086","1087","1088","1089","1090","1091","1092","1093","1094","1095","1096","1097","1098","1099","1100","1101","1102","1103","1104","1105","1106","1107","1108","1109","1110","1111","1112","1113","1114","1115","1116","1117","1118","1119","1120","1121","1122","1123","1124","1125","1126","1127","1128","1129","1130","1131","1132","1133","1134","1135","1136","1137","1138","1139","1140","1141","1142","1143","1144","1145","1146","1147","1148","1149","1150","1151","1152","1153","1154","1155","1156","1157","1158","1159","1160","1161","1162","1163","1164","1165","1166","1167","1168","1169","1170","1171","1172","1173","1174","1175","1176","1177","1178","1179","1180","1181","1182","1183","1184","1185","1186","1187","1188","1189","1190","1191","1192","1193","1194","1195","1196","1197","1198","1199","1200","1201","1202","1203","1204","1205","1206","1207","1208","1209","1210","1211","1212","1213","1214","1215","1216","1217","1218","1219","1220","1221","1222","1223","1224","1225","1226","1227","1228","1229","1230","1231","1232","1233","1234","1235","1236","1237","1238","1239","1240","1241","1242","1243","1244","1245","1246","1247","1248","1249","1250","1251","1252","1253","1254","1255","1256","1257","1258","1259","1260","1261","1262","1263","1264","1265","1266","1267","1268","1269","1270","1271","1272","1273","1274","1275","1276","1277","1278","1279","1280","1281","1282","1283","1284","1285","1286","1287","1288","1289","1290","1291","1292","1293","1294","1295","1296","1297","1298","1299","1300","1301","1302","1303","1304","1305","1306","1307","1308","1309","1310","1311","1312","1313","1314","1315","1316","1317","1318","1319","1320","1321","1322","1323","1324","1325","1326","1327","1328","1329","1330","1331","1332","1333","1334","1335","1336","1337","1338","1339","1340","1341","1342","1343","1344","1345","1346","1347","1348","1349","1350","1351","1352","1353","1354","1355","1356","1357","1358","1359","1360","1361","1362","1363","1364","1365","1366","1367","1368","1369","1370","1371","1372","1373","1374","1375","1376","1377","1378","1379","1380","1381","1382","1383","1384","1385","1386","1387","1388","1389","1390","1391","1392","1393","1394","1395","1396","1397","1398","1399","1400","1401","1402","1403","1404","1405","1406","1407","1408","1409","1410","1411","1412","1413","1414","1415","1416","1417","1418","1419","1420","1421","1422","1423","1424","1425","1426","1427","1428","1429","1430","1431","1432","1433","1434","1435","1436","1437","1438","1439","1440","1441","1442","1443","1444","1445","1446","1447","1448","1449","1450","1451","1452","1453","1454","1455","1456","1457","1458","1459","1460","1461","1462","1463","1464","1465","1466","1467","1468","1469","1470","1471","1472","1473","1474","1475","1476","1477","1478","1479","1480","1481","1482","1483","1484","1485","1486","1487","1488","1489","1490","1491","1492","1493","1494","1495","1496","1497","1498","1499","1500","1501","1502","1503","1504","1505","1506","1507","1508","1509","1510","1511","1512","1513","1514","1515","1516","1517","1518","1519","1520","1521","1522","1523","1524","1525","1526","1527","1528","1529","1530","1531","1532","1533","1534","1535","1536","1537","1538","1539","1540","1541","1542","1543","1544","1545","1546","1547","1548","1549","1550","1551","1552","1553","1554","1555","1556","1557","1558","1559","1560","1561","1562","1563","1564","1565","1566","1567","1568","1569","1570","1571","1572","1573","1574","1575","1576","1577","1578","1579","1580","1581","1582","1583","1584","1585","1586","1587","1588","1589","1590","1591","1592","1593","1594","1595","1596","1597","1598","1599","1600","1601","1602","1603","1604","1605","1606","1607","1608","1609","1610","1611","1612","1613","1614","1615","1616","1617","1618","1619","1620","1621","1622","1623","1624","1625","1626","1627","1628","1629","1630","1631","1632","1633","1634","1635","1636","1637","1638","1639","1640","1641","1642","1643","1644","1645","1646","1647","1648","1649","1650","1651","1652","1653","1654","1655","1656","1657","1658","1659","1660","1661","1662","1663","1664","1665","1666","1667","1668","1669","1670","1671","1672","1673","1674","1675","1676","1677","1678","1679","1680","1681","1682","1683","1684","1685","1686","1687","1688","1689","1690","1691","1692","1693","1694","1695","1696","1697","1698","1699","1700","1701","1702","1703","1704","1705","1706","1707","1708","1709","1710","1711","1712","1713","1714","1715","1716","1717","1718","1719","1720","1721","1722","1723","1724","1725","1726","1727","1728","1729","1730","1731","1732","1733","1734","1735","1736","1737","1738","1739","1740","1741","1742","1743","1744","1745","1746","1747","1748","1749","1750","1751","1752","1753","1754","1755","1756","1757","1758","1759","1760","1761","1762","1763","1764","1765","1766","1767","1768","1769","1770","1771","1772","1773","1774","1775","1776","1777","1778","1779","1780","1781","1782","1783","1784","1785","1786","1787","1788","1789","1790","1791","1792","1793","1794","1795","1796","1797","1798","1799","1800","1801","1802","1803","1804","1805","1806","1807","1808","1809","1810","1811","1812","1813","1814","1815","1816","1817","1818","1819","1820","1821","1822","1823","1824","1825","1826","1827","1828","1829","1830","1831","1832","1833","1834","1835","1836","1837","1838","1839","1840","1841","1842","1843","1844","1845","1846","1847","1848","1849","1850","1851","1852","1853","1854","1855","1856","1857","1858","1859","1860","1861","1862","1863","1864","1865","1866","1867","1868","1869","1870","1871","1872","1873","1874","1875","1876","1877","1878","1879","1880","1881","1882","1883","1884","1885","1886","1887","1888","1889","1890","1891","1892","1893","1894","1895","1896","1897","1898","1899","1900","1901","1902","1903","1904","1905","1906","1907","1908","1909","1910","1911","1912","1913","1914","1915","1916","1917","1918","1919","1920","1921","1922","1923","1924","1925","1926","1927","1928","1929","1930","1931","1932","1933","1934","1935","1936","1937","1938","1939","1940","1941","1942","1943","1944","1945","1946","1947","1948","1949","1950","1951","1952","1953","1954","1955","1956","1957","1958","1959","1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040","2041","2042","2043","2044","2045","2046","2047","2048","2049","2050","2051","2052","2053","2054","2055","2056","2057","2058","2059","2060","2061","2062","2063","2064","2065","2066","2067","2068","2069","2070","2071","2072","2073","2074","2075","2076","2077","2078","2079","2080","2081","2082","2083","2084","2085","2086","2087","2088","2089","2090","2091","2092","2093","2094","2095","2096","2097","2098","2099","2100","2101","2102","2103","2104","2105","2106","2107","2108","2109","2110","2111","2112","2113","2114","2115","2116","2117","2118","2119","2120","2121","2122","2123","2124","2125","2126","2127","2128","2129","2130","2131","2132","2133","2134","2135","2136","2137","2138","2139","2140","2141","2142","2143","2144","2145","2146","2147","2148","2149","2150","2151","2152","2153","2154","2155","2156","2157","2158","2159","2160","2161","2162","2163","2164","2165","2166","2167","2168","2169","2170","2171","2172","2173","2174","2175","2176","2177","2178","2179","2180","2181","2182","2183","2184","2185","2186","2187","2188","2189","2190","2191","2192","2193","2194","2195","2196","2197","2198","2199","2200","2201","2202","2203","2204","2205","2206","2207","2208","2209","2210","2211","2212","2213","2214","2215","2216","2217","2218","2219","2220","2221","2222","2223","2224","2225","2226","2227","2228","2229","2230","2231","2232","2233","2234","2235","2236","2237","2238","2239","2240","2241","2242","2243","2244","2245","2246","2247","2248","2249","2250","2251","2252","2253","2254","2255","2256","2257","2258","2259","2260","2261","2262","2263","2264","2265","2266","2267","2268","2269","2270","2271","2272","2273","2274","2275","2276","2277","2278","2279","2280","2281","2282","2283","2284","2285","2286","2287","2288","2289","2290","2291","2292","2293","2294","2295","2296","2297","2298","2299","2300","2301","2302","2303","2304","2305","2306","2307","2308","2309","2310","2311","2312","2313","2314","2315","2316","2317","2318","2319","2320","2321","2322","2323","2324","2325","2326","2327","2328","2329","2330","2331","2332","2333","2334","2335","2336","2337","2338","2339","2340","2341","2342","2343","2344","2345","2346","2347","2348","2349","2350","2351","2352","2353","2354","2355","2356","2357","2358","2359","2360","2361","2362","2363","2364","2365","2366","2367","2368","2369","2370","2371","2372","2373","2374","2375","2376","2377","2378","2379","2380","2381","2382","2383","2384","2385","2386","2387","2388","2389","2390","2391","2392","2393","2394","2395","2396","2397","2398","2399","2400","2401","2402","2403","2404","2405","2406","2407","2408","2409","2410","2411","2412","2413","2414","2415","2416","2417","2418","2419","2420","2421","2422","2423","2424","2425","2426","2427","2428","2429","2430","2431","2432","2433","2434","2435","2436","2437","2438","2439","2440","2441","2442","2443","2444","2445","2446","2447","2448","2449","2450","2451","2452","2453","2454","2455","2456","2457","2458","2459","2460","2461","2462","2463","2464","2465","2466","2467","2468","2469","2470","2471","2472","2473","2474","2475","2476","2477","2478","2479","2480","2481","2482","2483","2484","2485","2486","2487","2488","2489","2490","2491","2492","2493","2494","2495","2496","2497","2498","2499","2500","2501","2502","2503","2504","2505","2506","2507","2508","2509","2510","2511","2512","2513","2514","2515","2516","2517","2518","2519","2520","2521","2522","2523","2524","2525","2526","2527","2528","2529","2530","2531","2532","2533","2534","2535","2536","2537","2538","2539","2540","2541","2542","2543","2544","2545","2546","2547","2548","2549","2550","2551","2552","2553","2554","2555","2556","2557","2558","2559","2560","2561","2562","2563","2564","2565","2566","2567","2568","2569","2570","2571","2572","2573","2574","2575","2576","2577","2578","2579","2580","2581","2582","2583","2584","2585","2586","2587","2588","2589","2590","2591","2592","2593","2594","2595","2596","2597","2598","2599","2600","2601","2602","2603","2604","2605","2606","2607","2608","2609","2610","2611","2612","2613","2614","2615","2616","2617","2618","2619","2620","2621","2622","2623","2624","2625","2626","2627","2628","2629","2630","2631","2632","2633","2634","2635","2636","2637","2638","2639","2640","2641","2642","2643","2644","2645","2646","2647","2648","2649","2650","2651","2652","2653","2654","2655","2656","2657","2658","2659","2660","2661","2662","2663","2664","2665","2666","2667","2668","2669","2670","2671","2672","2673","2674","2675","2676","2677","2678","2679","2680","2681","2682","2683","2684","2685","2686","2687","2688","2689","2690","2691","2692","2693","2694","2695","2696","2697","2698","2699","2700","2701","2702","2703","2704","2705","2706","2707","2708","2709","2710","2711","2712","2713","2714","2715","2716","2717","2718","2719","2720","2721","2722","2723","2724","2725","2726","2727","2728","2729","2730","2731","2732","2733","2734","2735","2736","2737","2738","2739","2740","2741","2742","2743","2744","2745","2746","2747","2748","2749","2750","2751","2752","2753","2754","2755","2756","2757","2758","2759","2760","2761","2762","2763","2764","2765","2766","2767","2768","2769","2770","2771","2772","2773","2774","2775","2776","2777","2778","2779","2780","2781","2782","2783","2784","2785","2786","2787","2788","2789","2790","2791","2792","2793","2794","2795","2796","2797","2798","2799","2800","2801","2802","2803","2804","2805","2806","2807","2808","2809","2810","2811","2812","2813","2814","2815","2816","2817","2818","2819","2820","2821","2822","2823","2824","2825","2826","2827","2828","2829","2830","2831","2832","2833","2834","2835","2836","2837","2838","2839","2840","2841","2842","2843","2844","2845","2846","2847","2848","2849","2850","2851","2852","2853","2854","2855","2856","2857","2858","2859","2860","2861","2862","2863","2864","2865","2866","2867","2868","2869","2870","2871","2872","2873","2874","2875","2876","2877","2878","2879","2880","2881","2882","2883","2884","2885","2886","2887","2888","2889","2890","2891","2892","2893","2894","2895","2896","2897","2898","2899","2900","2901","2902","2903","2904","2905","2906","2907","2908","2909","2910","2911","2912","2913","2914","2915","2916","2917","2918","2919","2920","2921","2922","2923","2924","2925","2926","2927","2928","2929","2930","2931","2932","2933","2934","2935","2936","2937","2938","2939","2940","2941","2942","2943","2944","2945","2946","2947","2948","2949","2950","2951","2952","2953","2954","2955","2956","2957","2958","2959","2960","2961","2962","2963","2964","2965","2966","2967","2968","2969","2970","2971","2972","2973","2974","2975","2976","2977","2978","2979","2980","2981","2982","2983","2984","2985","2986","2987","2988","2989","2990","2991","2992","2993","2994","2995","2996","2997","2998","2999","3000","3001","3002","3003","3004","3005","3006","3007","3008","3009","3010","3011","3012","3013","3014","3015","3016","3017","3018","3019","3020","3021","3022","3023","3024","3025","3026","3027","3028","3029","3030","3031","3032","3033","3034","3035","3036","3037","3038","3039","3040","3041","3042","3043","3044","3045","3046","3047","3048","3049","3050","3051","3052","3053","3054","3055","3056","3057","3058","3059","3060","3061","3062","3063","3064","3065","3066","3067","3068","3069","3070","3071","3072","3073","3074","3075","3076","3077","3078","3079","3080","3081","3082","3083","3084","3085","3086","3087","3088","3089","3090","3091","3092","3093","3094","3095","3096","3097","3098","3099","3100","3101","3102","3103","3104","3105","3106","3107","3108","3109","3110","3111","3112","3113","3114","3115","3116","3117","3118","3119","3120","3121","3122","3123","3124","3125","3126","3127","3128","3129","3130","3131","3132","3133","3134","3135","3136","3137","3138","3139","3140","3141","3142","3143","3144","3145","3146","3147","3148","3149","3150","3151","3152","3153","3154","3155","3156","3157","3158","3159","3160","3161","3162","3163","3164","3165","3166","3167","3168","3169","3170","3171","3172","3173","3174","3175","3176","3177","3178","3179","3180","3181","3182","3183","3184","3185","3186","3187","3188","3189","3190","3191","3192","3193","3194","3195","3196","3197","3198","3199","3200","3201","3202","3203","3204","3205","3206","3207","3208","3209","3210","3211","3212","3213","3214","3215","3216","3217","3218","3219","3220","3221","3222","3223","3224","3225","3226","3227","3228","3229","3230","3231","3232","3233","3234","3235","3236","3237","3238","3239","3240","3241","3242","3243","3244","3245","3246","3247","3248","3249","3250","3251","3252","3253","3254","3255","3256","3257","3258","3259","3260","3261","3262","3263","3264","3265","3266","3267","3268","3269","3270","3271","3272","3273","3274","3275","3276","3277","3278","3279","3280","3281","3282","3283"],["junk","meaningful","junk","meaningful","meaningful","meaningful","Typical_Chatter","meaningful","junk","Typical_Chatter","junk","junk","junk","Typical_Chatter","meaningful","meaningful","junk","junk","meaningful","junk","meaningful","meaningful","meaningful","junk","Typical_Chatter","junk","meaningful","meaningful","junk","meaningful","meaningful","junk","meaningful","junk","junk","junk","Typical_Chatter","junk","meaningful","Typical_Chatter","junk","meaningful","meaningful","meaningful","junk","meaningful","Typical_Chatter","meaningful","Typical_Chatter","meaningful","junk","junk","junk","meaningful","meaningful","Typical_Chatter","Typical_Chatter","meaningful","meaningful","Typical_Chatter","junk","junk","junk","junk","junk","Typical_Chatter","meaningful","meaningful","meaningful","junk","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","meaningful","meaningful","meaningful","Typical_Chatter","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","junk","meaningful","meaningful","junk","junk","junk","meaningful","meaningful","meaningful","junk","junk","meaningful","meaningful","junk","Typical_Chatter","junk","meaningful","junk","Typical_Chatter","Typical_Chatter","junk","meaningful","junk","junk","meaningful","meaningful","Typical_Chatter","junk","meaningful","meaningful","junk","junk","Typical_Chatter","meaningful","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","junk","junk","meaningful","junk","meaningful","Typical_Chatter","meaningful","junk","junk","junk","junk","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","meaningful","junk","meaningful","meaningful","Typical_Chatter","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","junk","junk","junk","junk","junk","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","junk","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","meaningful","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter","Typical_Chatter"],["kronosstar","centralbulletin","grammar","abilapost","fire","kronosstar","tag","shooting","failure","viktor","successful","success","living","sow.kronos","apd","officials","fear","dream","dancing","succeed","van","dolphin","surrounding","fail","fire","achieve","afdheroes","standoff","dreams","building","dispatched","worth","paramedics","artist","desire","motivation","e.kronos","product","arrived","newman","idea","scene","presence","resident","recommend","dancingdolphinfire","dr","cops","saveourwildlands","reports","accept","afraid","reach","additional","residents","megaman","inspired","complex","terror","newsonline","overcome","secret","smad.co.kronos","tunnel","wind","jakab","tense","cop","intnews","measured","apartment","viktor","begun","suspects","units","greycatcollectibles","joni","guy","progress","gunmen","pursuit","released","corner","firm","knowledge","lift","purpose","road","teach","expansion","floors","intersection","department","mitchell","prize","sara","trollingsnark","dr","injuries","strong","butterfly","count","develop","discouragement","failures","improve","liking","stepping","stones","surest","apd","ithakis","lucio","report","sylvia","closed","responders","witness","bathing","child","daily","determination","genius","happiness","leaders","meds","morning","satisfaction","wonderful","stefano","internationalnews","bicyclist","alexandiras","climatechange","follow","hut","lame","poor","siaradsea","timmy","evacuation","credit","dark","easy","fall","ideas","fired","hostage","newsonlinetoday","song","sylvia","madeg","black","crowd","concerns","fresh","ben","businesses","stay","buildings","hit","newman","achievement","carpet","challenges","chance","charging","curious","decision","entrepreneurs","fears","givers","hurts","ithing","mistake","positive","refill","seat","takers","talents","unsuccessful","youve","minds","officer","condition","erratic","underway","upper","guy","hostages","bert","dancing","dolphin","gonna","units","achilleos","trapped","live","cast","circumstances","consent","decisions","difficulties","gift","imaginary","inferior","sin","stone","succeeding","unconquerable","voice","abilaallfaith","apb","author","award","break","church","flares","helpnow","involved","martao","meet","pole","protection","sing","sings","survival","trucks","pokrallyinthepark","result","unclear","di","environmental","stage","wildlands","ithakis","ambulance","floor","hospital","peaceful","tag","artists","captive","common","destined","distance","extra","flush","insanity","jams","meaning","mile","oars","pursue","refuse","runs","thinking","undone","alexandrias","marek","terrorists","heavy","perimeter","stable","alexandrias","galore","guys","lots","report","scene","standoff","courage","mind","newsonlinetoday","airplane","aware","badprofiles.kronos","bestfood","boss","bricks","cards","clickhere","climb","comfort","create","dates.kronos","diet.kronos","discuss","disinterested","doubt","easycredit.kronos","eighty","foundation","harder","hell","joy","lay","misfortune","morecredit","nobanks","peaked","percent","punt","starvenow","strangest","subdued","tacky","tamed","thrown","wisdom","zone","music","roger_roger","continued","expanded","expected","firefighters","identified","location","occupants","terrorist","vicinity","continues","evacuate","galore","injured","lucio","albert","cat","collection","crucial","dang","danger","de","displaced","einstein","goldman","hate","interviews","key","missed","nature","rachel","redisrad","stores","won","yup","firefighter","gun","word","youre","appears","crowd","government","omg","accomplish","accomplishment","add","advise","ahead","atrotious","average","battles","breath","breaths","caterpillar","century","choice","created","creativity","cross","doesnt","edition","elses","empower","enthusiasm","excellence","excellent","expands","failing","fastjobs.kronos","fiscal","genuinely","glories","goals","grammer","hottips.kronos","idea.pokrally","imitation","impatient","lazy","limited","loss","masterpiece","measure","medals","mental","miserable","motivate","multiply","obstacles","ocean","ordinary","originality","pin","plan","private","proportion","quit","sacrifices","settle","shalt","shore","shrinks","sight","single","spelling","struggles","thous","thy","tongue","trading","tricks","visit","walking","announced","assist","begins","calmer","crime","diverted","draw","excess","male","mcconnel","measures","neighborhood","providing","troubleatgelato","waste","coming","di","inside","lot","stefano","coffee","command","evacuations","floor","guess","hostages","pok.kronos","prayers","prof","residents","river","support","taking","team","terrorists","evacuated","hostage","violence","advised","attendance","blather","concert","continue","cornered","doc","donot","dophin","estimates","female","helping","multiple","negotiated","officers","original","ourcountryourrights","pour","replace","requested","screaming","vigilant","isnt","argument","asset","attribute","bitter","blessings","blogs","blowing","cancer","capital","carpool","conceive","criticism","cure","determined","dictionary","disappointed","diseasefund.kronos","diseases","disguise","diverged","doomed","easily","efforts","excuse","explain","fate","forgive","fyi","gettingfired","goodstuff.kronos","grasp","greatness","grows","hinder","impossible","inherit","judgment","links","literally","losing","meek","nasty","one's","payus","permission","plant","prescription","principle","rarely","reaction","readymade","reasons","reckless","repeated","roads","scares","shapes","simply","soul","sum","tragedy","trials","unexamined","ups","website","wood","apartments","arrested","audrey","firemen","jakab","parking","stay","takes","agents","alinsky","american","awful","blah","bringing","brontes_riff","brothers","buddy","carson","cheers","climate","cookies","counseling","couple","credits","downtown","ellen","erik","faiths","folks","founder","gastov","green","grocery","hang","happy","instruments","island","lero","lomax","milk","mitchell's","natural","ourmusic","ouzerielian","phone","plays","pray","quotes","reminds","responsible","robeson","saul","singing","sisters","somethings","speaker","standupspeakup","survivial","teaches","theband","tied","told","uofa","upstairs","businesses","names","rescued","truccotrucco","abilapost","audrey","band","community","injured","maha_homeland","marek","moments","save","soldiers","speak","giving","online","risk","avoid","evacuating","lorenzo","remarks","st","dolphn","gawking","grow","neighboring","pd","poklove","praying","relieving","responded","streets","unconfirmed","april","attained","backwards","blame","cheap","cheappills","complement","condiment","confidently","contest","contest.kronos","cost","creating","dares","date","descriptions","diff","difficult","direction","dots","drugs.kronos","filay","finding","flavor","forgetting","fortune","freeithing","function","gifted","habit","halfway","heals","imagined","influences","intuition","leadership","loose","majority","marvel","matters","meaningful","minion","observations","offered","officia1abilapost","overcoming","pause","pharmacyripoff","produce","react","reading","reflect","remembering","rocket","serving","ship","stroke","tenacity","test","would've","write","writing","winning","wrong","driver","fired","schaber","building","evacuating","hanns","pictures","safety","scared","street","tonight","trapped","yeah","abilafire","block","dancingdolphin","dude","guys","luck","arrivals","corporations","figthers","guns","holding","house","night","patient","peacefully","red","requesting","resolves","weary","professor","windows","witnesses","bed","destiny","knowing","link","abilafinest","absense","appreciation","benefit","bonus","born","brings","capture","closer","coincidence","creative","definiteness","dodon't","easier","eye","failed","followme","followme.kronos","getem.kronos","ghost","imaginations","individual","interfere","laser","limitations","limitless","low","mastery","maximum","opportunities","past","possibilities","potential","question","resistance","revenge","seeds","sowing","spend","strike","strive","true","warrior","explosion","friendsofkronos","move","smoke","additional","ambulance","arrived","coming","evacuated","hit","nearby","playing","prettyrain","reports","shoot","sirens","situation","unit","victims","wow","yellow","blessed","called","choconibbs","evacuations","flames","hope","omg","alm","blocked","burn","drive","due","footfingers","homeland","jerkdrivers","keeping","mad","marshal","negotiating","north","plate","polvo","reporter","rotter","simon_hamaeth","staff","surrendered","build","connect","energy","hand","sleep","abila's","accepted","activists","advises","afdheros","air","aliens","allergictofurballs","allruined","ally","amatuer","angry","animal","announcing","answered","apathetic","applause","ashtma","attack","attackers","attention","audience","audreynewmanworld","aura","aw","bean","beat","belief","believes","biker","biology","bittersweet","blend","board","boom","bot","bring","businessman","buy","calmed","carbon","cares","carrying","celebrate","chanters","checkin","chekcing","childless","classes","closing","collaborate","comeondown","concludes","conclused","consequences","conservationist","cormorant","counter","craziness","cred","crying","dancingdophinsfire","dansingdolphinfire","definitelygonnabelate","devastation","device","didn'thave","directly","discussion","distafano_interview","doin","doll","downwithkronos","dudes","ecological","economics","effective","emerging","engagement","ernieo","evidence","exciting","extort","extorting","fairly","farm","figured","firghtened","focused","frame","freak","freezer","fun'n'run","funny","gag","gandhi","gelatogalorestandoff","gelatorocks","generation","generousabila","gg","ghandi","global","goonsquad","governmental","grandma's","greenliving","grew","guy's","haev","happend","happened","harpsichord","haunting","headlights","heck","helpless","hippy","hogwash","hometown","hoping","hourofneed","hurry","idiot","imreallypromptmostofthetime","ims","including","infernaltraffic","inspect","insurance","interdependence","invites","ivolence","jujst","julie","keping","kicks","knocked","leaves","legitimate","lucky","lyrics","mars","marta","medical","moar","mobile","moneygrubbers","mountain","moved","movig","national","nite","notios","noway","official","omgomgomg","omgopmgomgthank","oppression","organizer","otters","owed","owner","pahetic","peeks","phd","phish","pillowcase","pissed","pleasedontgiveuponme","podium","pople","povided","practices","princecharming","putitout","quoting","radio","range","receives","recipes","reeducation","remarksand","renewable","reporters","riot","robots","rockers","scarey","scarlet","schedule","school","sciences","scientists","section","sellstuff","sending","served","sit","slowdown","smell","smokygridlock","society","somebodywantgelatobad","someone's","sounded","srsly","statements","stayingbehindmymailbox","stillonit","stillshaking","stinking","stoodup","stress","stuffed","suffer","sustainable","tada","telephone","terorrist","thanks4nothing","thatz","themself","threat","thundering","tired","titanium","trapanitweets","trustus","trylove","tv","typinghard","university","unwind","ur","vegetables","victim","wan","warn","watermelons","welcomes","wheels","whoweare","wide","winnign","wishfulthinking","wnat","yeahright","moving","music","wrong","click","die","activist","bullets","collapsed","dancingdolphinfire","doors","en","hiding","hope","killing","leave","lorenzo","moving","protoguy","remarks","route","sick","special","sustainability","taxi","100s","5k","abilajobs","alive","arms","badcredit","beauty","boldness","boost","cheapdrugs.kronos","costs","creditratings","dare","diminishes","discount","distinguishes","dreaming","drugs","evolution","feelings","fixit.kronos","follower","form","getpeople","heres","ignorance","incredible","inspires","learned","magic","make.money.kronos","mo","nuts","paid","paint","phenomena","rating","required","rich","scam","scandal","software","tear","times","workathome.kronos","newsonline","playing","speaking","catch","decide","free","serve","size","step","tomorrow","win","guest","heroes","megaman","speech","street","arise","assisted","baa","blackvan","carlyscoffee","continuing","controlled","edessis","eira","finally","hoses","illumation","inhalation","justice","partial","patrons","popping","precaution","rave","sheep","standoffover","surround","system","tells","tethan","theyre","treated","treating","trickling","understood","unknown","violent","wth","article","ground","movie","rise","stuff","weight","mcconnell","shooter","speakers","special","unit","bike","block","business","choconibbs","click","cop","cops","corporate","dangermice","firefighter","heading","hey","hurt","inspiring","internationally","intnews","introduces","kid","legacy","local","looked","luck","move","negotiator","onlythetruth","peaceful","professor","quality","scary","set","shop","shown","sow","species","store","talk","talking","tomish","whats","yelling","bated","breadth","cars.kronos","cheapmeds","choppers","consist","depends","entrepreneur","evvah","france","girlfriend","impactful","interrupt","intrinsic","medication","meds.kronos","mistakes","momentum","net","paris","penultimate","rank","salad","sales","seizure","timelessness","underneath","universe","vans","youll","gold","late","moment","moments","usual","workathome","coffee","egeou","government","leave","nearby","running","support","taking","talking","abilaprays","accident","addressing","anarchy","arrest","coffeee","cut","deal","drnewman","enemy","feelin","firstresponders","govt","greed","homes","include","land","lovely","manage","minor","movies","occupied","octavios","ode","pok's","pollute","pretty","raly","reggiewassali","reporting","responsibilty","terrorism","therye","unfounded","uninjured","urges","waving","words","band","collapsed","driving","hes","issue","light","protoguy","pursued","remain","river","scared","searched","set","shooters","soldiers","usual","wild","wounded","abilasfinest","actions","avoid","excitement","experience","fun","light","makes","pursued","raise","remain","slowly","spreading","talent","traveled","tree","types","understand","word","activism","arrested","arriving","book","caught","clean","continues","dancingdolphinsfire","dead","die","driver","elodis","escalated","evacuate","faith","friends","friendsofkronos","guest","happening","hospital","hour","inside","inspiration","late","live","mailbox","mcconnell","message","movie","nice","officer","pls","pollution","pressure","radicals","ran","rescued","rules","sad","saved","science","send","shooter","social","someones","sounds","stuck","success","tactical","telling","tethys","town","truccotrucco","truck","understand","van","view","watch","water","witnesses","yikes","business","fight","grocer","hour","refrain","situation","sounds","tactical","talk","team","telling","vehicle","yelling","expect","forward","hire","reason","started","terrible","tonite","4ever","abilaparadise","abilia","actnow","actor","affects","age","aliens.kronos","amongus","anarchist","animals","answering","appartments","apt","apts","aptsearch","areslittle","arse","athena","athenamusiconline","awards","awareness","background","bad's","bands","barf","beansnthings","bear","beer","beginning","believ","belive","bet","bets","blog","body","bonfire","bravely","bribe","bs","buidling","bummer","buys","card","career","carrier","chased","cheered","chemicals","chicken","chouting","chuc","citizen","citizenship","classis","clue","cnat","comments","communications","company","congestion","construction","cormorants","coverage","covered","covers","custom","cycling","cyclist","dance","dancind","dancingdolfinfire","dancingfire","danzamacabra","ddfire","dedicated","deportations","destroying","destroys","details","didhn't","didt'n","dis","disappeared","disgusting","distinguised","dogs","dolphins","drink","drinking","drinks","drives","dt83neln","dtrejos","e's","eastabila","eat","elder","electrical","emergency","employer","enemies","enfuego","engage","entering","enthusiastic","environmentalheros","er","erik's","ermou","esitmated","essential","estefan","evening","everyday","evil","expand","exposed","faculty","false","falseflag","fantastic","fat","favorites","featured","feeling","figures","filters","finallyhere","fingerboard","finished","firstdatedisaster","flag","flashing","flooding","fly","flying","folk","forgot","friday","frites","furniture","garden","getout","gladitsnotmyhouse","glory","gonig","gonnabelate","goodness","gooooooal","gowawy","grabbed","graduated","grandmother","greengardens","greenie","greenlife","gridlock","griefstricken","guilty","guitar","gurbuz","happyending","hilel","hink","historic","homelandillumination.kronos","homelessawareness","homelessness","hotchicks.kronos","houses","hte","huge","identity","ii","institute","institution","interviewed","interwebs","irrational","itolduso","iwait","jeez","joybubbles","jumpy","keyboard","kick","kicked","kindafun","knocking","kronosians","laouto","laugh","lawmakers","layinglow","level","ligths","lime","linkcity.kronos","linked","livecasting","lola","loser","lute","maha","makeadifference","managed","maple","marak","marekinterview","marine","meetourpartners","messed","microblogs","miilling","minutes","missingtethys","mix","mmm","ms","mtg","musicians","musicvideos","mutually","nashville","negoitations","negoitator","newspaper","nico","nobodycares","noes","nooo","nooooooooo","noresalevalue","norris","notice","notmoving","notthatintome","now.guess","numorous","nut","officially","ohnoohnoohnoohnoohnoohnoohnoohnoohnoohno","omgponies","omgwtfbbq","ominousknock","onfire","onl1nerecords","operation","ourcommunity","ourfans","ourlistenerstories","outta","overlord","overreaction","panickattak","paradise","parlor","partners","partnership","passionate","pdf","peeked","peoplearehorrible","perform","performing","persevere","pic","picking","plea","pokpokpok","policenegotiator","political","pommes","poorpuppies","practically","prayersanswered","preety","presentations","prestgious","profits","punch","punished","pyroatheart","raising","ramp","reached","realcity","recycle","recycling","refer.kronos","relationship","relationships","reminder","renown","repair","research","restaurant","ride","rinaldo","rootin","rosewood","round","rubab","sais","salo","sarcasm","scaredmetodeath","schadenfreude","scientist","score","secondary","sell","serivice","serves","servide","shaken","sharing","shoddy","shoe","shootout","shopped","showeed","situatoin","slightly","smells","smokefreehome","snek","solve","sombody","someday","somedby","someothing","sometthing","songwriters","sophisticated","sososad","soulofshi","sound","sow's","spandex","spill","spooking","stakeholders","startseomething","starve","sticking","stopping","strengthens","string","stringed","stronger","studio","suitable","supposed","suppposed","surferman","sustability","swoop","symbiotic","syruppy","syvlia","taco","takign","talks","tastes","tension","term","teror","tha","thinkt","tho","thousands","threating","threw","thsi","time4wine","timmy's","toget","tonight's","tootin","torban","tough","tournament","toxic","trashbin","trenchcoat","troubles","ttl","tuned","turnout","tweet","united","univ","vaca","visits","vivasylvia","volunteers","waitforit","walked","wall","wandering","war","warming","watcher.kronos","waterfacts","weapons.livetests","weightloss.kronos","welksfurniture","wheezy","whiny","whoaminow","winner","wondering","worse","worstblockpartyever","worstfirstdateever","yay","yehu","yessir","youd","youtube.kronos","yr","yuck","154xu5xi","arises","b33nk4xs","booking","busy","cbcje9q","connection","consciousness","destinations","discovered","exotic","famous","focusing","human","knock","lives","march","mortal","mystery","remarkable","savepeople","search","silenced","silent","smush.com.kronos","subsides","trafficking","untold","vacation","appears","ben","corporate","corrupt","dead","free","inspiration","license","looked","panopticon","parla","pulled","ready","risk","sofitees","song","truck","visible","chasing","days","focus","gain","growing","half","heart","massive","musician","2nd","abilawatcher","account","accountability","accountable","actingfor","animated","announces","anooying","anthing","apa","armed","army","authorities","bac","backdoor","barely","beaten","bedtime","blackvansrules","blaze","bored","bowing","boycott","boys","brave","bravesthusbandever","burnabila","burnabilaburn","capitalist","car4sale","carlys","carreer","cartridge","circles","classic","corperations","couldthisgetworse","country","crackdown","cuaght","cuz","d'strange","dansingdolfinfire","debating","declined","deludednation","description","detailed","differnece","discredit","distraction","dog","draws","drrotter","enter","etheres","eyed","families","fans","farms","feeble","firewins","fist","flits","foreign","gathered","getoverit","glassy","gowaway","greeddy","gunshots","headed","heavily","helpus","historical","homeless","hop","howling","hurtfirefighter","information","injustice","ink","jax","johnp","joke","kinda","lived","magazine","masters","micheller","midnight","minded","murder","negotiate","newman's","norest","offering","outsdie","particpation","partner","persons","photoalbum","photos","pigs","pilau","pokers","pokliesinthepark","powerful","prayer","propaganda","proved","racing","raiser","reap","recommendations","releases","relieve","rescuing","rewards","ridiculous","rising","rotters","ruin","shift","shut","slippery","smart","souliou","status","stickyrheadinsomegelato","stooge","struck","stufpid","suddeny","summoned","supported","supporting","surrended","surrender","suspected","tellme","terorists","terrror","thanksafd","tint","transitioning","trouble","tuesday","type","ugh","ugly","undercover","usa","viktortree","walk","wanna","waved","welcoming","west","wetlands","worry","wuz","yeelling","yesssss","abilapolicedepartment","arrive","bullets","close","corruption","decided","en","environmental","growing","happening","head","hearing","hurt","lots","poeple","post","ran","route","solution","stupid","view","abilacitypark","anaregents","answer","apartment","article","awesome","black","called","care","clothes","connect","creator","cruise","decided","derp","donations","driving","energy","excitement","exit","expect","family","favorite","food","forget","grocer","gun","gunfire","hard","head","hemprules","henri","heroes","hes","incident","inspirational","internationalnews","introducing","issue","kidnap","kidnapped","kids","lights","lot","market","meeting","mom","money.kronos","movement","negotiations","party","peace","planning","play","poeple","poked","post","pulled","pulling","read","release","running","sale","saving","smoke","solution","speaking","standing","stupid","today's","tomatoma","totally","trucks","warm","weekend","windows","worried","worst","empty","followers.kronos","innovation","millions","miss","organization","planning","program","service","swear","water","abilafiredept","abilasfinest","activism","anaregents","bike","demand","doors","fighting","girl","leaving","negotiations","nice","office","onlythetruth","rememberelian","rememberjuliana","roger_roger","save","shoot","size","spreading","truthforcadau","weekend","window","woman","pictures","safety","383n28q","383xaw","39cni39s","39vn811v","39xhke","accidental","b39x02r","boredom","bug","bugs","call","casualties","chirpwatch.kronos","clicke","cousin","discoveries","dorel","empire","exercises","fires","hesitates","homeworkers.kronos","kronoskidnapping","mass","mounts","mute","neighborhoods","permanent","photo","pics.kronos","profile","renewal","robbery","rundown","sanjorge","shocking","snad.co.kronos","surprising","toll","training","urban","viewed","watchme","wealthiest","wnats","awesome","command","community","crap","dangermice","east","favorite","front","giving","gonna","gotta","gunfire","heart","incident","isnt","ive","juliana","kidnapped","killing","meeting","missing","peace","reported","sara_nespola","saved","science","stuck","tonight","tonite","victims","watch","whats","worried","wow","activity","addtional","admit","agenda","aiding","al","alexandria","almostcreamedbyvan","amblance","amount","anytbody","apdfail","apdheroes","apdswat","arentt","armageddon","armored","arresting","arrests","arrives","art","assessing","assisting","asterian","backway","badges","balck","banana","beantheredonethat","becuz","beleive","believed","belivef","blasted","bless","blood","boast","bottom","brew'vebeenserved","buying","bystander","bystanders","cafe","calm","cantbegood","canthear","capitalists","captives","caused","clearing","comeing","comeon","completely","copkiller","coppers","cordoned","couchsurf","courtesy","cow","craazy","crash","crimes","criminal","criminals","degrees","deported","deserve","differnce","dinner","distract","docs","drama","drivers","driveway","dummies","duty","eating","economic","egghead","endangered","engines","engulfed","enviro","establishing","everybody's","everybodys","excietemtn","exerting","exiting","expanding","explosions","extent","extorted","extortion","fd","fellow","fighter","figure","filling","finallly","fireiscool","fireisscience","firerefugees","firestarter","flurry","force","freebird","friendsofllm","fromparla","fulfillment","galor","getpopular","givin","gladly","glaore","gleatogalore","gonnagetit","goo","grace","greedy","greenwash","greenwashing","gridlocked","gunman","gunshot","handle","happeningn","harmful","havent","headline","hearts","helicoptors","helpme","herratomas","hirt","hngohebo_abilapost","holy","hows","humanity","id","idiots","ignorant","illiteratecriminals","imagine","immediately","impact","inconsiderate","indoors","injuries.hi","innocent","interviewing","issues","iwll","jacob","jewlry","joining","jojods","joking","julianna","katerina's","kidnappers","kingwilly","kline.kronos","konw","lawyer","learn","letting","line","logo","lookingforsomething","loooks","loves","luvwool","mamin","managing","maniacs","marriagematerial","martaflores","mikal","mindless","mood","moron","murdered","murders","nervous","nightmares","nooooo","nopeace","note","notified","omc","orchestrated","panel","passenger","peacerules","people's","peppers","poison","poisoning","pokpeace","pokrules","possibly","poster","pot","powercrystals","powr","practice","prepare","prevail","proffessor","protecting","proven","putting","quickly","radicalism","rally.businesses","rally.kronos","rallyinthepark","rallypark","rallys","random","ransom","realized","received","recognized","repent","resolved","responding","rioting","ripping","roofs","roughly","roundup","ruining","ruled","sap","saulalinsky","scen","security","shifted","shoots","shouting","shoving","shuoldve","signup","silly","sittin","snatched","somany","somanyguns","something's","souls","speaking.she's","spoken","spread","staffing","stalemate","stayed","stays","steakhouse","stinks","stopby","stories","stretcher","strings","stripped","structure","stuffnstuff","stupd","stupidfire","suport","supply","supporters","supports","surprised","swats","sway","switch","sylvia's","sympathesizers","table","tahnks","ten","terrified","terroristsnotasdumbastheylook","terrorsympathizer","thinkthe","thot","thtat","tiskele","ton","tonights","tooo","totaly","trickle","tring","tugs","tunes","tyranny","unfold","uniforms","unoccupied","updates","vacate","vomit","warnings","wasted","weeks","whereareu","wildlife","women","wonderig","wraps","writinlazy","ya","yells","zawahiri","abilafiredept","abilapolicedepartment","achilleos","actions","apartments","arrive","beautiful","bed","blessed","blocking","brewvebeenserved","buildings","carly's","cheering","citizens","cleaningfish","close","contact","corrupt","courage","cover","crap","dancin","dancingdolphin","days","dear","decide","demand","department","distefano","distress","dragging","dropped","dude","east","egeou","employees","evacuation","evacuees","event","explosion","fast","fighting","firemen","flames","front","fun","fund","george","girl","gotta","guests","ha","haha","hearing","hennyhenhendrix","hire","hold","hot","hundred","hungry","innovation","intense","ive","juliana","justiceforelian","knowing","leaving","license","link","madeg","makes","marcusdrymiau","mind","mindofkronos","miss","moment","musician","names","office","oso","panopticon","parking","parla","passion","peeking","press","program","raise","ready","refrain","rememberelian","rememberjuliana","renovation","resolution","response","returns","rights","rocks","safely","sara_nespola","scanner","schaber","searched","shaking","shelter","shooters","sign","sitting","sleep","sofitees","songs","speakers","speech","speeches","st","step","story","study","stuff","swift","talent","terrible","trashed","truthforcadau","types","vehicle","victor","violence","visible","waste","weight","wild","win","window","winning","woman","wont","world's","wounded","wtf","corruption","cruise","employees","family","friends","haha","means","missing","plans","president","tethys","abilacitypark","answer","arriving","bert","book","care","caught","cleaningfish","clothes","contact","creator","dancin","dear","destiny","distefano","donations","dragging","empty","escalated","event","exit","experience","fast","food","fund","george","guess","hand","hanns","heading","hey","hiding","hold","inspiring","introduces","justiceforelian","kapelou","kids","millions","minds","mom","movement","party","pics","play","pls","pok.kronos","president","prof","read","reason","release","rise","rocks","sad","sale","scanner","scary","serve","service","sick","sign","sirens","slowly","social","someones","songs","sow","speak","stage","started","swift","today's","tomatoma","tomorrow","totally","town","tree","warm","wont","youre","abilafire","battle","fight","hungry","kapelou","passion","pics","reported","world's","activist","battle","beautiful","blocking","brewvebeenserved","build","carly's","catch","chasing","cheering","citizens","clean","corner","cover","dancingdolphinsfire","derp","distress","dropped","elodis","evacuees","faith","focus","followers.kronos","forget","forward","gain","gold","ground","guests","ha","half","hard","hemprules","hennyhenhendrix","henri","hot","hundred","inspirational","intense","internationally","introducing","kid","kidnap","legacy","lights","local","maha_homeland","mailbox","marcusdrymiau","market","massive","means","message","mindofkronos","money.kronos","negotiator","online","organization","oso","peeking","plans","poked","pollution","prayers","press","pressure","prettyrain","pulling","quality","radicals","renovation","resolution","response","returns","rights","rules","safely","saving","send","shaking","shelter","shop","shown","sitting","species","speeches","standing","store","story","study","sustainability","swear","takes","taxi","tomish","trashed","traveled","victor","wildlands","workathome","worst","wtf","yeah","yellow","yikes","pokrally","pok","police","life","rally","pok","rally","pokrally","people","time","people","afd","control","person","pok","day","gelatogalore","world","police","people","dont","park","stop","real","gelato","stand","park","followers","door","city","wait","change","swat","run","remember","start","trust","starting","public","shot","shots","swat","gelato","matter","run","im","home","site","shots","leader","act","difference","found","gastech","time","city","im","time","lose","cars","kronos","action","join","gelatogalore","feel","future","news","safe","stand","heard","safe","top","wait","environment","hands","left","lost","traffic","traffic","control","kronos","stand","bunch","children","money","site","top","change","dont","kronos","stop","breaking","hear","news","public","run","site","arent","job","month","public","crazy","hear","start","ago","bad","crazy","day","difference","ago","bad","control","earth","im","power","resolve","real","home","join","rally","shot","top","begin","crazy","didnt","rest","return","bad","home","waiting","education","starting","wait","happen","responsibility","week","car","kidnapping","lost","starting","action","change","feel","followers","heard","leader","life","safe","world","check","education","heard","leader","love","shots","killed","power","resolve","whos","car","children","door","found","lose","real","setting","waiting","whos","car","cars","events","gelatogalore","police","questions","waiting","begin","day","didnt","hands","job","kill","left","life","love","questions","return","world","afd","arent","dont","environment","gastech","person","start","traffic","week","afd","city","door","elian","hear","listen","neighbors","park","swat","ago","breaking","bunch","check","children","death","education","elian","em","environment","feel","followers","gastech","listen","money","neighbors","person","rest","trust","watching","act","cars","check","elian","future","hands","job","kidnapping","killed","left","lost","love","money","neighbors","pokrally","power","resolve","rest","return","stop","action","breaking","death","em","gelato","join","kidnapping","kill","killed","setting","shot","watching","whos","act","arent","difference","earth","events","found","future","happen","lose","matter","month","news","remember","responsibility","setting","week","begin","bunch","death","didnt","earth","em","events","happen","kill","listen","matter","month","questions","remember","responsibility","trust","watching"],[596,186,157,404,355,335,88,61,53,65,52,138,50,22,146,53,45,44,129,40,118,116,41,35,42,34,36,91,29,88,32,28,31,27,27,27,12,26,79,31,25,76,27,27,23,70,28,69,10,67,21,21,21,62,62,25,9,22,22,24,19,19,19,19,19,23,21,56,56,18,55,55,20,20,54,8,8,21,17,19,19,19,20,16,16,16,16,16,16,18,18,18,48,7,7,7,7,47,17,17,15,15,15,15,15,15,15,15,15,15,18,18,18,44,44,16,16,16,14,14,14,14,14,14,14,14,14,14,14,17,41,15,6,6,6,6,6,6,6,6,40,13,13,13,13,13,16,16,16,16,16,39,38,38,14,14,15,15,15,37,37,37,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,32,36,13,13,13,13,35,35,14,14,14,14,14,34,34,30,11,11,11,11,11,11,11,11,11,11,11,11,11,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,33,12,12,12,13,13,13,13,32,31,31,31,31,31,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,30,30,30,11,11,11,12,12,12,12,12,12,12,26,25,28,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,11,11,10,10,10,10,10,10,10,10,10,27,27,27,27,27,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,26,26,25,22,10,10,10,10,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,21,23,23,23,23,23,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,22,22,22,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,19,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,21,21,21,21,21,21,21,18,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,20,20,20,20,8,8,8,8,8,8,8,8,8,8,8,17,17,17,19,19,19,19,19,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,16,16,18,18,18,7,7,7,7,7,7,7,7,7,7,17,17,17,17,17,15,6,6,6,6,6,6,6,6,6,6,6,6,6,16,16,16,14,14,14,14,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,15,15,15,15,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,13,14,14,14,14,14,14,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,12,12,12,12,12,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,13,13,13,11,11,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,12,12,12,10,10,10,10,10,10,10,10,11,11,11,11,11,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,9,9,9,9,9,9,10,10,10,10,10,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1259,275,240,202,169,162,124,112,82,75,70,65,60,58,57,54,53,52,51,47,43,39,38,33,32,31,30,29,28,27,26,25,25,24,23,21,21,20,20,20,20,20,20,19,19,19,16,16,16,15,14,14,14,14,14,14,14,14,13,13,12,12,12,12,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[0.0679279689993162,0.0187783947501262,0.0178937770686118,0.0407874810701666,0.0358404846037355,0.0338213023725391,0.022022022022022,0.00615850580514891,0.00604057442443583,0.0162662662662663,0.00592660132208799,0.0157282881240027,0.0056986551173923,0.00550550550550551,0.0147400302877335,0.00535083291267037,0.00512878960565307,0.00501481650330522,0.0130237253912166,0.00455892409391384,0.0119131751640586,0.0117112569409389,0.00413932357395255,0.00398905858217461,0.0105105105105105,0.00387508547982676,0.00363452801615346,0.00918727915194346,0.00330521996808753,0.00888440181726401,0.00323069156991418,0.00319124686573969,0.00312973245835437,0.00307727376339184,0.00307727376339184,0.00307727376339184,0.003003003003003,0.00296330066104399,0.00797576981322564,0.00775775775775776,0.00284932755869615,0.00767289247854619,0.00272589601211509,0.00272589601211509,0.00262138135400046,0.00706713780918728,0.00700700700700701,0.00696617869762746,0.0025025025025025,0.00676426047450782,0.00239343514930476,0.00239343514930476,0.00239343514930476,0.00625946491670873,0.00625946491670873,0.00625625625625626,0.00225225225225225,0.002221100454316,0.002221100454316,0.00600600600600601,0.00216548894460907,0.00216548894460907,0.00216548894460907,0.00216548894460907,0.00216548894460907,0.00575575575575576,0.00212014134275618,0.00565371024734982,0.00565371024734982,0.00205151584226123,0.00555275113579,0.00555275113579,0.00201918223119637,0.00201918223119637,0.00545179202423019,0.002002002002002,0.002002002002002,0.00525525525525526,0.00193754273991338,0.00191822311963655,0.00191822311963655,0.00191822311963655,0.005005005005005,0.00182356963756553,0.00182356963756553,0.00182356963756553,0.00182356963756553,0.00182356963756553,0.00182356963756553,0.00181726400807673,0.00181726400807673,0.00181726400807673,0.00484603735487128,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00474507824331146,0.00171630489651691,0.00171630489651691,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.00170959653521769,0.0045045045045045,0.0045045045045045,0.0045045045045045,0.004442200908632,0.004442200908632,0.00161534578495709,0.00161534578495709,0.00161534578495709,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00425425425425425,0.00413932357395255,0.00151438667339727,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.00403836446239273,0.001481650330522,0.001481650330522,0.001481650330522,0.001481650330522,0.001481650330522,0.004004004004004,0.004004004004004,0.004004004004004,0.004004004004004,0.004004004004004,0.00393740535083291,0.00383644623927309,0.00383644623927309,0.00141342756183746,0.00141342756183746,0.00375375375375375,0.00375375375375375,0.00375375375375375,0.00373548712771328,0.00373548712771328,0.00373548712771328,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00364713927513107,0.00363452801615346,0.00131246845027764,0.00131246845027764,0.00131246845027764,0.00131246845027764,0.00353356890459364,0.00353356890459364,0.0035035035035035,0.0035035035035035,0.0035035035035035,0.0035035035035035,0.0035035035035035,0.00343260979303382,0.00343260979303382,0.00341919307043538,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.003331650681474,0.00121150933871782,0.00121150933871782,0.00121150933871782,0.00325325325325325,0.00325325325325325,0.00325325325325325,0.00325325325325325,0.00323069156991418,0.00312973245835437,0.00312973245835437,0.00312973245835437,0.00312973245835437,0.00312973245835437,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00302877334679455,0.00302877334679455,0.00302877334679455,0.001110550227158,0.001110550227158,0.001110550227158,0.003003003003003,0.003003003003003,0.003003003003003,0.003003003003003,0.003003003003003,0.003003003003003,0.003003003003003,0.00296330066104399,0.00284932755869615,0.00282685512367491,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00275275275275275,0.00275275275275275,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00272589601211509,0.00272589601211509,0.00272589601211509,0.00272589601211509,0.00272589601211509,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.00262493690055527,0.00262493690055527,0.00252397778899546,0.00250740825165261,0.0025025025025025,0.0025025025025025,0.0025025025025025,0.0025025025025025,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.00239343514930476,0.00232205956587582,0.00232205956587582,0.00232205956587582,0.00232205956587582,0.00232205956587582,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.002221100454316,0.002221100454316,0.002221100454316,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.00216548894460907,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.00212014134275618,0.00212014134275618,0.00212014134275618,0.00212014134275618,0.00212014134275618,0.00212014134275618,0.00212014134275618,0.00205151584226123,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.00201918223119637,0.00201918223119637,0.00201918223119637,0.00201918223119637,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.00193754273991338,0.00193754273991338,0.00193754273991338,0.00191822311963655,0.00191822311963655,0.00191822311963655,0.00191822311963655,0.00191822311963655,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.00182356963756553,0.00182356963756553,0.00181726400807673,0.00181726400807673,0.00181726400807673,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00171630489651691,0.00171630489651691,0.00171630489651691,0.00171630489651691,0.00171630489651691,0.00170959653521769,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00161534578495709,0.00161534578495709,0.00161534578495709,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00151438667339727,0.00151438667339727,0.00151438667339727,0.00151438667339727,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.001481650330522,0.00141342756183746,0.00141342756183746,0.00141342756183746,0.00141342756183746,0.00141342756183746,0.00141342756183746,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.00136767722817415,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.00131246845027764,0.00131246845027764,0.00131246845027764,0.0012537041258263,0.0012537041258263,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.00121150933871782,0.00121150933871782,0.00121150933871782,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.001110550227158,0.001110550227158,0.001110550227158,0.001110550227158,0.001110550227158,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.00100959111559818,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000706713780918728,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000341919307043538,0.000341919307043538,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.143492135855938,0.02776375567895,0.0242301867743564,0.0230225666742649,0.019261454296786,0.018463642580351,0.0125189298334175,0.0113074204946996,0.0082786471479051,0.00854798267608844,0.00797811716434921,0.00656234225138819,0.0060575466935891,0.00661043993617506,0.0142642642642643,0.00615454752678368,0.00535083291267037,0.00592660132208799,0.0127627627627628,0.0117617617617618,0.00490084340095737,0.00393740535083291,0.00433097788921814,0.00376111237747891,0.00323069156991418,0.00312973245835437,0.00750750750750751,0.00330521996808753,0.00282685512367491,0.00272589601211509,0.00296330066104399,0.00284932755869615,0.00625625625625626,0.00242301867743564,0.00262138135400046,0.00239343514930476,0.00239343514930476,0.00227946204695692,0.00201918223119637,0.00201918223119637,0.00201918223119637,0.00201918223119637,0.005005005005005,0.00216548894460907,0.00216548894460907,0.00191822311963655,0.00182356963756553,0.00161534578495709,0.004004004004004,0.00151438667339727,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00159562343286984,0.00141342756183746,0.0035035035035035,0.0035035035035035,0.0035035035035035,0.001481650330522,0.00131246845027764,0.00136767722817415,0.00121150933871782,0.00121150933871782,0.003003003003003,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.0012537041258263,0.001110550227158,0.001110550227158,0.001110550227158,0.001110550227158,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00113973102347846,0.00100959111559818,0.0025025025025025,0.0025025025025025,0.0025025025025025,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.00102575792113061,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.000908632004038365,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.00225225225225225,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000911784818782767,0.000807672892478546,0.000807672892478546,0.000807672892478546,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.002002002002002,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000797811716434921,0.000706713780918728,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.00175175175175175,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.000683838614087075,0.00060575466935891,0.00060575466935891,0.00060575466935891,0.0015015015015015,0.0015015015015015,0.0015015015015015,0.00056986551173923,0.00056986551173923,0.00056986551173923,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.000504795557799091,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.00125125125125125,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000455892409391384,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.000403836446239273,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.001001001001001,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000341919307043538,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000302877334679455,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000750750750750751,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000227946204695692,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.000201918223119637,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.0005005005005005,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000113973102347846,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.000100959111559818,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025,0.00025025025025025],[0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,1.09861228866811,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0.405465108108164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0.0275424212938758,0.0206301752339494,0.0196583233782646,0.0165379004215748,0.0145320659645026,0.0137133580228405,0.00892916153991954,0.00676581015737049,0.0066362492932995,0.00659540341016784,0.00651103704248253,0.00637727204455513,0.00626061254084859,0.00604841600367828,0.00597656797413347,0.00587849079246944,0.00563455128676373,0.00550933903594675,0.00528066622372067,0.00500849003267887,0.0048303768558065,0.00474850606164029,0.00454751174511787,0.00438242877859401,0.00426164528041614,0.00425721652777704,0.00399293714205472,0.00372512113456264,0.00363115527369218,0.00360231494331332,0.00354927745960419,0.00350594302287521,0.00343836253899156,0.00338073077205824,0.00338073077205824,0.00338073077205824,0.00329913600200634,0.00325551852124126,0.00323389636956537,0.0031455000879262,0.00313030627042429,0.00311109017831605,0.00299470285654104,0.00299470285654104,0.00287988176879035,0.00286547779581742,0.00284109685361076,0.00282454239873431,0.00274928000167195,0.0027426716045681,0.00262945726715641,0.00262945726715641,0.00262945726715641,0.00253799461915257,0.00253799461915257,0.00253669361929532,0.00247435200150475,0.00244012825347788,0.00244012825347788,0.00243522587452351,0.00237903276552246,0.00237903276552246,0.00237903276552246,0.00237903276552246,0.00237903276552246,0.0023337581297517,0.00232921333286525,0.00229238223665393,0.00229238223665393,0.00225382051470549,0.00225144683957083,0.00225144683957083,0.00221829841225262,0.00221829841225262,0.00221051144248772,0.00219942400133756,0.00219942400133756,0.00213082264020807,0.00212860826388852,0.00210738349163999,0.00210738349163999,0.00210738349163999,0.00202935489543626,0.00200339601307155,0.00200339601307155,0.00200339601307155,0.00200339601307155,0.00200339601307155,0.00200339601307155,0.00199646857102736,0.00199646857102736,0.00199646857102736,0.00196489905998909,0.00192449600117036,0.00192449600117036,0.00192449600117036,0.00192449600117036,0.00192396366290598,0.00188555365041473,0.00188555365041473,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00187818376225458,0.00182641940589263,0.00182641940589263,0.00182641940589263,0.00180115747165666,0.00180115747165666,0.0017746387298021,0.0017746387298021,0.0017746387298021,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.0017529715114376,0.00172495166112082,0.00167835128040734,0.00166372380918946,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00164956800100317,0.00163741588332424,0.00162775926062063,0.00162775926062063,0.00162775926062063,0.00162775926062063,0.00162775926062063,0.00162348391634901,0.00162348391634901,0.00162348391634901,0.00162348391634901,0.00162348391634901,0.00159648048624113,0.00155554508915803,0.00155554508915803,0.00155280888857683,0.00155280888857683,0.00152201617157719,0.00152201617157719,0.00152201617157719,0.00151460969207492,0.00151460969207492,0.00151460969207492,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00150254700980366,0.00147878772047655,0.00147367429499181,0.0014418939679642,0.0014418939679642,0.0014418939679642,0.0014418939679642,0.00143273889790871,0.00143273889790871,0.00142054842680538,0.00142054842680538,0.00142054842680538,0.00142054842680538,0.00142054842680538,0.0013918035008256,0.0013918035008256,0.00138636348794677,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137733475898669,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.00137464000083597,0.0013508681037425,0.00133097904735157,0.00133097904735157,0.00133097904735157,0.00131908068203357,0.00131908068203357,0.00131908068203357,0.00131908068203357,0.00130993270665939,0.00126899730957628,0.00126899730957628,0.00126899730957628,0.00126899730957628,0.00126899730957628,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00125212250816972,0.00122806191249318,0.00122806191249318,0.00122806191249318,0.00122006412673894,0.00122006412673894,0.00122006412673894,0.00121761293726175,0.00121761293726175,0.00121761293726175,0.00121761293726175,0.00121761293726175,0.00121761293726175,0.00121761293726175,0.0012015150228872,0.00115530290662231,0.00114619111832697,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00112691025735275,0.00111614519248994,0.00111614519248994,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110914920612631,0.00110525572124386,0.00110525572124386,0.00110525572124386,0.00110525572124386,0.00110525572124386,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00109971200066878,0.00106432032416075,0.00106432032416075,0.00102338492707765,0.00101666655782763,0.00101467744771813,0.00101467744771813,0.00101467744771813,0.00101467744771813,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.00100169800653577,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000998234285513679,0.000970454441562737,0.000941514132911437,0.000941514132911437,0.000941514132911437,0.000941514132911437,0.000941514132911437,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000913209702946316,0.000900578735828331,0.000900578735828331,0.000900578735828331,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000887319364901048,0.000878030209032952,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000876485755718802,0.000859643338745225,0.000859643338745225,0.000859643338745225,0.000859643338745225,0.000859643338745225,0.000859643338745225,0.000859643338745225,0.00083181809276806,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000824784000501584,0.000818707941662119,0.000818707941662119,0.000818707941662119,0.000818707941662119,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000811741958174503,0.000785605976503168,0.000785605976503168,0.000785605976503168,0.000777772544579013,0.000777772544579013,0.000777772544579013,0.000777772544579013,0.000777772544579013,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.000776404444288417,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.00075127350490183,0.000739393860238276,0.000739393860238276,0.000736837147495907,0.000736837147495907,0.000736837147495907,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.00071027421340269,0.000695901750412801,0.000695901750412801,0.000695901750412801,0.000695901750412801,0.000695901750412801,0.000693181743973383,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000665489523675786,0.000654966353329695,0.000654966353329695,0.000654966353329695,0.000646969627708491,0.000646969627708491,0.000646969627708491,0.000646969627708491,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000626061254084859,0.000614030956246589,0.000614030956246589,0.000614030956246589,0.000614030956246589,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000608806468630877,0.000600757511443599,0.000573095559163483,0.000573095559163483,0.000573095559163483,0.000573095559163483,0.000573095559163483,0.000573095559163483,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554574603063155,0.000554545395178707,0.000554545395178707,0.000554545395178707,0.000554545395178707,0.000554545395178707,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000549856000334389,0.000532160162080377,0.000532160162080377,0.000532160162080377,0.000508333278913814,0.000508333278913814,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000507338723859065,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000500849003267887,0.000491224764997271,0.000491224764997271,0.000491224764997271,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000462121162648922,0.000450289367914165,0.000450289367914165,0.000450289367914165,0.000450289367914165,0.000450289367914165,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.000443659682450524,0.00041590904638403,0.00041590904638403,0.00041590904638403,0.00041590904638403,0.00041590904638403,0.00041590904638403,0.000409353970831059,0.000409353970831059,0.000409353970831059,0.000409353970831059,0.000409353970831059,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000405870979087252,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000375636752450915,0.000369696930119138,0.000369696930119138,0.000369696930119138,0.000369696930119138,0.000369696930119138,0.000369696930119138,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000368418573747954,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000332744761837893,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000327483176664848,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000323484813854246,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000304403234315439,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000286547779581742,0.000277272697589353,0.000277272697589353,0.000277272697589353,0.000277272697589353,0.000277272697589353,0.000277272697589353,0.000277272697589353,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000274928000167195,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000250424501633943,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000245612382498636,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000231060581324461,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.000221829841225262,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.00020467698541553,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000202935489543626,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000184848465059569,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000163741588332424,0.000138636348794677,0.000138636348794677,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000125212250816972,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000122806191249318,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000110914920612631,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,0.000101467744771813,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,9.24242325297845e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,8.18707941662119e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.62121162648922e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,4.09353970831059e-05,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>class<\/th>\n      <th>word<\/th>\n      <th>n<\/th>\n      <th>tf<\/th>\n      <th>idf<\/th>\n      <th>tf_idf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":4,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":5,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"targets":6,"render":"function(data, type, row, meta) { return DTWidget.formatRound(data, 3, 3, \",\", \".\"); }"},{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"rowCallback":"function(row, data) {\nvar value=data[0]; $(row).css({'line-height':'25%'});\n}"}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.rowCallback"],"jsHooks":[]}</script>
+```
+
 </div>
-<p><strong>3. Visualizing tf-idf within Three Records Classes</strong></p>
-<p>Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.</p>
+
+**3. Visualizing tf-idf within Three Records Classes**
+
+Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records. 
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_tf_idf_count</span> <span class='op'>&lt;-</span> <span class='va'>mb_tf_idf</span> <span class='op'>%&gt;%</span> 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mb_tf_idf_count</span> <span class='op'>&lt;-</span> <span class='va'>mb_tf_idf</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>tf_idf</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>class</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>top_n</span><span class='op'>(</span><span class='fl'>15</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
@@ -2476,14 +420,18 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"tf-idf"</span>, y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>class</span>, ncol <span class='op'>=</span> <span class='fl'>2</span>, scales <span class='op'>=</span> <span class='st'>"free"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-23-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
-</div>
-<p><strong>3.Visualizing count of latitude and longitude by classification as bar chart</strong></p>
+
+
+
+
+**3.Visualizing count of latitude and longitude by classification as bar chart**
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>latitudecount_plot</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>latitudecount_plot</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
   <span class='fu'>select</span><span class='op'>(</span><span class='va'>type</span>, <span class='va'>class</span>,<span class='va'>latitude</span>, <span class='va'>longitude</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>type</span> <span class='op'>==</span> <span class='st'>"mbdata"</span>, <span class='va'>latitude</span> <span class='op'>&gt;</span><span class='fl'>0</span>, <span class='va'>longitude</span> <span class='op'>&gt;</span><span class='fl'>0</span> <span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>class</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -2494,34 +442,39 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>geom_text</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label<span class='op'>=</span><span class='va'>total_count</span><span class='op'>)</span>, vjust<span class='op'>=</span><span class='op'>-</span><span class='fl'>0.3</span>, size<span class='op'>=</span><span class='fl'>3.5</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'>theme_minimal</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>latitudecount_plot</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-24-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-24-1.png" width="624" /></p>
-</div>
-<p><strong>5. Visualizing Word Length within Three Records Classes</strong></p>
-<p>To explore the Word Length within three records Classes, we caculate the length of every record and add a new column named “length” in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.</p>
+
+**5. Visualizing Word Length within Three Records Classes**
+
+To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>length</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='st'>"\\W+"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>length</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>mbdata_classed</span><span class='op'>$</span><span class='va'>message</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='st'>"\\W+"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre></div>
+
 </div>
-</div>
-<p>A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.</p>
+
+
+A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_plot</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_plot</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>type</span> <span class='op'>==</span> <span class='st'>"mbdata"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>x<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>class</span><span class='op'>)</span>, y<span class='op'>=</span><span class='va'>length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_boxplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill<span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>labs</span><span class='op'>(</span>title<span class='op'>=</span><span class='st'>"Word Length Distribution by Classification"</span>, x<span class='op'>=</span><span class='st'>"Class"</span>, y<span class='op'>=</span><span class='st'>"Word Length"</span><span class='op'>)</span>
 <span class='va'>length_plot</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-26-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
-</div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_voplot</span> <span class='op'>&lt;-</span><span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_voplot</span> <span class='op'>&lt;-</span><span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
   <span class='co'>#filter(type == "mbdata") %&gt;%</span>
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>class</span>, y <span class='op'>=</span> <span class='va'>length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
   <span class='fu'>geom_violin</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span>, trim <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2529,15 +482,19 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>theme_classic</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
 <span class='va'>length_voplot</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-27-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-27-1.png" width="624" /></p>
-</div>
-<p><strong>Interpretation for violin plot</strong>:</p>
-<p>This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median.</p>
+
+
+**Interpretation  for violin plot**: 
+
+This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_plot2</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>length_plot2</span> <span class='op'>&lt;-</span> <span class='va'>mbdata_classed</span> <span class='op'>%&gt;%</span>
   <span class='co'>#filter(type == "mbdata") %&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>class</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>
@@ -2548,14 +505,17 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>stat_summary</span><span class='op'>(</span>fun <span class='op'>=</span> <span class='va'>mean</span>, geom <span class='op'>=</span> <span class='st'>"point"</span>, size <span class='op'>=</span> <span class='fl'>3</span>, color <span class='op'>=</span> <span class='st'>"red"</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='va'>length_plot2</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-28-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-28-1.png" width="624" /></p>
-</div>
-<p><strong>Visualizing contribution to record classification by bar chart</strong></p>
+
+
+**Visualizing contribution to record classification by bar chart**
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>contribution_plot1</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>contribution_plot1</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>class</span>, <span class='va'>word</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;=</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -2565,13 +525,14 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Contribution to record classification"</span>, y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 <span class='va'>contribution_plot1</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-29-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
-</div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>contribution_plot2</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>contribution_plot2</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>class</span>, <span class='va'>word</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -2582,35 +543,45 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Contribution to record classification"</span>, y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 <span class='va'>contribution_plot2</span>
-</code></pre>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-30-1.png" width="624" />
+
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-30-1.png" width="624" /></p>
-</div>
-<h2 id="question-2">Question 2</h2>
-<p><strong>Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.</strong></p>
-<p>We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.</p>
+
+
+
+
+
+## Question 2
+
+**Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+
+We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model. 
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"meaningful"</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ccdata</span><span class='op'>$</span><span class='va'>class</span> <span class='op'>&lt;-</span> <span class='st'>"meaningful"</span>
 <span class='va'>data2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>ccdata</span>, <span class='va'>meaningful</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data2</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data2</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data2</span><span class='op'>$</span><span class='va'>message</span> <span class='op'>&lt;-</span> <span class='fu'>str_replace_all</span><span class='op'>(</span><span class='va'>data2</span><span class='op'>$</span><span class='va'>message</span>,<span class='fu'>fixed</span><span class='op'>(</span><span class='st'>"#"</span><span class='op'>)</span>,<span class='st'>""</span><span class='op'>)</span>
 
 <span class='va'>usenet_words</span> <span class='op'>&lt;-</span> <span class='va'>data2</span><span class='op'>%&gt;%</span>
   <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>message</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>, <span class='st'>"[a-z']$"</span><span class='op'>)</span>,
          <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='va'>stop_words</span><span class='op'>$</span><span class='va'>word</span>,
          <span class='op'>!</span><span class='va'>word</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"aliba"</span>,<span class='st'>"abila"</span>,<span class='st'>"rt"</span>,<span class='st'>"homelandilluminations"</span>,<span class='st'>"centralbulletin"</span>, <span class='st'>"alibapost"</span>, <span class='st'>"grammar"</span>,<span class='st'>"kronosstar"</span>, <span class='st'>"pok"</span>,<span class='st'>"abilapost"</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>top_terms_by_topic_LDA</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>word</span>,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>top_terms_by_topic_LDA</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>word</span>,
                                    <span class='va'>plot</span> <span class='op'>=</span> <span class='cn'>T</span>,
                                    <span class='va'>number_of_topics</span> <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
 <span class='op'>{</span>
@@ -2640,58 +611,58 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
         <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>top_terms</span><span class='op'>)</span>
     <span class='op'>}</span>
 <span class='op'>}</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot top ten terms in the hotel reviews by topic</span>
-<span class='fu'>top_terms_by_topic_LDA</span><span class='op'>(</span><span class='va'>reviews</span><span class='op'>$</span><span class='va'>text</span>, number_of_topics <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-34-1.png" width="624" /></p>
-</div>
-<p>In this question, we would combine mbdata and ccdata into analysis.</p>
-<div class="layout-chunk" data-layout="l-body">
+</code></pre></div>
 
 </div>
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#fire_term_counts &lt;- mb_usenet_words%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='co'># plot top ten terms in the hotel reviews by topic</span>
+<span class='fu'>top_terms_by_topic_LDA</span><span class='op'>(</span><span class='va'>reviews</span><span class='op'>$</span><span class='va'>text</span>, number_of_topics <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
+</code></pre></div>
+<img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-34-1.png" width="624" />
+
+</div>
+
+
+In this question, we would combine mbdata and ccdata into analysis. 
+
+
+<div class="layout-chunk" data-layout="l-body">
+
+
+</div>
+
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#fire_term_counts &lt;- mb_usenet_words%&gt;%</span>
 <span class='co'>#  count(date, word) %&gt;%</span>
 <span class='co'>#  extract(word, "fire", "(\\d+)", convert = TRUE) %&gt;%</span>
 <span class='co'>#  complete(fire, word, fill = list(count = 0)) %&gt;%</span>
 <span class='co'>#  group_by(fire) %&gt;%</span>
 <span class='co'>#  mutate(fire_total = sum(count))</span>
-</code></pre>
+</code></pre></div>
+
 </div>
-</div>
+
+
+
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fire_count</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span> 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fire_count</span> <span class='op'>&lt;-</span> <span class='va'>mb_usenet_words</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>,<span class='st'>"fire|Dancing Dolphin Department"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<!--radix_placeholder_article_footer-->
-<!--/radix_placeholder_article_footer-->
-</div>
+</code></pre></div>
 
-<div class="d-appendix">
 </div>
 
 
-<!--radix_placeholder_site_after_body-->
-<!--/radix_placeholder_site_after_body-->
-<!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
-<!--/radix_placeholder_appendices-->
-<!--radix_placeholder_navigation_after_body-->
-<!--/radix_placeholder_navigation_after_body-->
 
-</body>
 
-</html>
+
+
+
+
+
+```{.r .distill-force-highlighting-css}
+```
