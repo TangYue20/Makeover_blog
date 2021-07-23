@@ -395,8 +395,6 @@ class_cors %>%
 ```
 
 
-
-
 **4.Visualising count of latitude and longitude by classification as bar chart**
 
 ```{r}
@@ -500,8 +498,6 @@ We can use the LDA() function from the topicmodels package, setting k = 4, to cr
 ```{r}
 #data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
 #data_lda
-
-
 ```
 
 In this question, we would combine mbdata and ccdata into analysis. 
