@@ -498,8 +498,8 @@ This violin plot shows the relationship of record classes to sentence length. We
 We can use the LDA() function from the topicmodels package, setting k = 4, to create a two-topic LDA model.
 
 ```{r}
-data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
-data_lda
+#data_lda <- LDA(data$message, k = 2, control = list(seed = 1234))
+#data_lda
 
 
 ```
