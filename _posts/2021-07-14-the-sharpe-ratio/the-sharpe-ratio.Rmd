@@ -107,7 +107,7 @@ In this step, we would like to use package <span style="color:blue">*stringr*</s
 
 
 ```{r}
-#data$message <- str_replace_all(data$message,fixed("@"),"")
+
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
 data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
@@ -115,12 +115,6 @@ data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
 
 ```
 
-
-Besides, there are a lot of repeat records which forward from other publisher that begin with "RT". The repeat records represent one review or voice, so we remove repeat records.
-
-```{r}
-#data <- data[- grep("RT @", data$message),]
-```
 
 * For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
 
@@ -195,21 +189,21 @@ Now, all records in Microblog data have been labeled with responding class- **Ju
 junk$class <- "junk"
 Typical_Chatter$class <- "Typical_Chatter"
 meaningful$class <- "meaningful"
-ccdata$class <- 'meaningful'
+#ccdata$class <- 'meaningful'
 
 ```
 
 * Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
 
 ```{r}
-data_classed <- rbind(junk, Typical_Chatter, meaningful,ccdata)
+mbdata_classed <- rbind(junk, Typical_Chatter, meaningful)
 
 ```
 
 * In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
 
 ```{r}
-data_classed$message <- str_replace_all(data_classed$message,fixed("#"),"")
+mbdata_classed$message <- str_replace_all(mbdata_classed$message,fixed("#"),"")
 ```
 
 
@@ -223,7 +217,7 @@ After cleaning the text data, the next step is to segment sentence and count the
 (4) filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.
 
 ```{r}
-data_classed_token <- data_classed %>%
+mb_usenet_words <- mbdata_classed %>%
   unnest_tokens(word, message) %>%
   filter(str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
@@ -234,16 +228,19 @@ data_classed_token <- data_classed %>%
 The most common words in entire dataset could be seen from below code chunk. 
 
 ```{r}
-data_classed_token %>%
-  filter(type == "mbdata") %>%
+#ccdata_usenet_words <- subset(usenet_words, type == "ccdata")
+#mbdata_usenet_words <- subset(usenet_words, type == "mbdata")
+```
+
+```{r}
+mb_usenet_words%>%
   count(word,sort = TRUE) %>%
   top_n(15) 
 ```
 
 
 ```{r}
-data_classed_token %>%
-  filter(type == "mbdata") %>%
+mb_usnet_word_pot <-mb_usenet_words %>%
   count(word, sort = TRUE) %>%
   filter(n > 140) %>%
   mutate(word = reorder(word, n)) %>%
@@ -251,7 +248,7 @@ data_classed_token %>%
   theme(legend.position = "none")+
   geom_col() +
   labs(y = NULL)
-
+mb_usnet_word_pot
 ```
 
 * Generate the word cloud
@@ -259,7 +256,7 @@ The importance of words can be illustrated as a word cloud as follow :
 
 ```{r}
 set.seed(1234)
-wordcloud(words = data_classed_token$word,
+wordcloud(words = mb_usenet_words$word,
           #freq = data_classed_token$n,
           min.freq = 10,
           max.words = 200, 
@@ -272,24 +269,28 @@ wordcloud(words = data_classed_token$word,
 ## Question 1: 
 **Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
+Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. Our exploration and discussion are described below: 
+
+(1) explore the difference of most common words in three records classification.
+(2) explore whether there is relationship between records length and classes.
+(3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
 *1.Visualizing word frequency as word cloud* 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
-token_by_class <- data_classed_token %>%
-  count(type, class,author, word, sort = TRUE) %>%
-  group_by(class) %>%
-  #top_n(15) %>%
+mbwords_by_class <- mb_usenet_words %>%
+  count(class, word, sort = TRUE) %>%
+  #group_by(class) %>%
+  #top_n(20) %>%
   ungroup()
 ```
 
 
-
 ```{r}
 set.seed(1234)
-token_by_class %>%
-  filter(n > 12) %>%
+mbwords_by_class_plot <- mbwords_by_class %>%
+  filter(n > 50) %>%
 ggplot(aes(label = word,
            size = n,
            color= class))+
@@ -297,27 +298,25 @@ ggplot(aes(label = word,
   theme_minimal() +
   facet_wrap(~class, scales = "free_y") +
   labs(x = "Record Classification")
-```
+mbwords_by_class_plot
 
+```
+*2. Visualising tf-idf as interactive table*
+
+Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
 The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
 
-
 ```{r}
-tf_idf <- token_by_class %>%
+mb_tf_idf <- mbwords_by_class %>%
   bind_tf_idf(word,class,n) %>%
   arrange(desc(tf_idf))
 
 ```
 
-*2. Visualising tf-idf as interactive table*
-
-Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
 ```{r}
-tf_idf %>%
-  filter(type == "mbdata",n>20) %>%
-DT::datatable(tf_idf, filter = 'top') %>% 
+DT::datatable(mb_tf_idf, filter = 'top') %>% 
   formatRound(columns = c('tf', 'idf', 
                           'tf_idf'), 
               digits = 3) %>%
@@ -325,80 +324,35 @@ DT::datatable(tf_idf, filter = 'top') %>%
               target = 'row', 
               lineHeight='25%')
 ```
-**3. Visualising tf-idf within Three Records Classes**
+**3. Visualizing tf-idf within Three Records Classes**
 
-Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records.
+Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records. 
+
+
 ```{r}
+mb_tf_idf_plot <- mb_tf_idf %>% 
+  arrange(desc(tf_idf)) %>% 
+  group_by(class) %>% 
+  top_n(15) %>% 
+  ungroup() %>% 
+  mutate(word = fct_inorder(word))
 
-
+ggplot(mb_tf_idf_plot, 
+       aes(y = fct_rev(word), x = tf_idf, fill = class)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = "tf-idf", y = NULL) +
+  facet_wrap(~ class, ncol = 2, scales = "free") +
+  theme_bw()
 
 ```
 
-```{r}
-tf_idf %>%
-  group_by(class) %>%
-  slice_max(tf_idf,
-            n = 15) %>%
-  ungroup() %>%
-  mutate(word = reorder(word, 
-                        tf_idf)) %>%
-  ggplot(aes(tf_idf, 
-             word, 
-             fill = class)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ class, 
-             ncol = 2,
-             scales = "free") +
-  labs(x = "tf-idf", 
-       y = NULL,
-       title = "15 most frequent words in Three Record Classes") 
-  
-```
-(2) explore whether there is relationship between records length and classes.
-(3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
-** Visualizing correlation as a network
 
-To explore the relationship between three classes in network graph, we count the number of times that two words appear within the same document, or to see how correlated they are.
-
-Most operations for finding pairwise counts or correlations need to turn the data into a wide matrix first. we would use widyr package 'casts' a tidy datasets into a wide matrix, performs an operation such as a correlation on it, then re-tidies the result. 
-
-In this code chunk below, pairwise_cor() of widyr package is used to compute the correlation between newsgroup based on the common words found.
+**3.Visualizing count of latitude and longitude by classification as bar chart**
 
 ```{r}
-
-class_cors <- token_by_class %>%
-  pairwise_cor(author, 
-               word, 
-               n, 
-               sort = TRUE)
-```
-
-
-```{r}
-set.seed(1234)
-class_cors %>%
-  filter(correlation > .01) %>%
-  graph_from_data_frame() %>%
-  ggraph(layout = "fr") +
-  geom_edge_link(aes(alpha = correlation, 
-                     width = correlation)) +
-  geom_node_point(size = 3, 
-                  color = "lightblue") +
-  geom_node_text(aes(label = name),
-                 color = "red",
-                 repel = TRUE) +
-  theme_void() +
-  labs(title = "Network of Microblog authors") 
-  
-  
-```
-
-
-**4.Visualising count of latitude and longitude by classification as bar chart**
-
-```{r}
-data_classed %>%
+latitudecount_plot <- mbdata_classed %>%
   select(type, class,latitude, longitude) %>%
   filter(type == "mbdata", latitude >0, longitude >0 ) %>%
   group_by(class) %>%
@@ -408,40 +362,48 @@ ggplot(aes(x=class, y=total_count)) +
   labs(title="Count of Latitude and Longtitude by Classification", x="Class", y="Count of Latitude and Longtitude") +
   geom_text(aes(label=total_count), vjust=-0.3, size=3.5)+
   theme_minimal()
+latitudecount_plot
 ```
-**3. Visualizing Word Length within Three Records Classes**
+**5. Visualizing Word Length within Three Records Classes**
 
 To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
 
 ```{r}
-data_classed$length <- sapply(data_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
+mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
 
 ```
 
 A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
 ```{r}
-data_classed %>%
+length_plot <- mbdata_classed %>%
   filter(type == "mbdata") %>%
 ggplot(aes(x=as.character(class), y=length)) +
     geom_boxplot(aes(fill= class)) +
     labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
+length_plot
 
 ```
 
 ```{r}
-data_classed %>%
-  filter(type == "mbdata") %>%
+length_voplot <-mbdata_classed %>%
+  #filter(type == "mbdata") %>%
 ggplot(aes(x = class, y = length)) + 
   geom_violin(aes(fill = class), trim = FALSE) +
   geom_boxplot(width = 0.1) +
   theme_classic() +
   theme(legend.position = "none")
+length_voplot
 ```
-```{r}
 
-data_classed %>%
-  filter(type == "mbdata") %>%
+**Interpretation  for violin plot**: 
+
+This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
+
+
+```{r}
+length_plot2 <- mbdata_classed %>%
+  #filter(type == "mbdata") %>%
   group_by(class) %>%
   ggplot(aes(
     x = length, y = reorder(class, -length),
@@ -450,7 +412,7 @@ data_classed %>%
   geom_jitter(position = position_jitter(seed = 2020, width = 0.2), alpha = 0.4, size = 2) +
   stat_summary(fun = mean, geom = "point", size = 3, color = "red", alpha = 1)
 
-
+length_plot2
 
 ```
 
@@ -458,7 +420,7 @@ data_classed %>%
 
 
 ```{r}
-data_classed_token %>%
+contribution_plot1 <- mb_usenet_words %>%
   count(class, word) %>%
   ungroup() %>%
   filter(n >= 100) %>%
@@ -467,26 +429,24 @@ data_classed_token %>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-
+contribution_plot1
 ```
-```{r}
 
-data_classed_token %>%
+```{r}
+contribution_plot2 <- mb_usenet_words %>%
   count(class, word) %>%
   ungroup() %>%
-  filter(n >= 100) %>%
-  mutate(n = ifelse(class == "meaningful", -n, n)) %>%
-  mutate(word = reorder(word, n)) %>%
+  filter(n >= 50) %>%
+  filter(class == "junk"| class == "Typical_Chatter") %>%
+  mutate(n = ifelse(class == "junk", -n, n)) %>%
+  mutate(word = reorder(word, n))%>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-
+contribution_plot2
 ```
 
 
-**Interpretation  for violin plot**: 
-
-This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
 
 
 ## Question 2
@@ -516,7 +476,6 @@ In this question, we would combine mbdata and ccdata into analysis.
 #  mutate(fire_total = sum(count))
 
 ```
-
 
 
 ```{r}
