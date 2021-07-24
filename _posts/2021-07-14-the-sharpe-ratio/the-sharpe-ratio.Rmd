@@ -487,9 +487,7 @@ top_terms_by_topic_LDA <- function(word,
       ungroup() %>% 
       arrange(topic, -beta) 
     if(plot == T){
-        
         top_terms %>% 
-        
           mutate(term = reorder(term, beta)) %>%  
           ggplot(aes(term,beta, fill = factor(topic))) +
           geom_col(show.legend = FALSE) + 
@@ -497,7 +495,6 @@ top_terms_by_topic_LDA <- function(word,
           labs(x = NULL, y = "Beta") + 
           coord_flip() 
     }else{ 
-        
         return(top_terms)
     }
 }
