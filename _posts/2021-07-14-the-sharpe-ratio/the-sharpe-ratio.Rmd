@@ -244,7 +244,7 @@ mb_usnet_word_pot <-mb_usenet_words %>%
   count(word, sort = TRUE) %>%
   filter(n > 140) %>%
   mutate(word = reorder(word, n)) %>%
-  ggplot(aes(n, word, fill = word)) +
+  ggplot(aes(n, word, fill = "steelblue")) +
   theme(legend.position = "none")+
   geom_col() +
   labs(y = NULL)
@@ -576,7 +576,7 @@ fire <- data2 %>%
 ```{r}
 fire_count <- fire %>%
   group_by(date) %>%
-  count(date)
+  count(date) 
 ggplot(fire_count,aes(x=date, y=n)) +
     geom_area(fill="#69b3a2", alpha=0.5) +
     geom_line(color="#69b3a2") +
@@ -602,7 +602,7 @@ hit_count <- usenet_words %>%
   filter(str_detect(word,"van|bicyclist|hit|Cafe|@Brew'veBeenServed
                     |escaped|Jerkdrivers|Vehicle Accident-Report")) %>%
   group_by(date) %>%
-  count(date)
+  count(word,date)
 
 
 ```
@@ -612,31 +612,34 @@ hit_count <- usenet_words %>%
 
 ```{r}
 shooting_count <- usenet_words %>% 
-  filter(str_detect(word,"shooting|standoff|gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
+  filter(str_detect(word,"shooting|standoff|^gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
   group_by(date) %>%
   count(word,date)
 
 ```
 
 
+
+# Question 3
+If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?
+
+**The location of Hit & Run Accident**
+
 ```{r}
-#rally_count <- usenet_words %>% 
-#  filter(str_detect(word,"POKRally|rally|park|Rallypark|Parkcheck|
-#                    POKliesinthepark|POKRallyinthepark")) %>%
 
-
+location_hit <- meaningful %>%
+  filter(str_detect(message, "bicyclist")) 
 
 ```
 
 
+**The location of Shooting and standoff**
+```{r}
 
+#location_hit <- meaningful %>%
+#  filter(str_detect(message, "bicyclist")) 
 
-
-
-
-
-
-
+```
 
 
 

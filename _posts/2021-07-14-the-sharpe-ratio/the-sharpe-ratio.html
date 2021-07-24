@@ -1759,7 +1759,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>n</span> <span class='op'>&gt;</span> <span class='fl'>140</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mutate</span><span class='op'>(</span>word <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>word</span>, fill <span class='op'>=</span> <span class='va'>word</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>word</span>, fill <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
@@ -2016,9 +2016,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
       <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
       <span class='fu'>arrange</span><span class='op'>(</span><span class='va'>topic</span>, <span class='op'>-</span><span class='va'>beta</span><span class='op'>)</span> 
     <span class='kw'>if</span><span class='op'>(</span><span class='va'>plot</span> <span class='op'>==</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>{</span>
-        
         <span class='va'>top_terms</span> <span class='op'>%&gt;%</span> 
-        
           <span class='fu'>mutate</span><span class='op'>(</span>term <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>beta</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>  
           <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>term</span>,<span class='va'>beta</span>, fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>topic</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
           <span class='fu'>geom_col</span><span class='op'>(</span>show.legend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2026,7 +2024,6 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
           <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NULL</span>, y <span class='op'>=</span> <span class='st'>"Beta"</span><span class='op'>)</span> <span class='op'>+</span> 
           <span class='fu'>coord_flip</span><span class='op'>(</span><span class='op'>)</span> 
     <span class='op'>}</span><span class='kw'>else</span><span class='op'>{</span> 
-        
         <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>top_terms</span><span class='op'>)</span>
     <span class='op'>}</span>
 <span class='op'>}</span>
@@ -2110,7 +2107,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fire_count</span> <span class='op'>&lt;-</span> <span class='va'>fire</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>count</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> 
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fire_count</span>,<span class='fu'>aes</span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>date</span>, y<span class='op'>=</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_area</span><span class='op'>(</span>fill<span class='op'>=</span><span class='st'>"#69b3a2"</span>, alpha<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_line</span><span class='op'>(</span>color<span class='op'>=</span><span class='st'>"#69b3a2"</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2140,7 +2137,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>,<span class='st'>"van|bicyclist|hit|Cafe|@Brew'veBeenServed
                     |escaped|Jerkdrivers|Vehicle Accident-Report"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>count</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>
+  <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>,<span class='va'>date</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2148,17 +2145,27 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>shooting_count</span> <span class='op'>&lt;-</span> <span class='va'>usenet_words</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>,<span class='st'>"shooting|standoff|gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>word</span>,<span class='st'>"shooting|standoff|^gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>count</span><span class='op'>(</span><span class='va'>word</span>,<span class='va'>date</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<h1 id="question-3">Question 3</h1>
+<p>If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?</p>
+<p><strong>The location of Hit &amp; Run Accident</strong></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#rally_count &lt;- usenet_words %&gt;% </span>
-<span class='co'>#  filter(str_detect(word,"POKRally|rally|park|Rallypark|Parkcheck|</span>
-<span class='co'>#                    POKliesinthepark|POKRallyinthepark")) %&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>location_hit</span> <span class='op'>&lt;-</span> <span class='va'>meaningful</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>, <span class='st'>"bicyclist"</span><span class='op'>)</span><span class='op'>)</span> 
+</code></pre>
+</div>
+</div>
+<strong>The location of Shooting and standoff</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#location_hit &lt;- meaningful %&gt;%</span>
+<span class='co'>#  filter(str_detect(message, "bicyclist")) </span>
 </code></pre>
 </div>
 </div>
