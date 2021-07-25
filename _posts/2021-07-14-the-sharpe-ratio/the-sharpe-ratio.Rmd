@@ -651,7 +651,6 @@ bgmap
 ```
 
 ```{r}
-
 tmap_mode("plot")
 tm_shape(bgmap) +
 tm_rgb(bgmap, r = 1,g = 2,b = 3,
@@ -659,58 +658,45 @@ tm_rgb(bgmap, r = 1,g = 2,b = 3,
        saturation = 1,
        interpolate = TRUE,
        max.value = 255)
-
 ```
 
 ```{r}
-gps <- data2 %>%
-  filter(latitude >0) %>%
-  filter(str_detect(message,"fire|Dolphin|black van|shotting|rally ")) %>%
-  distinct(latitude, longitude, .keep_all = TRUE)
-```
 
-```{r}
+gps <- mbdata %>%
+  dplyr::select(date,message,latitude,longitude)%>%
+  #filter(!is.na(latitude), !is.na(longitude))
+  drop_na()
+
 gps_sf <- st_as_sf(gps, 
                    coords = c("longitude", "latitude"),
                        crs= 4326)
 
-```
+gps_point <- gps_sf %>%
+  group_by(message) %>%
+  summarize(m = mean(date),
+            do_union = FALSE)%>%
+  st_cast("MULTIPOINT")
 
-
-```{r}
-
-gps_location <- gps_sf 
-  #group_by(date) 
-  #summarize(m = author, 
-            #do_union=FALSE) %>%
-  #st_cast("LINESTRING")
 ```
 
 ```{r}
-gps_location_selected <- gps_location %>%
-  mutate(duplicate=duplicated(geometry)) %>%
-  filter(duplicate !="TRUE") 
-
-  tmap_mode("view")
-  
+tmap_mode("view")
 tm_shape(bgmap) +
   tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
        saturation = 1,
        interpolate = TRUE,
        max.value = 255) +
-  tm_shape(gps_location_selected) +
-  tm_bubbles(size=10,alpha = 0.5, col="red") 
-
-```
-
-```{r}
-
+  tm_shape(gps_point) +
+  tm_dots(col = "red")
 ```
 
 
-```{r}
 
+
+#4.Insights
+
+Q1: 
 
 
 
