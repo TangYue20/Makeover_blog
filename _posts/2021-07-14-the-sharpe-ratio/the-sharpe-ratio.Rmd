@@ -449,7 +449,9 @@ usenet_words <- data2%>%
   unnest_tokens(word, message) %>%
   filter(#str_detect(word, "[a-z']$"),
          !word %in% stop_words$word,
-         !word %in% c("aliba","abila","rt","homelandilluminations","centralbulletin", "alibapost", "grammar","kronosstar", "pok","abilapost"))
+         !word %in% c("aliba","abila","rt","homelandilluminations"
+                      ,"centralbulletin", "alibapost", "grammar",
+                      "kronosstar", "pok","abilapost"))
 ```
 
 
