@@ -256,7 +256,8 @@ wordcloud(words = mb_usenet_words$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-#3. Data Visualization 
+
+# 3. Data Visualization 
 
 ## Question 1: 
 
@@ -266,7 +267,7 @@ Since ccdata is the text transcripts of emergency dispatches by local police and
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
-###1.Visualizing word frequency as word cloud*
+###1.Visualizing word frequency as word cloud
 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
