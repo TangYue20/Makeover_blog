@@ -257,6 +257,7 @@ wordcloud(words = mb_usenet_words$word,
 ```
 
 #3. Data Visualization 
+
 ## Question 1: 
 
 Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. **Our exploration and discussion for difference on junk, meaningful nd typical-chatter are described below**: 
