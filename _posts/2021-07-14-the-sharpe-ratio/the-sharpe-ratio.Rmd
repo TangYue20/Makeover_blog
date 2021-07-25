@@ -57,16 +57,18 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 
 
 ```{r}
-packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
-'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
-'topicmodels','stringr','clock', 'tidytext','tokenizers',
-'igraph','ggraph','DT','topicmodels','xts','dygraphs','sf',
-'tmap','rgdal','raster','sp','patchwork','hrbrthemes')
-for (p in packages){
+packages = c('tidytext', 'tidyverse','dplyr','tm',
+             'widyr', 'wordcloud','lubridate','wordcloud',
+             'DT', 'ggwordcloud', 'SnowballC','ggplot2',
+             'tokenizers', 'lubridate', 'topicmodels','stringr',
+             'hms','tidyverse', 'stringr','clock','tmap',
+             'tidygraph', 'ggraph', 'tidytext','dygraphs','sf',
+             'igraph','rgdal','raster','sp','patchwork','hrbrthemes')
+for(p in packages){
   if(!require(p, character.only = T)){
-  install.packages(p)
+    install.packages(p)
   }
-  library(p,character.only = T)
+  library(p, character.only = T)
 }
 ```
 
@@ -255,8 +257,8 @@ The importance of words can be illustrated as a word cloud as follow :
 set.seed(1234)
 wordcloud(words = mb_usenet_words$word,
           min.freq = 10,
-          max.words = 200, 
-          random.order=FALSE, rot.per=0.35,
+          max.words = 150, 
+          random.order=FALSE,
           colors=brewer.pal(8, "Dark2"))
 ```
 
@@ -391,7 +393,7 @@ length_plot2 <- mbdata_classed %>%
 
 ```
 
-```{r fig.height=5, fig.width=8}
+```{r fig.height=3, fig.width=9}
 
 length_voplot + length_plot2
 ```
@@ -608,8 +610,9 @@ If you were able to send a team of first responders to any single place, where w
 
 
 ```{r}
-bgmap <- raster("data/geospatial/MC2-tourist.tif")
+bgmap= raster("data/Geospatial/MC2-tourist.tif")
 bgmap
+
 ```
 
 ```{r}
@@ -657,8 +660,6 @@ tm_shape(bgmap) +
   tm_shape(gps_point) +
   tm_dots(col = "red")
 ```
-
-
 
 
 #4.Insights
