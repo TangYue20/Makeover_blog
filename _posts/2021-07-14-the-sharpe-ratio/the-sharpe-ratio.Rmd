@@ -22,7 +22,6 @@ knitr::opts_chunk$set(fig.retina = 3,
                       message = FALSE,
                       warning = FALSE)
 ```
-
 # 1. Overview
 
 The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see [VAST Challenge 2021]( https://vast-challenge.github.io/2021/index.html).
@@ -48,8 +47,6 @@ This module will research Mini-Challenge 3 which includes multiple types of text
   + Segment 1  :"csv-1700-1830.csv" - covers the time period from 1700 to 1830 Abila time on January 23.
   + Segment 2: "csv-1831-2000.csv'- covers the time period from 1830 to 2000 Abila time on January 23.
   + Segment 3: "csv-2001-2131.csv" - covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
-
-
 
 ### 2.2 Install and load R package
 
@@ -137,7 +134,7 @@ Class| Definition
 |**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
 |**Typical Chatter**|represents no meaningful and irrelevant or inappropriate messages post online. |
 
-* classify Junk records: The **str_detect()** function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
+* classify Junk records: The str_detect() function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
 
 ```{r}
 junk <- mbdata %>% filter_at(.vars = vars(message, author), 
@@ -535,12 +532,12 @@ max(rally_people_number$number)
 
 **Event 2: Fire in Dancing Dolphin**
 
-Using the below code chunk, we could plot the risk level of Fire in Dancing Dolphin.
+Using the below code chunk, we could plot the risk level of Fire in Dancing Dolphin.Twits with hashtags such as Fire, DancingDolphinFire, AFD (Abila Fire Department) are used to identify the event.
 
 ```{r}
 fire <- data2 %>% 
   filter(str_detect(message,"fire|Dancing|Dolphin|Department|
-                    building|Dancingdolfinfire"))
+                    building|Dancingdolfinfire|AFD"))
 fire_count <- fire %>%
   group_by(date) %>%
   count(date)
@@ -565,7 +562,7 @@ fire_people_number$number
 
 **Event 3: Hit & Run Accident**
 
-Using the below code chunk, we could plot the risk level of Hit & Run Accident. 
+Using the below code chunk, we could plot the risk level of Hit & Run Accident. Hashtags bicyclist, Jerkdrivers and A@Brew'veBeenServed are used to identify this event.
 
 ```{r}
 hit_count <- usenet_words %>% 
@@ -585,12 +582,12 @@ c<- ggplot(hit_count,aes(x= date)) +
 
 **Event 4: Shooting and standoff**
 
-Using the below code chunk, we could plot the risk level of shooting and standoff event. 
+Using the below code chunk, we could plot the risk level of shooting and standoff event. and the hashtags Troubleatgelato, Gelatogalorestandoff, Blackvan and Hostage are used to identified this event.
 
 ```{r}
 shooting_count <- usenet_words %>% 
   filter(str_detect(word,"shooting|standoff|^gun|shooter|shooting fire|
-                    ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
+                    ambulance|Gelatogalorestandofff|Gelato Galore|Hostage")) %>%
   group_by(date) %>%
   count(word,date)
 
@@ -690,12 +687,44 @@ Based on record provided and key words, we can see four social events happened f
 
 From the distribution of social attention and event keywords appeared, we leverage histogram to evaluate the risk level changed over the course. Overall, the risk levels of four social events are gradually drop down from beginning to end.
 
-Event 1- POK rally： POK rally event, the largest count of real-time rally topic happened about at 17:49, when Professor Lorenzo Di Stefano made the talk about corporate social responsibility. About 2000 people gathered there and heavy police was disposed. The rally closed around 19:05, so we can see the rally topic density dramatically drop down. Because some records post by participants and bystanders were froward by other people online, rally influence also exist for a while. 
+**Event 1- POK rally**： POK rally event, the largest count of real-time rally topic happened about at 17:49, when Professor Lorenzo Di Stefano made the talk about corporate social responsibility. About 2000 people gathered there and heavy police was disposed. The rally closed around 19:05, so we can see the rally topic density dramatically drop down. Because some records post by participants and bystanders were froward by other people online, rally influence also exist for a while. 
 
-Event 2 - Fire in Dancing Dolphin: The fire was at Dancing Dolphin. At the 18:25pm, a witness @GreyCatCollectibles reported some precursor of the fire firstly. This social event keeps high attention until at 20:05 @CentralBulletin reported that an injured firefighter rescued from the fire, then the risk level went down. But around 20:25 AFD requested additional trucks. The fire kept spreading and AFD shifted focus to protecting surrounding buildings from the spread of fire, reported by @AbilaPOst at 20:52. Several miniutes later, the top floor of dancing dolphin collapsed, during this period, the risk level shows slightly increase. At 21:15, @KronosStart, @HomelandIlluminations and @AbilaFireDept issued reports that the fire was nearly under control, then the risk went lower.
+**Event 2 - Fire in Dancing Dolphin**: The fire was at Dancing Dolphin. At the 18:25pm, a witness @GreyCatCollectibles reported some precursor of the fire firstly. This social event keeps high attention until at 20:05 @CentralBulletin reported that an injured firefighter rescued from the fire, then the risk level went down. But around 20:25 AFD requested additional trucks. The fire kept spreading and AFD shifted focus to protecting surrounding buildings from the spread of fire, reported by @AbilaPOst at 20:52. Several miniutes later, the top floor of dancing dolphin collapsed, during this period, the risk level shows slightly increase. At 21:15, @KronosStart, @HomelandIlluminations and @AbilaFireDept issued reports that the fire was nearly under control, then the risk went lower.
 
-Event 3- Hit & Run Accident: at 19:19, the risk of hit & run accident event accidentally increased, because Abila Police Department reported a car hit on Souliou street, and @ hennyhenhendrix reported a black van hit his car. Many tweets also report a black van hit a bicyclist, a witness @KronosStar at 19:35:07 said the bicyclist was uninjured, The van hit and then escaped, police pursued it. 
+**Event 3- Hit & Run Accident**: at 19:19, the risk of hit & run accident event accidentally increased, because Abila Police Department reported a car hit on Souliou street, and @ hennyhenhendrix reported a black van hit his car. Many tweets also report a black van hit a bicyclist, a witness @KronosStar at 19:35:07 said the bicyclist was uninjured, The van hit and then escaped, police pursued it. 
 
-Event 4- Shooting and standoff: At 19:40, Abila Police reported gun fire at Gelato Galore near the City Park, and the shooters were in the black van. In the shooting fire, a cop was gunned down and witness said that there are hostages controled by gunman.  @HomelandIlluminations and @NewsOnline, then police and gunman stayed in standoff, which continues until about 21:00. And then the two van guys fighted with each other,at 21:13, the two kidnappers dropped the gun and gave up, then the risk went down.
+**Event 4- Shooting and standoff**: At 19:40, Abila Police reported gun fire at Gelato Galore near the City Park, and the shooters were in the black van. In the shooting fire, a cop was gunned down and witness said that there are hostages controled by gunman.  @HomelandIlluminations and @NewsOnline, then police and gunman stayed in standoff, which continues until about 21:00. And then the two van guys fighted with each other,at 21:13, the two kidnappers dropped the gun and gave up, then the risk went down.
+
 
 **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
+
+![](image/10.map.png)
+Base on records provided, we can get the information of events with bad social influence:
+
+2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
+2014-01-23 18:41-20:52 fire at Dancing Dolphin Apartment Complex
+2014-01-23 19:20- Black van hit and uses the fire confusion driving hostages to another place. 
+2014-01-23 19:40-21:00 gun shotting at Gelato Galore
+
+Above four social events, if I am able to send a team of first reponders, the place should be Abila City Park, there are 2000 people gathered and the on-site inspection is necessary. Importantly, from the map we can see, Gelato Galore near the City Park, when the rally ends at 17:05, the time period before shooting event occurring is enough for the team go to Gelato Galore where the shooting and standoff would happen. if take this arrangement, the team would take participate two social events to reduce more risks involves.
+
+However, in real time and without retrospection, I would send the first reponders to Daning Dolphain based on event sequence and risks, because do not know the results and then the fire situation is quite serious, police also came to help manage the scene and started evacuation in Dancing Dolphin and nearby buildings. Some residents trapped on upper floor.To protecting residents and surrounding buildings from the spread of fire, the first reponders might be sent to Daning Dolphain. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
