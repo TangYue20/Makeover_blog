@@ -493,6 +493,10 @@ From the results shown in 8 topic model, we can
 Firstly, we filter all rally reports and count the relevant words appeared in rally reports. We use the below code chunk to get the 
 
 ```{r}
+options(scipen = 999)
+```
+
+```{r}
 rally <- data2 %>% 
   filter(str_detect(message,"POKRally|rally|park|Rallypark|Parkcheck|
                     POKliesinthepark|POKRallyinthepark")) 
@@ -506,8 +510,9 @@ rally_count <- rally %>%
 a<- ggplot(rally_count,aes(x= date)) +
   geom_histogram(aes(y = stat(density)), 
                    colour="black", fill="white") +
-  geom_density(alpha = 0.2, fill = "#FF6666") 
-a
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of POK rally event")
+#a
 ```
 
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
@@ -537,9 +542,11 @@ fire_count <- fire %>%
 b<- ggplot(fire_count,aes(x= date)) +
     geom_histogram(aes(y = stat(density)), 
                    colour="black", fill="white") +
-  geom_density(alpha = 0.2, fill = "#FF6666") 
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of fire in dancing dolphin event")
+  
 
-b
+#b
 ```
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
 
@@ -566,9 +573,9 @@ hit_count <- usenet_words %>%
 c<- ggplot(hit_count,aes(x= date)) +
     geom_histogram(aes(y = stat(density)), 
                    colour="black", fill="white") +
-  geom_density(alpha = 0.2, fill = "#FF6666") 
-
-c
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of hit & run accident event")
+#c
 
 ```
 
@@ -585,9 +592,15 @@ shooting_count <- usenet_words %>%
 d<- ggplot(hit_count,aes(x= date)) +
     geom_histogram(aes(y = stat(density)), 
                    colour="black", fill="white") +
-  geom_density(alpha = 0.2, fill = "#FF6666") 
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of shooting and standoff event")
 
-d
+
+```
+
+```{r}
+
+a +b+c+d
 ```
 
 
