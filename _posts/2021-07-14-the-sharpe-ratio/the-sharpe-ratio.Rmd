@@ -547,9 +547,8 @@ b<- ggplot(fire_count,aes(x= date)) +
   geom_density(alpha = 0.2, fill = "#FF6666") +
   ggtitle("risk of fire in dancing dolphin event")
   
-
-#b
 ```
+
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
 
 ```{r}
@@ -558,7 +557,6 @@ fire_people_number <- fire %>%
   mutate(number = extract_numeric(message)) %>%
   filter(number >0)
 fire_people_number$number
-           
 ```
 
 **Event 3: Hit & Run Accident**
@@ -587,7 +585,8 @@ Using the below code chunk, we could plot the risk level of shooting and standof
 
 ```{r}
 shooting_count <- usenet_words %>% 
-  filter(str_detect(word,"shooting|standoff|^gun|shooter|shooting fire|ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
+  filter(str_detect(word,"shooting|standoff|^gun|shooter|shooting fire|
+                    ambulance|Gelatogalorestandofff|Gelato Galore")) %>%
   group_by(date) %>%
   count(word,date)
 
@@ -596,25 +595,21 @@ d<- ggplot(hit_count,aes(x= date)) +
                    colour="black", fill="white") +
   geom_density(alpha = 0.2, fill = "#FF6666") +
   ggtitle("risk of shooting and standoff event")
-
-
 ```
 
-```{r}
+```{r fig.height=5, fig.width=10}
 a +b+c+d
 ```
 
 
 # Question 3
-If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?
+**If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
 
 
 ```{r}
 bgmap= raster("data/Geospatial/MC2-tourist.tif")
 bgmap
-
 ```
-
 ```{r}
 tm_shape(bgmap) +
 tm_rgb(bgmap, r = 1,g = 2,b = 3,
@@ -623,7 +618,6 @@ tm_rgb(bgmap, r = 1,g = 2,b = 3,
        interpolate = TRUE,
        max.value = 255)
 ```
-
 ```{r}
 
 Abila_st <- st_read(dsn = "data/Geospatial",
@@ -634,13 +628,10 @@ Abila_st <- st_read(dsn = "data/Geospatial",
 
 gps <- mbdata %>%
   dplyr::select(date,message,latitude,longitude)%>%
-  #filter(!is.na(latitude), !is.na(longitude))
-  drop_na()
-
+  filter(!is.na(latitude), !is.na(longitude))
 gps_sf <- st_as_sf(gps, 
                    coords = c("longitude", "latitude"),
                        crs= 4326)
-
 gps_point <- gps_sf %>%
   group_by(message) %>%
   summarize(m = mean(date),
@@ -662,13 +653,13 @@ tm_shape(bgmap) +
 ```
 
 
-#4.Insights
+# 4.Insights
 
 **Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
 **(1) Differences on Key words of three record types**
 
-![](image/000003.png)
+![](image/000003.png)  ![](image/)
 
 for junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
 
@@ -681,3 +672,5 @@ for junk records, its most frequent words are relate to "life", "successful", "t
 
 
 
+
+**Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
