@@ -256,18 +256,18 @@ wordcloud(words = mb_usenet_words$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-
 # 3. Data Visualization 
 
 ## Question 1: 
 
 Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. **Our exploration and discussion for difference on junk, meaningful nd typical-chatter are described below**: 
 
-(1) explore the difference of most common words in three records classification.
-(2) explore whether there is relationship between records length and classes.
-(3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
+(1) explore the difference of most frequent words in three records types.
+(2) explore the difference of records length in three email classifications.
+(3) compare the sentence length of three records types.
+(4) compare the count of geographic location for three records types (for example whether records with location is more likely to be meaningful records)
 
-### 1.Visualizing word frequency as word cloud
+### 1.Visualizing difference of word frequency by word cloud
 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
@@ -294,7 +294,7 @@ mbwords_by_class_plot
 
 ```
 
-### 2. VisualiZing word tf-idf as interactive table**
+### 2. VisualiZing word tf-idf as interactive table
 
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
@@ -315,11 +315,11 @@ DT::datatable(mb_tf_idf, filter = 'top') %>%
 
 ```
 
-### 3. Visualizing tf-idf within Three Records Classes**
+### 3. Visualizing tf-idf within Three Records Classes
 
 Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records, and present the key words in three different records types.
 
-```{r}
+```{r fig.height=6, fig.width=9}
 mb_tf_idf_count <- mb_tf_idf %>% 
   arrange(desc(tf_idf)) %>% 
   group_by(class) %>% 
@@ -338,7 +338,7 @@ tf_idf_plot <- ggplot(mb_tf_idf_count,
 tf_idf_plot
 ```
 
-### 4. Visualizing count of latitude and longitude by classification as bar chart**
+### 4. Visualizing count of latitude and longitude by classification as bar chart
 
 ```{r}
 latitudecount_plot <- mbdata_classed %>%
@@ -354,9 +354,9 @@ ggplot(aes(x=class, y=total_count)) +
 
 latitudecount_plot
 ```
-### 5. Visualizing Word Length within Three Records Classes**
+### 5. Visualizing Word Length within Three Records Classes
 
-To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
+To explore the  Word Length within three records Classes, we calculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, *strsplit()* of *stringr* was used to get the word length.
 
 ```{r}
 mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
@@ -389,14 +389,14 @@ length_plot2 <- mbdata_classed %>%
 
 ```
 
-```{r fig.height=4, fig.width=10}
+```{r fig.height=5.5, fig.width=13}
 
 length_voplot + length_plot2
 ```
 
-### 6.Visualizing words contribution to record classification by bar chart**
+### 6.Visualizing Top 15 frequent words of three record types by bar chart
 
-We examine how often associated words are preceded to one specific record type. We would like to explore which words contributed the most in different records types. The below code chunk was used to visualize the word contribution between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
+To better present the difference of top 15 frequent key words in three record types, We examine how often associated words are preceded to one specific record type. We would like to explore the difference of frequent words in three records types. The below code chunk was used to visualize the top 15 common words between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
 
 ```{r}
 contribution_plot1 <- mb_usenet_words %>%
@@ -423,11 +423,11 @@ contribution_plot2 <- mb_usenet_words %>%
   labs(x = "Contribution to record classification", y = NULL)
 ```
 
-```{r fig.height=4, fig.width=9}
+```{r fig.height=4, fig.width=10}
 contribution_plot1 + contribution_plot2
 
 ```
-## Question 2
+## 2. Question 2
 
 To analyze and present potential consequences of the situation, we conbine the ccdata and meaningful data to explore. We can use the LDA() function from the topic models package, setting k = 8, to create a eight-topic LDA model, helping use avoiding to oveymany word overlaps.
 
@@ -482,7 +482,7 @@ top_terms_by_topic_LDA <- function(word,
 # plot top ten word terms by topic
 top_terms_by_topic_LDA(reviews$text, number_of_topics = 6)
 ```
-From the results shown in 8 topic model, we can 
+From the results shown in 8 topic model, we can see some important hints about social event happened during 17:00pm - 21:30 pm, for example topic 1 shows key word "rally", topic 2 shows high beta on "ploice" and "stangoff", topic 3 shows high beta on "fire", topic 5 presents "van" and "APD". Even though some words in 8 topic are overlapped, we could summarize 4 events from the topic generated and data provided. 
 
 **Event 1: POK rally** 
 
