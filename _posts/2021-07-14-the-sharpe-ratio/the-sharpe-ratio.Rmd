@@ -645,7 +645,7 @@ tm_shape(bgmap) +
 
 **(2) Differences on count of Geography location for three record types**
 
-![](image/4. latitude.png){width=50%}
+![](image/4. latitude.png){width=70%}
 
 **Interpretation**: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information. 
 
@@ -681,7 +681,8 @@ From the distribution of social attention and event keywords appeared, we levera
 
 ### **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
 
-![](image/10.map.png){width=40%}
+![](image/10.map.png){width=70%}
+
 Base on records provided, we can get the information of events with bad social influence:
 
 * 2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
