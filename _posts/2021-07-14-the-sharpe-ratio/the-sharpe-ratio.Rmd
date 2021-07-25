@@ -61,7 +61,7 @@ packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
 'igraph','ggraph','DT','topicmodels','xts','dygraphs','sf',
-'tmap','rgdal','raster','sp','patchwork')
+'tmap','rgdal','raster','sp','patchwork','hrbrthemes')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -240,9 +240,9 @@ mb_usnet_word_pot <-mb_usenet_words %>%
   count(word, sort = TRUE) %>%
   filter(n > 140) %>%
   mutate(word = reorder(word, n)) %>%
-  ggplot(aes(n, word, fill = "steelblue")) +
+  ggplot(aes(n, word)) +
   theme(legend.position = "none")+
-  geom_col() +
+  geom_col(fill = "steelblue") +
   labs(y = NULL)
 mb_usnet_word_pot
 ```
@@ -340,7 +340,7 @@ ggplot(mb_tf_idf_count,
   theme_bw()
 ```
 
-**4.Visualizing count of latitude and longitude by classification as bar chart**
+**4. Visualizing count of latitude and longitude by classification as bar chart**
 
 ```{r}
 latitudecount_plot <- mbdata_classed %>%
@@ -429,7 +429,7 @@ contribution_plot2 <- mb_usenet_words %>%
 #contribution_plot2
 ```
 
-```{r fig.height=6, fig.width=10}
+```{r fig.height=4, fig.width=9}
 contribution_plot1 + contribution_plot2
 
 ```
@@ -486,10 +486,11 @@ top_terms_by_topic_LDA <- function(word,
 # plot top ten word terms by topic
 top_terms_by_topic_LDA(reviews$text, number_of_topics = 6)
 ```
+From the results shown in 8 topic model, we can 
 
+**Event 1: POK rally** 
 
-
-**Event 1: POK rally** usenet_words
+Firstly, we filter all rally reports and count the relevant words appeared in rally reports. We use the below code chunk to get the 
 
 ```{r}
 rally <- data2 %>% 
@@ -497,18 +498,16 @@ rally <- data2 %>%
                     POKliesinthepark|POKRallyinthepark")) 
 ```
 
-
 ```{r}
 rally_count <- rally %>%
   group_by(date) %>%
   count(date)
 
-
-  ggplot(rally_count,aes(x=date, y=n)) +
-    geom_area(fill="#69b3a2", alpha=0.5) +
-    geom_line(color="#69b3a2") +
-    ylab("event frequency") 
-
+a<- ggplot(rally_count,aes(x= date)) +
+  geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") 
+a
 ```
 
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
@@ -523,38 +522,24 @@ max(rally_people_number$number)
 ```
 
 
-```{r}
-
-don <- xts(x = rally_count$n, order.by = rally_count$date)
-
-p <- dygraph(don) %>%
-  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.2, drawGrid = FALSE, colors="#D8AE5A") %>%
-  dyRangeSelector() %>%
-  dyCrosshair(direction = "vertical") %>%
-  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
-  dyRoller(rollPeriod = 1)
-p
-
-```
-
-
 **Event 2: Fire in Dancing Dolphin**
+
+Using the below code chunk, we could plot the risk level of Fire in Dancing Dolphin.
 
 ```{r}
 fire <- data2 %>% 
   filter(str_detect(message,"fire|Dancing|Dolphin|Department|
                     building|Dancingdolfinfire"))
-```
-
-
-```{r}
 fire_count <- fire %>%
   group_by(date) %>%
-  count(date) 
-ggplot(fire_count,aes(x=date, y=n)) +
-    geom_area(fill="#69b3a2", alpha=0.5) +
-    geom_line(color="#69b3a2") +
-    ylab("event frequency)") 
+  count(date)
+
+b<- ggplot(fire_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") 
+
+b
 ```
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
 
@@ -567,9 +552,9 @@ fire_people_number$number
            
 ```
 
-
-
 **Event 3: Hit & Run Accident**
+
+Using the below code chunk, we could plot the risk level of Hit & Run Accident. 
 
 ```{r}
 hit_count <- usenet_words %>% 
@@ -578,11 +563,18 @@ hit_count <- usenet_words %>%
   group_by(date) %>%
   count(word,date)
 
+c<- ggplot(hit_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") 
+
+c
 
 ```
 
-
 **Event 4: Shooting and standoff**
+
+Using the below code chunk, we could plot the risk level of shooting and standoff event. 
 
 ```{r}
 shooting_count <- usenet_words %>% 
@@ -590,8 +582,13 @@ shooting_count <- usenet_words %>%
   group_by(date) %>%
   count(word,date)
 
-```
+d<- ggplot(hit_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") 
 
+d
+```
 
 
 # Question 3
@@ -618,18 +615,18 @@ location_hit <- meaningful %>%
 
 ```{r}
 bgmap <- raster("data/geospatial/MC2-tourist.jpg")
-bgmap
-```
-
-
-```{r}
-tmap_mode("plot")
 tm_shape(bgmap) +
 tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
        saturation = 1,
        interpolate = TRUE,
        max.value = 255)
+```
+
+
+
+Abila_st <- st_read(dsn = "data/Geospatial",
+                    layer = "Abila")
 ```
 
 ```{r}
