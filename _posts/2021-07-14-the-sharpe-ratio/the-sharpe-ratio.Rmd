@@ -60,7 +60,7 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
-'igraph','ggraph','DT','topicmodels','xts','dygraphs')
+'igraph','ggraph','DT','topicmodels','xts','dygraphs','tmap','rgdal','raster', 'sf')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -80,9 +80,9 @@ The data of Microblog records and emergency calls are stored in separate csv fil
 
 ```{r}
 library(tidyverse)
-table1 <- read.csv("csv-1700-1830.csv")
-table2 <- read.csv("csv-1831-2000.csv")
-table3 <- read.csv("csv-2001-2131.csv")
+table1 <- read.csv("data/csv-1700-1830.csv")
+table2 <- read.csv("data/csv-1831-2000.csv")
+table3 <- read.csv("data/csv-2001-2131.csv")
 data <- rbind(table1, table2,table3)
 ```
 
@@ -352,7 +352,7 @@ ggplot(mb_tf_idf_count,
 
 ```{r}
 latitudecount_plot <- mbdata_classed %>%
-  select(type, class,latitude, longitude) %>%
+  #select(type, class,latitude, longitude) %>%
   filter(type == "mbdata", latitude >0, longitude >0 ) %>%
   group_by(class) %>%
   summarise(total_count= n()) %>%
@@ -642,7 +642,22 @@ location_hit <- meaningful %>%
 ```
 
 
+```{r}
 
+bgmap <- raster("data/geospatial/MC2-tourist.jpg")
+bgmap
 
+```
 
+```{r}
+
+tmap_mode("plot")
+tm_shape(bgmap) +
+tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255)
+
+```
 
