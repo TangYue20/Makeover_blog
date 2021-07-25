@@ -484,15 +484,13 @@ top_terms_by_topic_LDA(reviews$text, number_of_topics = 6)
 ```
 From the results shown in 8 topic model, we can see some important hints about social event happened during 17:00pm - 21:30 pm, for example topic 1 shows key word "rally", topic 2 shows high beta on "ploice" and "stangoff", topic 3 shows high beta on "fire", topic 5 presents "van" and "APD". Even though some words in 8 topic are overlapped, we could summarize 4 events from the topic generated and data provided. 
 
+
 **Event 1: POK rally** 
 
 Firstly, we filter all rally reports and count the relevant words appeared in rally reports. We use the below code chunk to get the 
 
 ```{r}
 options(scipen = 999)
-```
-
-```{r}
 rally <- data2 %>% 
   filter(str_detect(message,"POKRally|rally|park|Rallypark|Parkcheck|
                     POKliesinthepark|POKRallyinthepark")) 
@@ -508,7 +506,6 @@ a<- ggplot(rally_count,aes(x= date)) +
                    colour="black", fill="white") +
   geom_density(alpha = 0.2, fill = "#FF6666") +
   ggtitle("risk of POK rally event")
-#a
 ```
 
 How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
@@ -521,7 +518,6 @@ rally_people_number <- rally %>%
 max(rally_people_number$number)
            
 ```
-
 
 **Event 2: Fire in Dancing Dolphin**
 
@@ -543,15 +539,6 @@ b<- ggplot(fire_count,aes(x= date)) +
   
 ```
 
-How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
-
-```{r}
-fire_people_number <- fire %>%
-  filter(str_detect(message,"[0-9]+")) %>%
-  mutate(number = extract_numeric(message)) %>%
-  filter(number >0)
-fire_people_number$number
-```
 
 **Event 3: Hit & Run Accident**
 
@@ -656,9 +643,10 @@ tm_shape(bgmap) +
 ![](image/8. Q1.png)
 **Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records. Since one social event POK rally invested to play Viktor-E, who become the People Focus in typical-chatter.
 
-**(2) Differences on geometry count of three record types**
+**(2) Differences on count of Geography location for three record types**
 
 ![](image/4. latitude.png){width = 50%}
+
 **Interpretation**: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information. 
 
 **(3) Differences on sentence length of three record types**
@@ -673,6 +661,9 @@ For better key words cooperation, two bar charts count the frequent words within
 
 
 **Q2: Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+
+![](image/7.topicmodel.png)
+Refer the topic which model generated and information data provides, we could roughly classify four event topic, they are POK rally, Fire in Dancing Dolphin, Hit & Run Accident, and Shooting and standoff.
 
 ![](image/9. risk level.png)
 
@@ -689,15 +680,16 @@ From the distribution of social attention and event keywords appeared, we levera
 **Event 4- Shooting and standoff**: At 19:40, Abila Police reported gun fire at Gelato Galore near the City Park, and the shooters were in the black van. In the shooting fire, a cop was gunned down and witness said that there are hostages controled by gunman.  @HomelandIlluminations and @NewsOnline, then police and gunman stayed in standoff, which continues until about 21:00. And then the two van guys fighted with each other,at 21:13, the two kidnappers dropped the gun and gave up, then the risk went down.
 
 
+
 **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
 
 ![](image/10.map.png)
 Base on records provided, we can get the information of events with bad social influence:
 
-2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
-2014-01-23 18:41-20:52 fire at Dancing Dolphin Apartment Complex
-2014-01-23 19:20- Black van hit and uses the fire confusion driving hostages to another place. 
-2014-01-23 19:40-21:00 gun shotting at Gelato Galore
+* 2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
+* 2014-01-23 18:41-20:52 fire at Dancing Dolphin Apartment Complex
+* 2014-01-23 19:20- Black van hit and uses the fire confusion driving hostages to another place. 
+* 2014-01-23 19:40-21:00 gun shotting at Gelato Galore
 
 Above four social events, if I am able to send a team of first reponders, the place should be Abila City Park, there are 2000 people gathered and the on-site inspection is necessary. Importantly, from the map we can see, Gelato Galore near the City Park, when the rally ends at 17:05, the time period before shooting event occurring is enough for the team go to Gelato Galore where the shooting and standoff would happen. if take this arrangement, the team would take participate two social events to reduce more risks involves.
 

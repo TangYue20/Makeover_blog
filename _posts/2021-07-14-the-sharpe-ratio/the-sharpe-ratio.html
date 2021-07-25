@@ -2009,12 +2009,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>scipen <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rally</span> <span class='op'>&lt;-</span> <span class='va'>data2</span> <span class='op'>%&gt;%</span> 
+<span class='va'>rally</span> <span class='op'>&lt;-</span> <span class='va'>data2</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"POKRally|rally|park|Rallypark|Parkcheck|
                     POKliesinthepark|POKRallyinthepark"</span><span class='op'>)</span><span class='op'>)</span> 
 </code></pre>
@@ -2031,7 +2026,6 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
                    colour<span class='op'>=</span><span class='st'>"black"</span>, fill<span class='op'>=</span><span class='st'>"white"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_density</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.2</span>, fill <span class='op'>=</span> <span class='st'>"#FF6666"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>ggtitle</span><span class='op'>(</span><span class='st'>"risk of POK rally event"</span><span class='op'>)</span>
-<span class='co'>#a</span>
 </code></pre>
 </div>
 </div>
@@ -2065,20 +2059,6 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
   <span class='fu'>ggtitle</span><span class='op'>(</span><span class='st'>"risk of fire in dancing dolphin event"</span><span class='op'>)</span>
 </code></pre>
 </div>
-</div>
-<p>How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fire_people_number</span> <span class='op'>&lt;-</span> <span class='va'>fire</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'>str_detect</span><span class='op'>(</span><span class='va'>message</span>,<span class='st'>"[0-9]+"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>number <span class='op'>=</span> <span class='fu'>extract_numeric</span><span class='op'>(</span><span class='va'>message</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>number</span> <span class='op'>&gt;</span><span class='fl'>0</span><span class='op'>)</span>
-<span class='va'>fire_people_number</span><span class='op'>$</span><span class='va'>number</span>
-</code></pre>
-</div>
-<pre><code> [1]        2        2        2       23       23 12304157 12304157
- [8]        2        2      500        2      500        2        2
-[15]      829      829        2      829</code></pre>
 </div>
 <p><strong>Event 3: Hit &amp; Run Accident</strong></p>
 <p>Using the below code chunk, we could plot the risk level of Hit &amp; Run Accident. Hashtags bicyclist, Jerkdrivers and <a href="mailto:A@Brew&#39;veBeenServed" class="email">A@Brew'veBeenServed</a> are used to identify this event.</p>
@@ -2122,7 +2102,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>a</span> <span class='op'>+</span><span class='va'>b</span><span class='op'>+</span><span class='va'>c</span><span class='op'>+</span><span class='va'>d</span>
 </code></pre>
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-40-1.png" width="960" /></p>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-38-1.png" width="960" /></p>
 </div>
 <h1 id="question-3">Question 3</h1>
 <p><strong>If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?</strong></p>
@@ -2152,7 +2132,7 @@ values     : 0, 255  (min, max)</code></pre>
        max.value <span class='op'>=</span> <span class='fl'>255</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-42-1.png" width="624" /></p>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-40-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2205,8 +2185,9 @@ Geodetic CRS:  WGS 84</code></pre>
 <p><strong>Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?</strong></p>
 <p><strong>(1) Differences on Key words of three record types</strong></p>
 <p><img src="image/8.%20Q1.png" /> <strong>Interpretation</strong>: For junk records, its most frequent words are relate to “life”, “successful”, “time”, the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as “fire”,“rally”, and “van”. Comparably, the common words of typical-chatter are fewer and people usually end with a metatag “tag” if they post typical-chatter records. Since one social event POK rally invested to play Viktor-E, who become the People Focus in typical-chatter.</p>
-<p><strong>(2) Differences on geometry count of three record types</strong></p>
-<p><img src="image/4.%20latitude.png" />{width = 50%} <strong>Interpretation</strong>: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information.</p>
+<p><strong>(2) Differences on count of Geography location for three record types</strong></p>
+<p><img src="image/4.%20latitude.png" />{width = 50%}</p>
+<p><strong>Interpretation</strong>: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information.</p>
 <p><strong>(3) Differences on sentence length of three record types</strong> <img src="image/5.%20length.PNG" /></p>
 <p><strong>Interpretation</strong>: The median of sentence length for Junk is largest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12.</p>
 <p><strong>(4) Differences on count of frequent words for three record types</strong> <img src="image/6.%20contribution.PNG" /></p>
@@ -2224,7 +2205,7 @@ Geodetic CRS:  WGS 84</code></pre>
 <p>2014-01-23 17:00-19:05 POK rally to start in Abila City Park. 2014-01-23 18:41-20:52 fire at Dancing Dolphin Apartment Complex 2014-01-23 19:20- Black van hit and uses the fire confusion driving hostages to another place. 2014-01-23 19:40-21:00 gun shotting at Gelato Galore</p>
 <p>Above four social events, if I am able to send a team of first reponders, the place should be Abila City Park, there are 2000 people gathered and the on-site inspection is necessary. Importantly, from the map we can see, Gelato Galore near the City Park, when the rally ends at 17:05, the time period before shooting event occurring is enough for the team go to Gelato Galore where the shooting and standoff would happen. if take this arrangement, the team would take participate two social events to reduce more risks involves.</p>
 <p>However, in real time and without retrospection, I would send the first reponders to Daning Dolphain based on event sequence and risks, because do not know the results and then the fire situation is quite serious, police also came to help manage the scene and started evacuation in Dancing Dolphin and nearby buildings. Some residents trapped on upper floor.To protecting residents and surrounding buildings from the spread of fire, the first reponders might be sent to Daning Dolphain.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
