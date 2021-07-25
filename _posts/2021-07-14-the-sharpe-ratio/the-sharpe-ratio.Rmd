@@ -636,16 +636,16 @@ tm_shape(bgmap) +
 
 # 4.Insights
 
-**Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
+### **Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
 **(1) Differences on Key words of three record types**
 
 ![](image/8. Q1.png)
-**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records. Since one social event POK rally invested to play Viktor-E, who become the People Focus in typical-chatter.
+**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records. Since POK rally invested Viktor-E bank to play music, Viktor become the People Focus in typical-chatter.
 
 **(2) Differences on count of Geography location for three record types**
 
-![](image/4. latitude.png){width = 50%}
+![](image/4. latitude.png){width=50%}
 
 **Interpretation**: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information. 
 
@@ -660,14 +660,12 @@ tm_shape(bgmap) +
 For better key words cooperation, two bar charts count the frequent words within two record types. it presents some top 15 frequent words only appear in junk or meaningful records, for example "fire","dancing","dolphin" only happened in menaingful records. but there are some words are frequent words for both, for example "pok", "kronosstar", this case is caused by that some junk poster usually attached with hot tag to attract people. Moreover, for junk and typical-chatter, there is no overlap key words, frequent words only occur in responding records type.
 
 
-**Q2: Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+### **Q2: Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
 
 ![](image/7.topicmodel.png)
-Refer the topic which model generated and information data provides, we could roughly classify four event topic, they are POK rally, Fire in Dancing Dolphin, Hit & Run Accident, and Shooting and standoff.
+Refer the topic which model generated and information data provides, we could roughly classify four event topic from 17:00 pm to 21:30, they are POK rally, Fire in Dancing Dolphin, Hit & Run Accident, and Shooting and standoff.
 
 ![](image/9. risk level.png)
-
-Based on record provided and key words, we can see four social events happened from 17:00 pm to 21:30. they are：
 
 From the distribution of social attention and event keywords appeared, we leverage histogram to evaluate the risk level changed over the course. Overall, the risk levels of four social events are gradually drop down from beginning to end.
 
@@ -681,9 +679,9 @@ From the distribution of social attention and event keywords appeared, we levera
 
 
 
-**Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
+### **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
 
-![](image/10.map.png)
+![](image/10.map.png){width=40%}
 Base on records provided, we can get the information of events with bad social influence:
 
 * 2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
