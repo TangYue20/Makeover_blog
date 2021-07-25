@@ -61,7 +61,7 @@ packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
 'igraph','ggraph','DT','topicmodels','xts','dygraphs','sf',
-'tmap','rgdal','raster', 'sf')
+'tmap','rgdal','raster','sp','patchwork')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -112,7 +112,6 @@ In this step, we would like to use package <span style="color:blue">*stringr*</s
 data$message <- str_replace_all(data$message,fixed("<"),"")
 data$message <- str_replace_all(data$message,fixed("˜"),"")
 data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
-#data$message <- str_replace_all(data$message,fixed("RT @.+ "),"")
 
 ```
 
@@ -143,17 +142,16 @@ junk <- mbdata %>% filter_at(.vars = vars(message, author),
 any_vars(str_detect(., pattern = "#artists|#badcreadit|#cars
   |#followme|#nobank|#meds|#cancer|#bestfood|#Grammar|cars.kronos
   |#workAtHome|#gettingFired|#pharmacyripoff|#iThing|sellstuff
-  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|Officia1AbilaPost|
-  visit this|#eastAbila link|#abilajobs|clickhere|#abilajobs|
-  #welksFurniture|#swat|#bugs|visit this link|this site|
-  junkman|carjunkers|eazymoney|junk99902|junkieduck113
+  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+  Officia1AbilaPost|visit this|#eastAbila link|#abilajobs|
+  clickhere|#abilajobs|#welksFurniture|#swat|#bugs|visit this link
+  |this site|junkman|carjunkers|eazymoney|junk99902|junkieduck113
   |junkman377|junkman995|KronosQuoth|Clevvah4Evah")))
+
+mbdata1 <- anti_join(mbdata,junk,by="message") 
            
 ```
 
-```{r}
-mbdata1 <- anti_join(mbdata,junk,by="message") 
-```
 
 * Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
 
@@ -190,7 +188,6 @@ Now, all records in Microblog data have been labeled with responding class- **Ju
 junk$class <- "junk"
 Typical_Chatter$class <- "Typical_Chatter"
 meaningful$class <- "meaningful"
-#ccdata$class <- 'meaningful'
 
 ```
 
@@ -226,17 +223,15 @@ mb_usenet_words <- mbdata_classed %>%
 
 ```
 
-The most common words in entire dataset could be seen from below code chunk. 
+*Generate the word cloud for entire records dataset*
 
-```{r}
-#ccdata_usenet_words <- subset(usenet_words, type == "ccdata")
-#mbdata_usenet_words <- subset(usenet_words, type == "mbdata")
-```
+The most common words in entire dataset could be seen from below code chunk, the TOp 15 most frequent words could be seen by bar chart.
 
-```{r}
+```{r echo=FALSE}
 mb_usenet_words%>%
   count(word,sort = TRUE) %>%
-  top_n(15) 
+    top_n(10) 
+
 ```
 
 
@@ -252,13 +247,13 @@ mb_usnet_word_pot <-mb_usenet_words %>%
 mb_usnet_word_pot
 ```
 
-* Generate the word cloud
+*Generate the word cloud for entire records dataset*
+
 The importance of words can be illustrated as a word cloud as follow :
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 set.seed(1234)
 wordcloud(words = mb_usenet_words$word,
-          #freq = data_classed_token$n,
           min.freq = 10,
           max.words = 200, 
           random.order=FALSE, rot.per=0.35,
@@ -277,31 +272,33 @@ Since ccdata is the text transcripts of emergency dispatches by local police and
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
 *1.Visualizing word frequency as word cloud* 
+
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
 ```{r echo=TRUE} 
 mbwords_by_class <- mb_usenet_words %>%
   count(class, word, sort = TRUE) %>%
-  #group_by(class) %>%
-  #top_n(20) %>%
   ungroup()
 ```
 
 
-```{r}
+```{r echo=TRUE, warning=FALSE}
 set.seed(1234)
 mbwords_by_class_plot <- mbwords_by_class %>%
   filter(n > 50) %>%
 ggplot(aes(label = word,
-           size = n,
+           size = 10,
            color= class))+
   geom_text_wordcloud() +
   theme_minimal() +
-  facet_wrap(~class, scales = "free_y") +
-  labs(x = "Record Classification")
+  facet_wrap(~class, ncol = 3, scales = "free") +
+  labs(x = "Record Classification") +
+  theme_bw()
+
 mbwords_by_class_plot
 
 ```
+
 *2. Visualising tf-idf as interactive table*
 
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
@@ -313,10 +310,6 @@ mb_tf_idf <- mbwords_by_class %>%
   bind_tf_idf(word,class,n) %>%
   arrange(desc(tf_idf))
 
-```
-
-
-```{r}
 DT::datatable(mb_tf_idf, filter = 'top') %>% 
   formatRound(columns = c('tf', 'idf', 
                           'tf_idf'), 
@@ -324,11 +317,12 @@ DT::datatable(mb_tf_idf, filter = 'top') %>%
   formatStyle(0, 
               target = 'row', 
               lineHeight='25%')
+
 ```
+
 **3. Visualizing tf-idf within Three Records Classes**
 
-Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records. 
-
+Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records, and present the key words in three different records types.
 
 ```{r}
 mb_tf_idf_count <- mb_tf_idf %>% 
@@ -349,7 +343,7 @@ ggplot(mb_tf_idf_count,
 
 
 
-**3.Visualizing count of latitude and longitude by classification as bar chart**
+**4.Visualizing count of latitude and longitude by classification as bar chart**
 
 ```{r}
 latitudecount_plot <- mbdata_classed %>%
@@ -362,6 +356,7 @@ ggplot(aes(x=class, y=total_count)) +
   labs(title="Count of Latitude and Longtitude by Classification", x="Class", y="Count of Latitude and Longtitude") +
   geom_text(aes(label=total_count), vjust=-0.3, size=3.5)+
   theme_minimal()
+
 latitudecount_plot
 ```
 **5. Visualizing Word Length within Three Records Classes**
@@ -373,37 +368,22 @@ mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlis
 
 ```
 
-A boxplot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
-```{r}
-length_plot <- mbdata_classed %>%
-  filter(type == "mbdata") %>%
-ggplot(aes(x=as.character(class), y=length)) +
-    geom_boxplot(aes(fill= class)) +
-    labs(title="Word Length Distribution by Classification", x="Class", y="Word Length")
-length_plot
-
-```
+A violin plot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
 
 ```{r}
 length_voplot <-mbdata_classed %>%
-  #filter(type == "mbdata") %>%
 ggplot(aes(x = class, y = length)) + 
   geom_violin(aes(fill = class), trim = FALSE) +
   geom_boxplot(width = 0.1) +
   theme_classic() +
   theme(legend.position = "none")
-length_voplot
+#length_voplot
 ```
-
-**Interpretation  for violin plot**: 
-
-This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12. However, for junk, there is no quite big difference on probability density around median. 
 
 
 ```{r}
 length_plot2 <- mbdata_classed %>%
-  #filter(type == "mbdata") %>%
   group_by(class) %>%
   ggplot(aes(
     x = length, y = reorder(class, -length),
@@ -412,12 +392,21 @@ length_plot2 <- mbdata_classed %>%
   geom_jitter(position = position_jitter(seed = 2020, width = 0.2), alpha = 0.4, size = 2) +
   stat_summary(fun = mean, geom = "point", size = 3, color = "red", alpha = 1)
 
-length_plot2
-
+#length_plot2
 ```
 
-**Visualizing contribution to record classification by bar chart**
+```{r fig.height=5, fig.width=8}
 
+length_voplot + length_plot2
+```
+**Interpretation  for violin plot**: 
+
+This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12.
+
+
+**6.Visualizing words contribution to record classification by bar chart**
+
+we examine how often associated words are preceded to one specific record type. We would like to explore which words contributed the most in different records types. The below code chunk was used to visualize the word contribution between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
 
 ```{r}
 contribution_plot1 <- mb_usenet_words %>%
@@ -429,7 +418,7 @@ contribution_plot1 <- mb_usenet_words %>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-contribution_plot1
+#contribution_plot1
 ```
 
 ```{r}
@@ -443,10 +432,13 @@ contribution_plot2 <- mb_usenet_words %>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-contribution_plot2
+#contribution_plot2
 ```
 
+```{r fig.height=4, fig.width=10}
+contribution_plot1 + contribution_plot2
 
+```
 ## Question 2
 
 **Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
@@ -645,10 +637,15 @@ location_hit <- meaningful %>%
 
 ```{r}
 
-bgmap <- raster("data/geospatial/MC2-tourist.jpg")
+bgmap <- raster::raster("data/geospatial/MC2-tourist.jpg")
+
 bgmap
+```
+```{r}
+stack
 
 ```
+
 
 ```{r}
 tmap_mode("plot")
