@@ -664,7 +664,7 @@ tm_shape(bgmap) +
 **(1) Differences on Key words of three record types**
 
 ![](image/8. Q1.png)
-**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
+**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records. Since one social event POK rally invested to play Viktor-E, who become the People Focus in typical-chatter.
 
 **(2) Differences on geometry count of three record types**
 
@@ -686,9 +686,16 @@ For better key words cooperation, two bar charts count the frequent words within
 
 ![](image/9. risk level.png)
 
-Fro
+Based on record provided and key words, we can see four social events happened from 17:00 pm to 21:30. they are：
 
+From the distribution of social attention and event keywords appeared, we leverage histogram to evaluate the risk level changed over the course. Overall, the risk levels of four social events are gradually drop down from beginning to end.
 
+Event 1- POK rally： POK rally event, the largest count of real-time rally topic happened about at 17:49, when Professor Lorenzo Di Stefano made the talk about corporate social responsibility. About 2000 people gathered there and heavy police was disposed. The rally closed around 19:05, so we can see the rally topic density dramatically drop down. Because some records post by participants and bystanders were froward by other people online, rally influence also exist for a while. 
 
+Event 2 - Fire in Dancing Dolphin: The fire was at Dancing Dolphin. At the 18:25pm, a witness @GreyCatCollectibles reported some precursor of the fire firstly. This social event keeps high attention until at 20:05 @CentralBulletin reported that an injured firefighter rescued from the fire, then the risk level went down. But around 20:25 AFD requested additional trucks. The fire kept spreading and AFD shifted focus to protecting surrounding buildings from the spread of fire, reported by @AbilaPOst at 20:52. Several miniutes later, the top floor of dancing dolphin collapsed, during this period, the risk level shows slightly increase. At 21:15, @KronosStart, @HomelandIlluminations and @AbilaFireDept issued reports that the fire was nearly under control, then the risk went lower.
+
+Event 3- Hit & Run Accident: at 19:19, the risk of hit & run accident event accidentally increased, because Abila Police Department reported a car hit on Souliou street, and @ hennyhenhendrix reported a black van hit his car. Many tweets also report a black van hit a bicyclist, a witness @KronosStar at 19:35:07 said the bicyclist was uninjured, The van hit and then escaped, police pursued it. 
+
+Event 4- Shooting and standoff: At 19:40, Abila Police reported gun fire at Gelato Galore near the City Park, and the shooters were in the black van. In the shooting fire, a cop was gunned down and witness said that there are hostages controled by gunman.  @HomelandIlluminations and @NewsOnline, then police and gunman stayed in standoff, which continues until about 21:00. And then the two van guys fighted with each other,at 21:13, the two kidnappers dropped the gun and gave up, then the risk went down.
 
 **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
