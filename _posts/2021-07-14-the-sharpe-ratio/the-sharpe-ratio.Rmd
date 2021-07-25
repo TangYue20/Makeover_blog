@@ -664,15 +664,29 @@ tm_shape(bgmap) +
 **(1) Differences on Key words of three record types**
 
 ![](image/8. Q1.png)
+**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
 
-for junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
+**(2) Differences on geometry count of three record types**
 
-**(1) Differences on Key words of three record types**
+![](image/4. latitude.png){width = 50%}
+**Interpretation**: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information. 
 
+**(3) Differences on sentence length of three record types**
+![](image/5. length.PNG)
 
+**Interpretation**: The median of sentence length for Junk is largest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12.
+
+**(4) Differences on count of frequent words for three record types**
+![](image/6. contribution.PNG)
+
+For better key words cooperation, two bar charts count the frequent words within two record types. it presents some top 15 frequent words only appear in junk or meaningful records, for example "fire","dancing","dolphin" only happened in menaingful records. but there are some words are frequent words for both, for example "pok", "kronosstar", this case is caused by that some junk poster usually attached with hot tag to attract people. Moreover, for junk and typical-chatter, there is no overlap key words, frequent words only occur in responding records type.
 
 
 **Q2: Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+
+![](image/9. risk level.png)
+
+Fro
 
 
 
