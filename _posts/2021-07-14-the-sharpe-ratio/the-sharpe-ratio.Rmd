@@ -302,7 +302,7 @@ mbwords_by_class_plot
 
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
-The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset.
+The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset. We can use DT table to check "tf", "idf", "tf-idf" details of tokens of three record types
 
 ```{r}
 mb_tf_idf <- mbwords_by_class %>%
@@ -599,7 +599,6 @@ d<- ggplot(hit_count,aes(x= date)) +
 ```
 
 ```{r}
-
 a +b+c+d
 ```
 
@@ -607,27 +606,13 @@ a +b+c+d
 # Question 3
 If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?
 
-**The location of Hit & Run Accident**
 
 ```{r}
-
-location_hit <- meaningful %>%
-  filter(str_detect(message, "bicyclist")) 
-
+bgmap <- raster("data/geospatial/MC2-tourist.tif")
+bgmap
 ```
 
-
-**The location of Shooting and standoff**
 ```{r}
-
-#location_hit <- meaningful %>%
-#  filter(str_detect(message, "bicyclist")) 
-
-```
-
-
-```{r}
-bgmap <- raster("data/geospatial/MC2-tourist.jpg")
 tm_shape(bgmap) +
 tm_rgb(bgmap, r = 1,g = 2,b = 3,
        alpha = NA,
@@ -636,7 +621,7 @@ tm_rgb(bgmap, r = 1,g = 2,b = 3,
        max.value = 255)
 ```
 
-
+```{r}
 
 Abila_st <- st_read(dsn = "data/Geospatial",
                     layer = "Abila")
@@ -680,6 +665,13 @@ tm_shape(bgmap) +
 
 **Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
 
+**(1) Differences on Key words of three record types**
+
+![](image/000003.png)
+
+for junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
+
+**(1) Differences on Key words of three record types**
 
 
 
