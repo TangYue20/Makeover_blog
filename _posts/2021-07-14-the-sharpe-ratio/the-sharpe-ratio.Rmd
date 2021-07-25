@@ -393,7 +393,7 @@ length_plot2 <- mbdata_classed %>%
 
 ```
 
-```{r fig.height=3, fig.width=9}
+```{r fig.height=4, fig.width=10}
 
 length_voplot + length_plot2
 ```
@@ -599,7 +599,7 @@ d<- ggplot(hit_count,aes(x= date)) +
   ggtitle("risk of shooting and standoff event")
 ```
 
-```{r fig.height=5, fig.width=10}
+```{r fig.height=7, fig.width=10}
 a +b+c+d
 ```
 
@@ -661,7 +661,10 @@ tm_shape(bgmap) +
 
 **(1) Differences on Key words of three record types**
 
-![](image/000003.png)  ![](image/)
+Class| Definition
+|------|----------|
+![](image/000003.png)|![](image/3.  keyword barchart)|
+
 
 for junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
 
