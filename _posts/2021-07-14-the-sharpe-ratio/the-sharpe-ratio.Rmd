@@ -50,7 +50,7 @@ This module will research Mini-Challenge 3 which includes multiple types of text
 
 ### 2.2 Install and load R package
 
-In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages will be used, which could be seen from below code chunk.
+In this module, the tidyverse, tidytext, dplyr and other packages will be used, which could be seen from below code chunk.
 
 
 ```{r}
@@ -389,7 +389,7 @@ length_plot2 <- mbdata_classed %>%
 
 ```
 
-```{r fig.height=5.5, fig.width=13}
+```{r fig.height=6, fig.width=15}
 
 length_voplot + length_plot2
 ```
