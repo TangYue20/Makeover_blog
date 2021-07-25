@@ -172,7 +172,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
                       
 ```
 
-* Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, **anti_join()** function in <span style="color:blue">*dplyr*</span> package would be used. 
+* Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, *anti_join()* function in <span style="color:blue">*dplyr*</span> package would be used. 
 
 ```{r}
 Typical_Chatter <- anti_join(mbdata1,junk,by="message") 
@@ -190,7 +190,7 @@ meaningful$class <- "meaningful"
 
 ```
 
-* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the **rbind** function of dplry package would be used.
+* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the *rbind* function of dplry package would be used.
 
 ```{r}
 mbdata_classed <- rbind(junk, Typical_Chatter, meaningful)
@@ -222,7 +222,7 @@ mb_usenet_words <- mbdata_classed %>%
 
 ```
 
-*Generate the word cloud for entire records dataset*
+**Generate the word cloud for records dataset**
 
 The most common words in entire dataset could be seen from below code chunk, the TOp 15 most frequent words could be seen by bar chart.
 
@@ -232,8 +232,6 @@ mb_usenet_words%>%
     top_n(10) 
 
 ```
-
-
 ```{r}
 mb_usnet_word_pot <-mb_usenet_words %>%
   count(word, sort = TRUE) %>%
@@ -245,8 +243,7 @@ mb_usnet_word_pot <-mb_usenet_words %>%
   labs(y = NULL)
 mb_usnet_word_pot
 ```
-
-*Generate the word cloud for entire records dataset*
+**Generate the word cloud for entire records dataset**
 
 The importance of words can be illustrated as a word cloud as follow :
 
@@ -259,17 +256,16 @@ wordcloud(words = mb_usenet_words$word,
           colors=brewer.pal(8, "Dark2"))
 ```
 
-### 3. Data Visualization 
+#3. Data Visualization 
+## Question 1: 
 
-### Question 1: 
-
-Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. Our exploration and discussion are described below: 
+Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. **Our exploration and discussion for difference on junk, meaningful nd typical-chatter are described below**: 
 
 (1) explore the difference of most common words in three records classification.
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
-*1.Visualizing word frequency as word cloud* 
+###1.Visualizing word frequency as word cloud*
 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
@@ -278,7 +274,6 @@ mbwords_by_class <- mb_usenet_words %>%
   count(class, word, sort = TRUE) %>%
   ungroup()
 ```
-
 
 ```{r echo=TRUE, warning=FALSE}
 set.seed(1234)

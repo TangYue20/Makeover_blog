@@ -2241,7 +2241,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </tbody>
 </table>
 <ul>
-<li>classify Junk records: The <strong>str_detect()</strong> function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|</li>
+<li>classify Junk records: The str_detect() function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2282,7 +2282,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </div>
 </div>
 <ul>
-<li>Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, <strong>anti_join()</strong> function in <span style="color:blue"><em>dplyr</em></span> package would be used.</li>
+<li>Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, <em>anti_join()</em> function in <span style="color:blue"><em>dplyr</em></span> package would be used.</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2304,7 +2304,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </div>
 </div>
 <ul>
-<li>Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the <strong>rbind</strong> function of dplry package would be used.</li>
+<li>Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the <em>rbind</em> function of dplry package would be used.</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2339,7 +2339,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </code></pre>
 </div>
 </div>
-<p><em>Generate the word cloud for entire records dataset</em></p>
+<p><strong>Generate the word cloud for records dataset</strong></p>
 <p>The most common words in entire dataset could be seen from below code chunk, the TOp 15 most frequent words could be seen by bar chart.</p>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>              word    n
@@ -2369,7 +2369,7 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </div>
 <p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
-<p><em>Generate the word cloud for entire records dataset</em></p>
+<p><strong>Generate the word cloud for entire records dataset</strong></p>
 <p>The importance of words can be illustrated as a word cloud as follow :</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2383,15 +2383,14 @@ terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
 </div>
 <p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
-<h3 id="data-visualization">3. Data Visualization</h3>
-<h3 id="question-1">Question 1:</h3>
-<p>Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. Our exploration and discussion are described below:</p>
+<p>#3. Data Visualization ## Question 1:</p>
+<p>Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. <strong>Our exploration and discussion for difference on junk, meaningful nd typical-chatter are described below</strong>:</p>
 <ol type="1">
 <li>explore the difference of most common words in three records classification.</li>
 <li>explore whether there is relationship between records length and classes.</li>
 <li>explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)</li>
 </ol>
-<p><em>1.Visualizing word frequency as word cloud</em></p>
+<p>###1.Visualizing word frequency as word cloud*</p>
 <p>Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
