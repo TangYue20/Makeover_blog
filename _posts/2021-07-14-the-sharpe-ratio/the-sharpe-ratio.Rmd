@@ -333,13 +333,15 @@ mb_tf_idf_count <- mb_tf_idf %>%
   ungroup() %>% 
   mutate(word = fct_inorder(word))
 
-ggplot(mb_tf_idf_count, 
+tf_idf_plot <- ggplot(mb_tf_idf_count, 
        aes(y = fct_rev(word), x = tf_idf, fill = class)) +
   geom_col() +
   guides(fill = FALSE) +
   labs(x = "tf-idf", y = NULL) +
   facet_wrap(~ class, ncol = 2, scales = "free") +
   theme_bw()
+
+tf_idf_plot
 ```
 
 **4. Visualizing count of latitude and longitude by classification as bar chart**
@@ -661,10 +663,7 @@ tm_shape(bgmap) +
 
 **(1) Differences on Key words of three record types**
 
-Class| Definition
-|------|----------|
-![](image/000003.png)|![](image/3.  keyword barchart)|
-
+![](image/8. Q1.png)
 
 for junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records.
 
