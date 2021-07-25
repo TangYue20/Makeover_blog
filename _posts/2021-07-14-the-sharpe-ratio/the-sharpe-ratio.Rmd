@@ -60,7 +60,8 @@ In this module, the tidyverse, ggforce, GGally, plotly R and parcoords packages 
 packages = c('tidyverse','dplyr','widyr','readr','tm','lubridate',
 'wordcloud','SnowballC', 'UpSetR','ggplot2','ggwordcloud',
 'topicmodels','stringr','clock', 'tidytext','tokenizers',
-'igraph','ggraph','DT','topicmodels','xts','dygraphs','tmap','rgdal','raster', 'sf')
+'igraph','ggraph','DT','topicmodels','xts','dygraphs','sf',
+'tmap','rgdal','raster', 'sf')
 for (p in packages){
   if(!require(p, character.only = T)){
   install.packages(p)
@@ -660,4 +661,56 @@ tm_rgb(bgmap, r = 1,g = 2,b = 3,
        max.value = 255)
 
 ```
+
+```{r}
+gps <- data2 %>%
+  filter(latitude >0) %>%
+  filter(str_detect(message,"fire|Dolphin|black van|shotting|rally ")) %>%
+  distinct(latitude, longitude, .keep_all = TRUE)
+```
+
+```{r}
+gps_sf <- st_as_sf(gps, 
+                   coords = c("longitude", "latitude"),
+                       crs= 4326)
+
+```
+
+
+```{r}
+
+gps_location <- gps_sf 
+  #group_by(date) 
+  #summarize(m = author, 
+            #do_union=FALSE) %>%
+  #st_cast("LINESTRING")
+```
+
+```{r}
+gps_location_selected <- gps_location %>%
+  mutate(duplicate=duplicated(geometry)) %>%
+  filter(duplicate !="TRUE") 
+
+  tmap_mode("view")
+  
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_location_selected) +
+  tm_bubbles(size=10,alpha = 0.5, col="red") 
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+
+
+
 
