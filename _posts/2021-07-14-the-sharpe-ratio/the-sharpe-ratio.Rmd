@@ -267,7 +267,7 @@ Since ccdata is the text transcripts of emergency dispatches by local police and
 (2) explore whether there is relationship between records length and classes.
 (3) explore whether there is relationship between records length and location. (whether records with location is more likely to be meaningful records)
 
-###1.Visualizing word frequency as word cloud
+### 1.Visualizing word frequency as word cloud
 
 Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
 
@@ -294,7 +294,7 @@ mbwords_by_class_plot
 
 ```
 
-**2. VisualiZing word tf-idf as interactive table**
+### 2. VisualiZing word tf-idf as interactive table**
 
 Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
 
@@ -315,7 +315,7 @@ DT::datatable(mb_tf_idf, filter = 'top') %>%
 
 ```
 
-**3. Visualizing tf-idf within Three Records Classes**
+### 3. Visualizing tf-idf within Three Records Classes**
 
 Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records, and present the key words in three different records types.
 
@@ -338,7 +338,7 @@ tf_idf_plot <- ggplot(mb_tf_idf_count,
 tf_idf_plot
 ```
 
-**4. Visualizing count of latitude and longitude by classification as bar chart**
+### 4. Visualizing count of latitude and longitude by classification as bar chart**
 
 ```{r}
 latitudecount_plot <- mbdata_classed %>%
@@ -354,7 +354,7 @@ ggplot(aes(x=class, y=total_count)) +
 
 latitudecount_plot
 ```
-**5. Visualizing Word Length within Three Records Classes**
+### 5. Visualizing Word Length within Three Records Classes**
 
 To explore the  Word Length within three records Classes, we caculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, strsplit() of stringr was used to get the word length.
 
@@ -393,12 +393,10 @@ length_plot2 <- mbdata_classed %>%
 
 length_voplot + length_plot2
 ```
-**Interpretation  for violin plot**: 
-This violin plot shows the relationship of record classes to sentence length. We can observe that the median weight for Junk is highest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12.
 
-**6.Visualizing words contribution to record classification by bar chart**
+### 6.Visualizing words contribution to record classification by bar chart**
 
-we examine how often associated words are preceded to one specific record type. We would like to explore which words contributed the most in different records types. The below code chunk was used to visualize the word contribution between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
+We examine how often associated words are preceded to one specific record type. We would like to explore which words contributed the most in different records types. The below code chunk was used to visualize the word contribution between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
 
 ```{r}
 contribution_plot1 <- mb_usenet_words %>%
@@ -410,7 +408,6 @@ contribution_plot1 <- mb_usenet_words %>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-#contribution_plot1
 ```
 
 ```{r}
@@ -424,14 +421,13 @@ contribution_plot2 <- mb_usenet_words %>%
   ggplot(aes(n, word, fill = class)) +
   geom_col() +
   labs(x = "Contribution to record classification", y = NULL)
-#contribution_plot2
 ```
 
 ```{r fig.height=4, fig.width=9}
 contribution_plot1 + contribution_plot2
 
 ```
-### Question 2
+## Question 2
 
 To analyze and present potential consequences of the situation, we conbine the ccdata and meaningful data to explore. We can use the LDA() function from the topic models package, setting k = 8, to create a eight-topic LDA model, helping use avoiding to oveymany word overlaps.
 
