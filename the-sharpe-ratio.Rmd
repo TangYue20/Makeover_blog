@@ -1,0 +1,714 @@
+---
+title: "VAST Challenge 2021 - Mini-Challenge 3 "
+description: |
+  Using Visual Analytics to Support Decision Making to Solve The kronos Incident.
+author:
+  - name: Tang Yue
+    url: {}
+    affiliation: Singapore Management University 
+    Programe: IT In Business
+date: 07-14-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup,include=FALSE}
+options(htmltools.dir.version=FALSE)
+knitr::opts_chunk$set(fig.retina = 3,
+                      echo = TRUE,
+                      eval = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+# 1. Overview
+
+The 2021 Visual Analytics Science and Technology (VAST) Challenge presented researchers with a single fictitious scenario: the disappearance of staff members of the GASTech oil and gas company on location on the island of Kronos. A group named the Protectors of Kronos (POK) was the prime suspect in the disappearance. Three mini-challenges and a grand challenge were offered. For more information, please see [VAST Challenge 2021]( https://vast-challenge.github.io/2021/index.html).
+
+This module will research Mini-Challenge 3 which includes multiple types of text data for participants to feature real-time streaming social media and emergency service data for participants to provide hostage and kidnapper information.This challenge has 3 tasks and questions and asked the participants to integrate results to evaluate the changing levels of risk to the public and recommend actions. 
+
+
+# 2. Data preparation and Exploration 
+
+### 2.1 Data Source
+
+* There are three dataset provides in Mini-Challenge 3 :
+
+  + Microblog records that have been identified by automated filters as being potentially relevant to the ongoing incident
+
+  + Text transcripts of emergency dispatches by the Abila, Kronos local police and fire departments.
+
+  + maps of Abila and background documents.
+
+
+* The data of Microblog and text transcripts of emergency dispatches are found in three segments:
+
+  + Segment 1  :"csv-1700-1830.csv" - covers the time period from 1700 to 1830 Abila time on January 23.
+  + Segment 2: "csv-1831-2000.csv'- covers the time period from 1830 to 2000 Abila time on January 23.
+  + Segment 3: "csv-2001-2131.csv" - covers the time period from 2000 to shortly after 2130 Abila time on January 23. 
+
+### 2.2 Install and load R package
+
+In this module, the tidyverse, tidytext, dplyr and other packages will be used, which could be seen from below code chunk.
+
+
+```{r}
+packages = c('tidytext', 'tidyverse','dplyr','tm',
+             'widyr', 'wordcloud','lubridate','wordcloud',
+             'DT', 'ggwordcloud', 'SnowballC','ggplot2',
+             'tokenizers', 'lubridate', 'topicmodels','stringr',
+             'hms','tidyverse', 'stringr','clock','tmap',
+             'tidygraph', 'ggraph', 'tidytext','dygraphs','sf',
+             'igraph','rgdal','raster','sp','patchwork','hrbrthemes')
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+```
+
+
+### 2.3 Import dataset and combine data
+
+The data of Microblog records and emergency calls are stored in separate csv files. And three csv files share same columns but data generate from different date, which is shown below.
+
+![](image/1.files.PNG){width=50%}
+
+* Firstly, we need to combine 3 files into one consolidated file, which is necessary for the following analysis. In this step, package <span style="color:blue">*tidyverse*</span> would be used.The following R code shows the process of data consolidation, then three datasets with different date have been integrated into one file.
+
+```{r}
+library(tidyverse)
+table1 <- read.csv("data/csv-1700-1830.csv")
+table2 <- read.csv("data/csv-1831-2000.csv")
+table3 <- read.csv("data/csv-2001-2131.csv")
+data <- rbind(table1, table2,table3)
+```
+
+### 2.4  Modifying Date format 
+
+* converting character objects to dates can be made easier by using the <span style="color:blue">*lubridate*</span> package, which would be used to convert date type from 'yyyymmddhhmmss' to 'yyyy-mm-dd hh:mm:ss', and create a new column 'date' in data, and the code chunk could be seen below.
+
+```{r}
+data$date.yyyyMMddHHmmss. <- ymd_hms(data$date.yyyyMMddHHmmss.)
+```
+
+* Rename "date.yyyyMMddHHmmss." in data into "date" with concise format.
+
+```{r}
+names(data)[names(data) == "date.yyyyMMddHHmmss."] <- "date"
+```
+
+
+### 2.5 Remove Special Chacaters
+
+In this step, we would like to use package <span style="color:blue">*stringr*</span> to clean special characters, including " @, < , ˜ " and none English words.
+
+
+```{r}
+
+data$message <- str_replace_all(data$message,fixed("<"),"")
+data$message <- str_replace_all(data$message,fixed("˜"),"")
+data$message <- str_replace_all(data$message,fixed("[\u4e00-\u9fa5]+"), "")
+
+```
+
+
+* For convenience of further analysis, we separate 'ccdata' and 'mbdata' from "data", they respectively represent microblog record and emergency call center data collected by the Abila, Kronos local police and fire departments.
+
+```{r}
+ccdata <- subset(data, type == "ccdata")
+mbdata <- subset(data, type == "mbdata")
+
+```
+
+### 2.6 Classify Record
+
+Based on content of data provided, we classified records into three segments, Junk, Typical_Chatter and Meaningful records, using <span style="color:blue">*stringr*</span>, <span style="color:blue">*dplyr*</span>package. Because emergency call center data is credible and reliable, here we just classify Microblog data into three classes.
+
+
+Class| Definition
+|------|----------|
+|**Junk**| referred to advertisements or financial purpose reports.|
+|**Meaningful**| refers to informative records which spread real news about ongoing or impending events happen in Aliba.|
+|**Typical Chatter**|represents no meaningful and irrelevant or inappropriate messages post online. |
+
+* classify Junk records: The str_detect() function is used to detect patterns of Junk records. And the below code chunk is used to identify the junk reports.|
+
+```{r}
+junk <- mbdata %>% filter_at(.vars = vars(message, author), 
+any_vars(str_detect(., pattern = "#artists|#badcreadit|#cars
+  |#followme|#nobank|#meds|#cancer|#bestfood|#Grammar|cars.kronos
+  |#workAtHome|#gettingFired|#pharmacyripoff|#iThing|sellstuff
+  |homeworkers.kronos|#abilasFinest|#hungry|Easy make.money|
+  Officia1AbilaPost|visit this|#eastAbila link|#abilajobs|
+  clickhere|#abilajobs|#welksFurniture|#swat|#bugs|visit this link
+  |this site|junkman|carjunkers|eazymoney|junk99902|junkieduck113
+  |junkman377|junkman995|KronosQuoth|Clevvah4Evah")))
+
+mbdata1 <- anti_join(mbdata,junk,by="message") 
+           
+```
+
+
+* Classify Spam records: Using the same way, we detect Spam records by below code chunk and classify corresponding emails into Spam class.
+
+```{r}
+meaningful<- mbdata1 %>% filter_at(.vars = vars(message, author), 
+any_vars(str_detect(., pattern ="#gowaway|#POKrally|van|gun|fire
+|rally|shooting|#AlibaPost|#CentralBulletin|
+#POKRallyinthePark|#IntNews|#nopeace|#IntNews|#KronosStar|#stuck|
+#Gastech employees|#POK connection|#Abila|#abilafire|#POK| #NewsOnline
+|#hurtfirefighte|#rally|#pokrally|#SavePeople
+|#terrorists|#tellme| #praying|@carlyscoffee|@dancingdolphin|
+terorrist|cop|#abilawatcher|#IntNews|#KronosStar|#gettingFired
+|#GelatoGalore|#helpu|#HI|#newsOnline|#DancingDolphinFire|
+#jerkdrivers|#stopby|#standoff|#abilaFire|#hurtfirefighter
+|#norest|#firstresponders|#IntNews|#AFDHeroes|#APD|#shooting
+|#kidnapping|#troubleatgelato|#Abila|#burnabila|#hostage|
+#repent|#dansingdolfinfire|#jerkdrivers|#AFD|#APDSWAT|
+#shooter|#HELPME|#fire|#thanksAFD")))
+                      
+```
+
+* Classify Meaningful records: Apart from the Spam and Junk, the rest of emails would be classified into meaningful records, which could be received by the below code chunk.In this step, *anti_join()* function in <span style="color:blue">*dplyr*</span> package would be used. 
+
+```{r}
+Typical_Chatter <- anti_join(mbdata1,junk,by="message") 
+Typical_Chatter <- anti_join(mbdata1,meaningful,by="message")
+```
+
+Now, all records in Microblog data have been labeled with responding class- **Junk**, **Meanigful** and **Spam**.
+
+* Next, we add "class" as a new column to represent the label of every record.
+
+```{r}
+junk$class <- "junk"
+Typical_Chatter$class <- "Typical_Chatter"
+meaningful$class <- "meaningful"
+
+```
+
+* Using below code chunk, we combine Junk, Spam and Meaningful records into one dataframe which was renamed as data_classed. In this preprocessing step, the *rbind* function of dplry package would be used.
+
+```{r}
+mbdata_classed <- rbind(junk, Typical_Chatter, meaningful)
+
+```
+
+* In the previous pre-processing step, we keep # as a tag to identify Junk, Spam and meaningful records. After records classifying, we move "#" in the tag using below code chunk.
+
+```{r}
+mbdata_classed$message <- str_replace_all(mbdata_classed$message,fixed("#"),"")
+```
+
+
+### 2.7 Data Tokenization and Word Counts
+
+After cleaning the text data, the next step is to segment sentence and count the occurrence of each word, to identify frequent words in records. The below code chunk shows how Multiple functions used to achieve this results:
+
+(1) unnest_tokens() function from <span style="color:blue">*tidytext*</span> package is used to split the sentences into tokens, 
+(2) stop_words() is used to remove stop-words.
+(3) str_detect() is used to detect the presence or absence of a pattern in string.
+(4) filter() of dplyr package is used to subset a data frame, retaining all rows that satisfy the specified conditions.
+
+```{r}
+mb_usenet_words <- mbdata_classed %>%
+  unnest_tokens(word, message) %>%
+  filter(str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word,
+         !word %in% c("aliba","abila","rt","homelandilluminations"))
+
+```
+
+**Generate the word cloud for records dataset**
+
+The most common words in entire dataset could be seen from below code chunk, the TOp 15 most frequent words could be seen by bar chart.
+
+```{r echo=FALSE}
+mb_usenet_words%>%
+  count(word,sort = TRUE) %>%
+    top_n(10) 
+
+```
+```{r}
+mb_usnet_word_pot <-mb_usenet_words %>%
+  count(word, sort = TRUE) %>%
+  filter(n > 140) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word)) +
+  theme(legend.position = "none")+
+  geom_col(fill = "steelblue") +
+  labs(y = NULL)
+mb_usnet_word_pot
+```
+**Generate the word cloud for entire records dataset**
+
+The importance of words can be illustrated as a word cloud as follow :
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+set.seed(1234)
+wordcloud(words = mb_usenet_words$word,
+          min.freq = 10,
+          max.words = 150, 
+          random.order=FALSE,
+          colors=brewer.pal(8, "Dark2"))
+```
+
+# 3. Data Visualization 
+
+## Question 1: 
+
+Since ccdata is the text transcripts of emergency dispatches by local police and fire departments, it has high reliability and we regard it as meaningful records. Based on question required, we analyze mbdata which is Microblog records post online, it can provide us hints about the differences of meaningful events records, typical chatter and junk. **Our exploration and discussion for difference on junk, meaningful nd typical-chatter are described below**: 
+
+(1) explore the difference of most frequent words in three records types.
+(2) explore the difference of records length in three email classifications.
+(3) compare the sentence length of three records types.
+(4) compare the count of geographic location for three records types (for example whether records with location is more likely to be meaningful records)
+
+### 1.Visualizing difference of word frequency by word cloud
+
+Firstly, we count words for three classes- Junk, Spam, Meaningful using the code chunk below, then the frequent words in tree record class could be seen.
+
+```{r echo=TRUE} 
+mbwords_by_class <- mb_usenet_words %>%
+  count(class, word, sort = TRUE) %>%
+  ungroup()
+```
+
+```{r echo=TRUE, warning=FALSE}
+set.seed(1234)
+mbwords_by_class_plot <- mbwords_by_class %>%
+  filter(n > 50) %>%
+ggplot(aes(label = word,
+           size = 10,
+           color= class))+
+  geom_text_wordcloud() +
+  theme_minimal() +
+  facet_wrap(~class, ncol = 3, scales = "free") +
+  labs(x = "Record Classification") +
+  theme_bw()
+
+mbwords_by_class_plot
+
+```
+
+### 2. VisualiZing word tf-idf as interactive table
+
+Table below is an interactive table created by using datatable(). The DT table can be used to review the frequency, tf-idf of common words of three classes by selecting "class" in DT table.
+
+The code chunk below uses bind_tf_idf() of tidytext to compute and bind the term frequency, inverse document frequency and ti-idf of a tidy text dataset to the dataset. We can use DT table to check "tf", "idf", "tf-idf" details of tokens of three record types
+
+```{r}
+mb_tf_idf <- mbwords_by_class %>%
+  bind_tf_idf(word,class,n) %>%
+  arrange(desc(tf_idf))
+
+DT::datatable(mb_tf_idf, filter = 'top') %>% 
+  formatRound(columns = c('tf', 'idf', 
+                          'tf_idf'), 
+              digits = 3) %>%
+  formatStyle(0, 
+              target = 'row', 
+              lineHeight='25%')
+
+```
+
+### 3. Visualizing tf-idf within Three Records Classes
+
+Leveraging facet bar charts to plot the tf-idf values of three class - Junk, Spam, Meaningful records, and present the key words in three different records types.
+
+```{r fig.height=6, fig.width=9}
+mb_tf_idf_count <- mb_tf_idf %>% 
+  arrange(desc(tf_idf)) %>% 
+  group_by(class) %>% 
+  top_n(15) %>% 
+  ungroup() %>% 
+  mutate(word = fct_inorder(word))
+
+tf_idf_plot <- ggplot(mb_tf_idf_count, 
+       aes(y = fct_rev(word), x = tf_idf, fill = class)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = "tf-idf", y = NULL) +
+  facet_wrap(~ class, ncol = 2, scales = "free") +
+  theme_bw()
+
+tf_idf_plot
+```
+
+### 4. Visualizing count of latitude and longitude by classification as bar chart
+
+```{r}
+latitudecount_plot <- mbdata_classed %>%
+  #select(type, class,latitude, longitude) %>%
+  filter(type == "mbdata", latitude >0, longitude >0 ) %>%
+  group_by(class) %>%
+  summarise(total_count= n()) %>%
+ggplot(aes(x=class, y=total_count)) +
+  geom_bar(aes(fill= class),stat="identity")+
+  labs(title="Count of Latitude and Longtitude by Classification", x="Class", y="Count of Latitude and Longtitude") +
+  geom_text(aes(label=total_count), vjust=-0.3, size=3.5)+
+  theme_minimal()
+
+latitudecount_plot
+```
+### 5. Visualizing Word Length within Three Records Classes
+
+To explore the  Word Length within three records Classes, we calculate the length of every record and add a new column named "length" in mbdata_classed. In the code chunk below, *strsplit()* of *stringr* was used to get the word length.
+
+```{r}
+mbdata_classed$length <- sapply(mbdata_classed$message, function(x) length(unlist(strsplit(as.character(x), "\\W+"))))
+
+```
+
+
+A violin plot can be used to complement the visual discovery of word length distribution by classification. In this code code chunk below, boxplot of ggplot2 is used to plot a static boxplot.
+
+```{r}
+length_voplot <-mbdata_classed %>%
+ggplot(aes(x = class, y = length)) + 
+  geom_violin(aes(fill = class), trim = FALSE) +
+  geom_boxplot(width = 0.1) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+```
+
+
+```{r}
+length_plot2 <- mbdata_classed %>%
+  group_by(class) %>%
+  ggplot(aes(
+    x = length, y = reorder(class, -length),
+    color = class
+  )) +
+  geom_jitter(position = position_jitter(seed = 2020, width = 0.2), alpha = 0.4, size = 2) +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "red", alpha = 1)
+
+```
+
+```{r fig.height=6, fig.width=15}
+
+length_voplot + length_plot2
+```
+
+### 6.Visualizing Top 15 frequent words of three record types by bar chart
+
+To better present the difference of top 15 frequent key words in three record types, We examine how often associated words are preceded to one specific record type. We would like to explore the difference of frequent words in three records types. The below code chunk was used to visualize the top 15 common words between "junk" & "meaningful and "junk" and "typical_chatter"record types with bar plot.
+
+```{r}
+contribution_plot1 <- mb_usenet_words %>%
+  count(class, word) %>%
+  ungroup() %>%
+  filter(n >= 100) %>%
+  mutate(n = ifelse(class == "junk", -n, n)) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = class)) +
+  geom_col() +
+  labs(x = "Contribution to record classification", y = NULL)
+```
+
+```{r}
+contribution_plot2 <- mb_usenet_words %>%
+  count(class, word) %>%
+  ungroup() %>%
+  filter(n >= 50) %>%
+  filter(class == "junk"| class == "Typical_Chatter") %>%
+  mutate(n = ifelse(class == "junk", -n, n)) %>%
+  mutate(word = reorder(word, n))%>%
+  ggplot(aes(n, word, fill = class)) +
+  geom_col() +
+  labs(x = "Contribution to record classification", y = NULL)
+```
+
+```{r fig.height=4, fig.width=10}
+contribution_plot1 + contribution_plot2
+
+```
+## 2. Question 2
+
+To analyze and present potential consequences of the situation, we conbine the ccdata and meaningful data to explore. We can use the LDA() function from the topic models package, setting k = 8, to create a eight-topic LDA model, helping use avoiding to oveymany word overlaps.
+
+```{r}
+ccdata$class <- "meaningful"
+data2 <- rbind(ccdata, meaningful)
+
+data2$message <- str_replace_all(data2$message,fixed("#"),"")
+
+usenet_words <- data2%>%
+  unnest_tokens(word, message) %>%
+  filter(#str_detect(word, "[a-z']$"),
+         !word %in% stop_words$word,
+         !word %in% c("aliba","abila","rt","homelandilluminations"
+                      ,"centralbulletin", "alibapost", "grammar",
+                      "kronosstar", "pok","abilapost"))
+```
+
+
+```{r}
+top_terms_by_topic_LDA <- function(word,
+                                   plot = T,
+                                   number_of_topics = 6)
+{
+    Corpus <- Corpus(VectorSource(usenet_words$word)) 
+    DTM <- DocumentTermMatrix(Corpus) 
+    unique_indexes <- unique(DTM$i) 
+    DTM <- DTM[unique_indexes,] 
+    lda <- LDA(DTM, k = number_of_topics, control = list(seed = 1234))
+    topics <- tidy(lda, matrix = "beta")
+
+    top_terms <- topics  %>% 
+      group_by(topic) %>% 
+      top_n(10, beta) %>%
+      ungroup() %>% 
+      arrange(topic, -beta) 
+    if(plot == T){
+        top_terms %>% 
+          mutate(term = reorder(term, beta)) %>%  
+          ggplot(aes(term,beta, fill = factor(topic))) +
+          geom_col(show.legend = FALSE) + 
+          facet_wrap(~ topic, scales = "free") + 
+          labs(x = NULL, y = "Beta") + 
+          coord_flip() 
+    }else{ 
+        return(top_terms)
+    }
+}
+```
+
+```{r}
+# plot top ten word terms by topic
+top_terms_by_topic_LDA(reviews$text, number_of_topics = 6)
+```
+From the results shown in 8 topic model, we can see some important hints about social event happened during 17:00pm - 21:30 pm, for example topic 1 shows key word "rally", topic 2 shows high beta on "ploice" and "stangoff", topic 3 shows high beta on "fire", topic 5 presents "van" and "APD". Even though some words in 8 topic are overlapped, we could summarize 4 events from the topic generated and data provided. 
+
+
+**Event 1: POK rally** 
+
+Firstly, we filter all rally reports and count the relevant words appeared in rally reports. We use the below code chunk to get the 
+
+```{r}
+options(scipen = 999)
+rally <- data2 %>% 
+  filter(str_detect(message,"POKRally|rally|park|Rallypark|Parkcheck|
+                    POKliesinthepark|POKRallyinthepark")) 
+```
+
+```{r}
+rally_count <- rally %>%
+  group_by(date) %>%
+  count(date)
+
+a<- ggplot(rally_count,aes(x= date)) +
+  geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of POK rally event")
+```
+
+How many people would be affected in rally event? we can use the below code chunk to evaluate the number of people.
+
+```{r}
+rally_people_number <- rally %>%
+  filter(str_detect(message,"[0-9]+")) %>%
+  mutate(number = extract_numeric(message)) %>%
+  filter(number >0)
+max(rally_people_number$number)
+           
+```
+
+**Event 2: Fire in Dancing Dolphin**
+
+Using the below code chunk, we could plot the risk level of Fire in Dancing Dolphin.Twits with hashtags such as Fire, DancingDolphinFire, AFD (Abila Fire Department) are used to identify the event.
+
+```{r}
+fire <- data2 %>% 
+  filter(str_detect(message,"fire|Dancing|Dolphin|Department|
+                    building|Dancingdolfinfire|AFD"))
+fire_count <- fire %>%
+  group_by(date) %>%
+  count(date)
+
+b<- ggplot(fire_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of fire in dancing dolphin event")
+  
+```
+
+
+**Event 3: Hit & Run Accident**
+
+Using the below code chunk, we could plot the risk level of Hit & Run Accident. Hashtags bicyclist, Jerkdrivers and A@Brew'veBeenServed are used to identify this event.
+
+```{r}
+hit_count <- usenet_words %>% 
+  filter(str_detect(word,"van|bicyclist|hit|Cafe|@Brew'veBeenServed
+                    |escaped|Jerkdrivers|Vehicle Accident-Report")) %>%
+  group_by(date) %>%
+  count(word,date)
+
+c<- ggplot(hit_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of hit & run accident event")
+#c
+
+```
+
+**Event 4: Shooting and standoff**
+
+Using the below code chunk, we could plot the risk level of shooting and standoff event. and the hashtags Troubleatgelato, Gelatogalorestandoff, Blackvan and Hostage are used to identified this event.
+
+```{r}
+shooting_count <- usenet_words %>% 
+  filter(str_detect(word,"shooting|standoff|^gun|shooter|shooting fire|
+                    ambulance|Gelatogalorestandofff|Gelato Galore|Hostage")) %>%
+  group_by(date) %>%
+  count(word,date)
+
+d<- ggplot(hit_count,aes(x= date)) +
+    geom_histogram(aes(y = stat(density)), 
+                   colour="black", fill="white") +
+  geom_density(alpha = 0.2, fill = "#FF6666") +
+  ggtitle("risk of shooting and standoff event")
+```
+
+```{r fig.height=7, fig.width=10}
+a +b+c+d
+```
+
+
+# Question 3
+**If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
+
+
+```{r}
+bgmap= raster("data/Geospatial/MC2-tourist.tif")
+bgmap
+```
+```{r}
+tm_shape(bgmap) +
+tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255)
+```
+```{r}
+
+Abila_st <- st_read(dsn = "data/Geospatial",
+                    layer = "Abila")
+```
+
+```{r}
+
+gps <- mbdata %>%
+  dplyr::select(date,message,latitude,longitude)%>%
+  filter(!is.na(latitude), !is.na(longitude))
+gps_sf <- st_as_sf(gps, 
+                   coords = c("longitude", "latitude"),
+                       crs= 4326)
+gps_point <- gps_sf %>%
+  group_by(message) %>%
+  summarize(m = mean(date),
+            do_union = FALSE)%>%
+  st_cast("MULTIPOINT")
+
+```
+
+```{r}
+tmap_mode("view")
+tm_shape(bgmap) +
+  tm_rgb(bgmap, r = 1,g = 2,b = 3,
+       alpha = NA,
+       saturation = 1,
+       interpolate = TRUE,
+       max.value = 255) +
+  tm_shape(gps_point) +
+  tm_dots(col = "red")
+```
+
+
+# 4.Insights
+
+### **Q1: Using visual analytics, characterize the different types of content in the dataset. What distinguishes meaningful event reports from typical chatter from junk or spam?**
+
+**(1) Differences on Key words of three record types**
+
+![](image/8. Q1.png)
+**Interpretation**: For junk records, its most frequent words are relate to "life", "successful", "time", the style of junk record is more macroscopic. However, for meaningful records, its frequents words seems to be more various,and it contains important social-event topic words, such as "fire","rally", and "van". Comparably, the common words of typical-chatter are fewer and people usually end with a metatag "tag"  if they post typical-chatter records. Since POK rally invested Viktor-E bank to play music, Viktor become the People Focus in typical-chatter.
+
+**(2) Differences on count of Geography location for three record types**
+
+![](image/4. latitude.png){width=70%}
+
+**Interpretation**: meaningful records are more likely to contains latitude and longitude data compared with typical-chatter records online, which means people usually attach their geometrical information when they post important or meaningful review online. Besides, Junk records generally are posted without geometrical information. 
+
+**(3) Differences on sentence length of three record types**
+![](image/5. length.PNG)
+
+**Interpretation**: The median of sentence length for Junk is largest, followed by Meaningful and Typical-chatter records respectively. Moreover, the shape of the distribution (extremely skinny on each end and wide in the middle) indicates the weights of Typical_chatter and Meaningful record are highly concentrated around the median, but this is not distinct for Junk records. Besides, Typical_chatter and Meaningful records have distinct wider section of violin plot, representing a higher probability that the sentence length of records will take on values of 10 and 12.
+
+**(4) Differences on count of frequent words for three record types**
+![](image/6. contribution.PNG)
+
+For better key words cooperation, two bar charts count the frequent words within two record types. it presents some top 15 frequent words only appear in junk or meaningful records, for example "fire","dancing","dolphin" only happened in menaingful records. but there are some words are frequent words for both, for example "pok", "kronosstar", this case is caused by that some junk poster usually attached with hot tag to attract people. Moreover, for junk and typical-chatter, there is no overlap key words, frequent words only occur in responding records type.
+
+
+### **Q2: Use visual analytics to represent and evaluate how the level of the risk to the public evolves over the course of the evening. Consider the potential consequences of the situation and the number of people who could be affected. Please limit your answer to 10 images and 1000 words.**
+
+![](image/7.topicmodel.png)
+Refer the topic which model generated and information data provides, we could roughly classify four event topic from 17:00 pm to 21:30, they are POK rally, Fire in Dancing Dolphin, Hit & Run Accident, and Shooting and standoff.
+
+![](image/9. risk level.png)
+
+From the distribution of social attention and event keywords appeared, we leverage histogram to evaluate the risk level changed over the course. Overall, the risk levels of four social events are gradually drop down from beginning to end.
+
+**Event 1- POK rally**： POK rally event, the largest count of real-time rally topic happened about at 17:49, when Professor Lorenzo Di Stefano made the talk about corporate social responsibility. About 2000 people gathered there and heavy police was disposed. The rally closed around 19:05, so we can see the rally topic density dramatically drop down. Because some records post by participants and bystanders were froward by other people online, rally influence also exist for a while. 
+
+**Event 2 - Fire in Dancing Dolphin**: The fire was at Dancing Dolphin. At the 18:25pm, a witness @GreyCatCollectibles reported some precursor of the fire firstly. This social event keeps high attention until at 20:05 @CentralBulletin reported that an injured firefighter rescued from the fire, then the risk level went down. But around 20:25 AFD requested additional trucks. The fire kept spreading and AFD shifted focus to protecting surrounding buildings from the spread of fire, reported by @AbilaPOst at 20:52. Several miniutes later, the top floor of dancing dolphin collapsed, during this period, the risk level shows slightly increase. At 21:15, @KronosStart, @HomelandIlluminations and @AbilaFireDept issued reports that the fire was nearly under control, then the risk went lower.
+
+**Event 3- Hit & Run Accident**: at 19:19, the risk of hit & run accident event accidentally increased, because Abila Police Department reported a car hit on Souliou street, and @ hennyhenhendrix reported a black van hit his car. Many tweets also report a black van hit a bicyclist, a witness @KronosStar at 19:35:07 said the bicyclist was uninjured, The van hit and then escaped, police pursued it. 
+
+**Event 4- Shooting and standoff**: At 19:40, Abila Police reported gun fire at Gelato Galore near the City Park, and the shooters were in the black van. In the shooting fire, a cop was gunned down and witness said that there are hostages controled by gunman.  @HomelandIlluminations and @NewsOnline, then police and gunman stayed in standoff, which continues until about 21:00. And then the two van guys fighted with each other,at 21:13, the two kidnappers dropped the gun and gave up, then the risk went down.
+
+
+
+### **Q3: If you were able to send a team of first responders to any single place, where would it be? Provide your rationale. How might your response be different if you had to respond to the events in real time rather than retrospectively?**
+
+![](image/10.map.png){width=70%}
+
+Base on records provided, we can get the information of events with bad social influence:
+
+* 2014-01-23 17:00-19:05 POK rally to start in Abila City Park.
+* 2014-01-23 18:41-20:52 fire at Dancing Dolphin Apartment Complex
+* 2014-01-23 19:20- Black van hit and uses the fire confusion driving hostages to another place. 
+* 2014-01-23 19:40-21:00 gun shotting at Gelato Galore
+
+Above four social events, if I am able to send a team of first reponders, the place should be Abila City Park, there are 2000 people gathered and the on-site inspection is necessary. Importantly, from the map we can see, Gelato Galore near the City Park, when the rally ends at 17:05, the time period before shooting event occurring is enough for the team go to Gelato Galore where the shooting and standoff would happen. if take this arrangement, the team would take participate two social events to reduce more risks involves.
+
+However, in real time and without retrospection, I would send the first reponders to Daning Dolphain based on event sequence and risks, because do not know the results and then the fire situation is quite serious, police also came to help manage the scene and started evacuation in Dancing Dolphin and nearby buildings. Some residents trapped on upper floor.To protecting residents and surrounding buildings from the spread of fire, the first reponders might be sent to Daning Dolphain. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
