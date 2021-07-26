@@ -3,3 +3,6 @@ title: "R for Data Science and Analysis"
 site: distill::distill_website
 listing: posts
 ---
+
+library(distill)
+create_post("The Sharpe Ratio")
